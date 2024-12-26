@@ -53,12 +53,12 @@
             <div class="collapse" id="symptomesSider">
               <ul class="nav nav-collapse">
                 <li>
-                  <a class="nav-link" href="<%= request.getContextPath() %>/pages/symptomes/insertion.jsp">
+                  <a class="nav-link" href="<%= request.getContextPath() %>/symptomes/insert">
                     <span class="sub-item">Insertion</span>
                   </a>
                 </li>
                 <li>
-                  <a href="<%= request.getContextPath() %>/pages/symptomes/liste.jsp">
+                  <a href="<%= request.getContextPath() %>/symptomes/liste">
                     <span class="sub-item">Liste</span>
                   </a>
                 </li>
