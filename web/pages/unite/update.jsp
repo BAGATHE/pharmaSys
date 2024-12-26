@@ -2,6 +2,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.Unite"%>
+
+<%
+    Unite unite = (Unite) request.getAttribute("unite");
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -73,9 +78,10 @@
             <div class="offset-md-2 col-md-8">
                 <!--debut formulaire-->
               <form method="post" action="" accept-charset="UTF-8">
+                <input type="hidden" name="id_unite" value="<%=unite.getIdUnite() %>" />
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
-                  <a href="<%= request.getContextPath() %>/pages/unite/liste.jsp"><button type="button" class="btn btn-info">retour</button></a>
+                  <a href="<%= request.getContextPath() %>/unite/list"><button type="button" class="btn btn-info">retour</button></a>
                   <div class="card-title"><h2 class="text-center" style="color: white;">Mise a jour Unité</h2></div>
                 </div>
                 <div class="card-body">
@@ -92,7 +98,7 @@
                                   id="nom"
                                   name="nom"
                                   required
-                                  value="test"
+                                  value="<%=unite.getNom() %>"
                                 />
                               </div>
                             </div>

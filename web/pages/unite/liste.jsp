@@ -1,6 +1,22 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+
+<%@page import="model.Unite"%>
+
+<%
+    Unite[] unites = (Unite[]) request.getAttribute("unites");
+    String message = (String) request.getAttribute("message");
+    if (message != null && !message.trim().isEmpty()) {
+%>
+    <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script>
+        swal({ title: "Notification",text: "<%= message %>",icon: "info", button: "OK"});
+    </script>
+<%
+        request.setAttribute("message", "");
+    }
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -86,6 +102,7 @@
                   </div>
                   <table class="table table-bordered table-head-bg-success  mt-3">
                     <thead >
+                      
                       <tr>
                         <th scope="col">#</th>
                         <th class="text-center" scope="col">Unité</th>
@@ -93,59 +110,56 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td class="text-center">1</td>
-                        <td class="text-center">Boite</td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-warning btn-sm">
-                                <i class="fas fa-edit"></i> 
-                                <a href="<%= request.getContextPath() %>/pages/unite/update.jsp">Modifier</a>
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal1">
-                                <i class="fas fa-trash-alt"></i> Supprimer
-                            </button>
-                            <div class="modal fade" id="deleteModal1" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                      Êtes-vous sûr de vouloir supprimer ce symptôme ?
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                      <a href=""><button type="button" class="btn btn-danger">Supprimer</button></a>
-                                    </div>
+                      <% 
+                          if (unites != null && unites.length > 0) {
+                              for (Unite unite : unites) { 
+                      %>
+                          <tr>
+                              <td class="text-center"><%= unite.getIdUnite() %></td>
+                              <td class="text-center"><%= unite.getNom() %></td>
+                              <td class="text-center">
+                                  <a href="<%= request.getContextPath() %>/unite/update?id_unite=<%= unite.getIdUnite() %>" class="btn btn-warning btn-sm">
+                                      <i class="fas fa-edit"></i> Modifier
+                                  </a>
+                                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= unite.getIdUnite() %>">
+                                      <i class="fas fa-trash-alt"></i> Supprimer
+                                  </button>
+                                  
+                                  <!-- Modal -->
+                                  <div class="modal fade" id="deleteModal<%= unite.getIdUnite() %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= unite.getIdUnite() %>" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel<%= unite.getIdUnite() %>">Confirmer la suppression</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                            Êtes-vous sûr de vouloir supprimer cette unité ?
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                            <a href="<%= request.getContextPath() %>/unite/delete?id_unite=<%= unite.getIdUnite() %>">
+                                              <button type="button" class="btn btn-danger">Supprimer</button>
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </div>
                                   </div>
-                                </div>
-                            </div>
-                        </td>
-                      </tr>
-                    </tbody>
+                              </td>
+                          </tr>
+                      <% 
+                              }
+                          } else { 
+                      %>
+                          <tr>
+                              <td colspan="4">Aucune unité trouvée.</td>
+                          </tr>
+                      <% 
+                          }
+                      %>
+                  </tbody>
                   </table>
 
-                    <!-- Pagination -->
-        <nav>
-            <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
                 </div>
               </div>
             
