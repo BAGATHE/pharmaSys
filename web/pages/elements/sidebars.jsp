@@ -243,12 +243,12 @@
                   <div class="collapse" id="unite">
                     <ul class="nav nav-collapse subnav">
                       <li>
-                        <a href="<%= request.getContextPath() %>/pages/unite/insertion.jsp">
+                        <a href="<%= request.getContextPath() %>/unite/insert">
                           <span class="sub-item">Insertion</span>
                         </a>
                       </li>
                       <li>
-                        <a href="<%= request.getContextPath() %>/pages/unite/liste.jsp">
+                        <a href="<%= request.getContextPath() %>/unite/list">
                           <span class="sub-item">Liste</span>
                         </a>
                       </li>
