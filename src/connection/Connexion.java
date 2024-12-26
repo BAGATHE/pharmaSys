@@ -16,7 +16,7 @@ public class Connexion {
             Class.forName("org.postgresql.Driver");
 
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pharmacie", "postgres",
-                    "postgres");
+                    "Dbamanager1");
             connection.setAutoCommit(false);
 
             System.out.println("Connected to the PostgreSQL database successfully!");

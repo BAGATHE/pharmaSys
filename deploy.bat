@@ -1,5 +1,5 @@
 @echo off
-set webapp=C:\Program Files\Apache Software Foundation\Tomcat 10.1\webapps
+set webapp=D:\WindowsApp\Tomcat\webapps
 set name=pharmacie
 xcopy /s /e /i "bin\*" "web\WEB-INF\classes\"
 

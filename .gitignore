@@ -1,2 +1,4 @@
 temp_src/
 bin/
+src/connection/
+deploy.bat
