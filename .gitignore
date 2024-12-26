@@ -1,4 +1,7 @@
 temp_src/
 bin/
-src/connection/
+# Ignorer deploy.bat
 deploy.bat
+
+# Ignorer Connexion.java
+src/connection/Connexion.java
