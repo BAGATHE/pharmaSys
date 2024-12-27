@@ -9,6 +9,32 @@ import java.util.List;
 import model.Symptome;
 
 public class SymptomeRepository {
+    public static Symptome[] getAllPaginated(Connection conn, int startIndex, int pageSize) throws SQLException {
+        List<Symptome> symptomes = new ArrayList<>();
+        String query = "SELECT * FROM symptomes LIMIT ? OFFSET ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, pageSize);
+            stmt.setInt(2, startIndex);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    symptomes.add(new Symptome(rs.getString("id_symptomes"), rs.getString("nom")));
+                }
+            }
+        }
+        return symptomes.toArray(new Symptome[0]);
+    }
+    
+    public static int getTotalCount(Connection conn) throws SQLException {
+        String query = "SELECT COUNT(*) FROM symptomes";
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+    
     public static Symptome getById(Connection conn, String id) throws SQLException {
         String query = "SELECT * FROM symptomes WHERE id_symptomes = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {

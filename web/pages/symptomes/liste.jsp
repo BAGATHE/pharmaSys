@@ -66,6 +66,7 @@
 
     <div class="container">
         <div class="page-inner">
+
           <div class="page-header">
             <h3 class="fw-bold mb-3">Symptômes</h3>
             <ul class="breadcrumbs mb-3">
@@ -91,15 +92,18 @@
                 </div>
                 <div class="card-body">
                   <div class="card-sub">
-                    <form method="GET" action="/your-filter-endpoint" class="row g-3">
-                        <div class="col-md-5">
-                          <input type="text" class="form-control" name="filterFirst" placeholder="Filtrer par nom">
+                    <form method="post" action="" class="row g-3 align-items-center">
+                        <input type="hidden" name="page" value="1" />
+                        <div class="col-md-5 d-flex align-items-center gap-2">
+                            <input type="text" class="form-control" name="filtrerNom" placeholder="Filtrer par nom">
+                            <input type="number" class="form-control" name="pageSize" placeholder="Nombre de lignes">
                         </div>
                         <div class="col-md-2">
-                          <button type="submit" class="btn btn-success">Valider</button>
+                            <button type="submit" class="btn btn-success">Valider</button>
                         </div>
-                      </form>
+                    </form>
                   </div>
+
                   <table class="table table-bordered table-head-bg-success  mt-3">
                     <thead >
                       <tr>
@@ -158,48 +162,40 @@
                   </table>
 
                     <!-- Pagination -->
-        <nav>
-            <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
+<!-- Pagination -->
+<nav>
+  <ul class="pagination justify-content-center">
+    <% 
+      int currentPage = (int) request.getAttribute("currentPage");
+      int totalPages = (int) request.getAttribute("totalPages");
+      int pageSize = request.getParameter("pageSize") != null 
+                     ? Integer.parseInt(request.getParameter("pageSize")) 
+                     : 10;
+    %>
+
+    <!-- Bouton "Précédent" -->
+    <li class="page-item <%= (currentPage == 1) ? "disabled" : "" %>">
+      <a class="page-link" href="?page=<%= currentPage - 1 %>&pageSize=<%= pageSize %>" tabindex="-1">Précédent</a>
+    </li>
+
+    <!-- Pages numérotées -->
+    <% for (int i = 1; i <= totalPages; i++) { %>
+      <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
+        <a class="page-link" href="?page=<%= i %>&pageSize=<%= pageSize %>"><%= i %></a>
+      </li>
+    <% } %>
+
+    <!-- Bouton "Suivant" -->
+    <li class="page-item <%= (currentPage == totalPages) ? "disabled" : "" %>">
+      <a class="page-link" href="?page=<%= currentPage + 1 %>&pageSize=<%= pageSize %>">Suivant</a>
+    </li>
+  </ul>
+</nav>
+
                 </div>
               </div>
-            
-              
             </div>
-            
           </div>
-
-         
-
-
-
         </div>
-
-       
-
-
-
-
-
-
-
-
-
       </div>
 <%@ include file="../elements/footer.jsp" %>
