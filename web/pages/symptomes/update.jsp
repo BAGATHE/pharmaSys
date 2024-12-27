@@ -2,6 +2,12 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.Symptome"%>
+
+<%
+    Symptome symptome = (Symptome) request.getAttribute("symptome");
+%>
+
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -65,7 +71,7 @@
                 <i class="icon-arrow-right"></i>
               </li>
               <li class="nav-item">
-                <a href="#">Formulaire Insertion</a>
+                <a href="#">Formulaire Mise a jou</a>
               </li>
             </ul>
           </div>
@@ -73,10 +79,11 @@
             <div class="offset-md-2 col-md-8">
                 <!--debut formulaire-->
               <form method="post" action="" accept-charset="UTF-8">
+                <input type="hidden" name="id_symptomes" value="<%= symptome.getIdSymptome() %>" />
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
-                  <a href="<%= request.getContextPath() %>/pages/symptomes/liste.jsp"><button type="button" class="btn btn-info">retour</button></a>
-                  <div class="card-title"><h2 class="text-center" style="color: white;">Insertion Symptôme</h2></div>
+                  <a href="<%= request.getContextPath() %>/symptomes/liste"><button type="button" class="btn btn-info">retour</button></a>
+                  <div class="card-title"><h2 class="text-center" style="color: white;">Mise a jou Symptôme</h2></div>
                 </div>
                 <div class="card-body">
                   <div class="row">
@@ -92,7 +99,7 @@
                                   id="nom"
                                   name="nom"
                                   required
-                                  value="test"
+                                  value="<%= symptome.getNom() %>"
                                 />
                               </div>
                             </div>
