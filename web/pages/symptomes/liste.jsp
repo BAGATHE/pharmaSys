@@ -121,8 +121,9 @@
                         <td class="text-center"><%= symptome.getNom() %></td>
                         <td class="text-center">
                             <button type="button" class="btn btn-warning btn-sm">
-                                <i class="fas fa-edit"></i> 
-                                <a href="<%= request.getContextPath() %>/symptomes/update?id_symptomes=<%= symptome.getIdSymptome() %>">Modifier</a>
+                                <a href="<%= request.getContextPath() %>/symptomes/update?id_symptomes=<%= symptome.getIdSymptome() %>">
+                                  <i class="fas fa-edit"></i> Modifier
+                                </a>
                             </button>
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= symptome.getIdSymptome() %>">
                                 <i class="fas fa-trash-alt"></i> Supprimer
