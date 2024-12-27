@@ -1,6 +1,22 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.Symptome"%>
+
+<%
+    Symptome[] symptomes = (Symptome[]) request.getAttribute("symptomes");
+    String message = (String) request.getAttribute("message");
+    if (message != null && !message.trim().isEmpty()) {
+%>
+    <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script>
+        swal({ title: "Notification",text: "<%= message %>",icon: "info", button: "OK"});
+    </script>
+<%
+        request.setAttribute("message", "");
+    }
+%>
+
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -93,22 +109,26 @@
                       </tr>
                     </thead>
                     <tbody>
+                    <% if(symptomes != null && symptomes.length > 0){
+                        for( Symptome symptome : symptomes ) {
+                     %>
                       <tr>
-                        <td class="text-center">1</td>
-                        <td class="text-center">maux de tete</td>
+                        <td class="text-center"><%= symptome.getIdSymptome() %></td>
+                        <td class="text-center"><%= symptome.getNom() %></td>
                         <td class="text-center">
                             <button type="button" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i> 
-                                <a href="<%= request.getContextPath() %>/pages/symptomes/update.jsp">Modifier</a>
+                                <a href="<%= request.getContextPath() %>/symptomes/update?id_symptomes=<%= symptome.getIdSymptome() %>">Modifier</a>
                             </button>
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal1">
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= symptome.getIdSymptome() %>">
                                 <i class="fas fa-trash-alt"></i> Supprimer
                             </button>
-                            <div class="modal fade" id="deleteModal1" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <%-- Modal --%>
+                            <div class="modal fade" id="deleteModal<%= symptome.getIdSymptome() %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= symptome.getIdSymptome() %>" aria-hidden="true">
                                 <div class="modal-dialog">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+                                      <h5 class="modal-title" id="deleteModalLabel<%= symptome.getIdSymptome() %>">Confirmer la suppression</h5>
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -116,13 +136,24 @@
                                     </div>
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                      <a href=""><button type="button" class="btn btn-danger">Supprimer</button></a>
+                                      <a href="<%= request.getContextPath() %>/symptomes/delete?id_symptomes=<%= symptome.getIdSymptome() %>">
+                                        <button type="button" class="btn btn-danger">Supprimer</button>
+                                      </a>
                                     </div>
                                   </div>
                                 </div>
                             </div>
                         </td>
                       </tr>
+                      <%    } 
+                        } else {
+                      %>
+                      <tr>
+                        <td colspan="4">Aucune unité trouvée.</td>
+                      </tr>
+                      <% 
+                        }
+                      %>
                     </tbody>
                   </table>
 
