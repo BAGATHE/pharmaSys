@@ -163,35 +163,34 @@
                   </table>
 
                     <!-- Pagination -->
-<!-- Pagination -->
-<nav>
-  <ul class="pagination justify-content-center">
-    <% 
-      int currentPage = (int) request.getAttribute("currentPage");
-      int totalPages = (int) request.getAttribute("totalPages");
-      int pageSize = request.getParameter("pageSize") != null 
-                     ? Integer.parseInt(request.getParameter("pageSize")) 
-                     : 10;
-    %>
+                  <nav>
+                    <ul class="pagination justify-content-center">
+                      <% 
+                        int currentPage = (int) request.getAttribute("currentPage");
+                        int totalPages = (int) request.getAttribute("totalPages");
+                        int pageSize = request.getParameter("pageSize") != null 
+                                       ? Integer.parseInt(request.getParameter("pageSize")) 
+                                       : 10;
+                      %>
 
-    <!-- Bouton "Précédent" -->
-    <li class="page-item <%= (currentPage == 1) ? "disabled" : "" %>">
-      <a class="page-link" href="?page=<%= currentPage - 1 %>&pageSize=<%= pageSize %>" tabindex="-1">Précédent</a>
-    </li>
+                      <!-- Bouton "Précédent" -->
+                      <li class="page-item <%= (currentPage == 1) ? "disabled" : "" %>">
+                        <a class="page-link" href="<%= request.getContextPath() %>/symptomes/liste?page=<%= currentPage - 1 %>&pageSize=<%= pageSize %>" tabindex="-1">Précédent</a>
+                      </li>
 
-    <!-- Pages numérotées -->
-    <% for (int i = 1; i <= totalPages; i++) { %>
-      <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
-        <a class="page-link" href="?page=<%= i %>&pageSize=<%= pageSize %>"><%= i %></a>
-      </li>
-    <% } %>
+                      <!-- Pages numérotées -->
+                      <% for (int i = 1; i <= totalPages; i++) { %>
+                        <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
+                          <a class="page-link" href="<%= request.getContextPath() %>/symptomes/liste?page=<%= i %>&pageSize=<%= pageSize %>"><%= i %></a>
+                        </li>
+                      <% } %>
 
-    <!-- Bouton "Suivant" -->
-    <li class="page-item <%= (currentPage == totalPages) ? "disabled" : "" %>">
-      <a class="page-link" href="?page=<%= currentPage + 1 %>&pageSize=<%= pageSize %>">Suivant</a>
-    </li>
-  </ul>
-</nav>
+                      <!-- Bouton "Suivant" -->
+                      <li class="page-item <%= (currentPage == totalPages) ? "disabled" : "" %>">
+                        <a class="page-link" href="<%= request.getContextPath() %>/symptomes/liste?page=<%= currentPage + 1 %>&pageSize=<%= pageSize %>">Suivant</a>
+                      </li>
+                    </ul>
+                  </nav>
 
                 </div>
               </div>
