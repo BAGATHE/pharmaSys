@@ -17,6 +17,14 @@
     }
 %>
 
+<% 
+  int currentPage = (int) request.getAttribute("currentPage");
+  int totalPages = (int) request.getAttribute("totalPages");
+  int pageSize = request.getParameter("pageSize") != null 
+                 ? Integer.parseInt(request.getParameter("pageSize")) 
+                 : 10;
+%>
+
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -96,7 +104,7 @@
                         <input type="hidden" name="page" value="1" />
                         <div class="col-md-5 d-flex align-items-center gap-2">
                             <input type="text" class="form-control" name="filtrerNom" placeholder="Filtrer par nom">
-                            <input type="number" class="form-control" name="pageSize" placeholder="Nombre de lignes">
+                            <input type="number" class="form-control" name="pageSize" placeholder="Nombre de lignes" >
                         </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-success">Valider</button>
@@ -165,13 +173,7 @@
                     <!-- Pagination -->
                   <nav>
                     <ul class="pagination justify-content-center">
-                      <% 
-                        int currentPage = (int) request.getAttribute("currentPage");
-                        int totalPages = (int) request.getAttribute("totalPages");
-                        int pageSize = request.getParameter("pageSize") != null 
-                                       ? Integer.parseInt(request.getParameter("pageSize")) 
-                                       : 10;
-                      %>
+
 
                       <!-- Bouton "Précédent" -->
                       <li class="page-item <%= (currentPage == 1) ? "disabled" : "" %>">

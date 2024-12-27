@@ -9,6 +9,25 @@ import java.util.List;
 import model.Symptome;
 
 public class SymptomeRepository {
+    public static Symptome[] getByNom(Connection conn, String nom, int startIndex, int pageSize) throws SQLException {
+        List<Symptome> symptomes = new ArrayList<>();
+        String query = "SELECT * FROM symptomes WHERE nom ILIKE ? LIMIT ? OFFSET ?"; 
+        
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + nom + "%"); // Rechercher par nom (partie du nom avec wildcards)
+            stmt.setInt(2, pageSize); // Limiter le nombre de résultats par page
+            stmt.setInt(3, startIndex);   // Décalage pour la pagination
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    symptomes.add(new Symptome(rs.getString("id_symptomes"), rs.getString("nom")));
+                }
+            }
+        }
+        return symptomes.toArray(new Symptome[0]);
+    }
+    
+
     public static Symptome[] getAllPaginated(Connection conn, int startIndex, int pageSize) throws SQLException {
         List<Symptome> symptomes = new ArrayList<>();
         String query = "SELECT * FROM symptomes LIMIT ? OFFSET ?";
