@@ -5,7 +5,6 @@ public class Laboratoire {
     private String nom;
     private String contact;
     private String adresse;
-    private MedicamentLaboratoire[] medicamentLaboratoires;
 
     public Laboratoire(String nom, String contact, String adresse) {
         this.nom = nom;
@@ -13,20 +12,12 @@ public class Laboratoire {
         this.adresse = adresse;
     }
 
-    public Laboratoire(String nom, String contact, String adresse, MedicamentLaboratoire[] medicamentLaboratoires) {
-        this.nom = nom;
-        this.contact = contact;
-        this.adresse = adresse;
-        this.medicamentLaboratoires = medicamentLaboratoires;
-    }
-
-    public Laboratoire(String idLaboratoire, String nom, String contact, String adresse,
-            MedicamentLaboratoire[] medicamentLaboratoires) {
+    public Laboratoire(String idLaboratoire, String nom, String contact, String adresse) {
         this.idLaboratoire = idLaboratoire;
         this.nom = nom;
         this.contact = contact;
         this.adresse = adresse;
-        this.medicamentLaboratoires = medicamentLaboratoires;
+
     }
 
     public String getIdLaboratoire() {
@@ -59,14 +50,6 @@ public class Laboratoire {
 
     public void setAdresse(String adresse) {
         this.adresse = adresse;
-    }
-
-    public MedicamentLaboratoire[] getMedicamentLaboratoires() {
-        return medicamentLaboratoires;
-    }
-
-    public void setMedicamentLaboratoires(MedicamentLaboratoire[] medicamentLaboratoires) {
-        this.medicamentLaboratoires = medicamentLaboratoires;
     }
 
 }

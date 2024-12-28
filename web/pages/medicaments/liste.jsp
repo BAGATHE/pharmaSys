@@ -95,9 +95,7 @@
                         <th class="text-center" scope="col">#</th>
                         <th class="text-center" scope="col">médicament</th>
                         <th class="text-center" scope="col">déscription</th>
-                        <th class="text-center" scope="col">quantité par boite</th>
-                        <th class="text-center" scope="col">prix vente</th>
-                        <th class="text-center" scope="col">seuil minimum en stock</th>
+                        <th class="text-center" scope="col">Prix vente</th>
                         <th class="text-center" scope="col">Laboratoire Fournisseur</th>
                         <th class="text-center" scope="col">action</th>
                       </tr>
@@ -107,9 +105,18 @@
                         <td class="text-center">1</td>
                         <td class="text-center">Paracetamol</td>
                         <td class="text-center">xxxx</td>
-                        <td class="text-center">3</td>
-                        <td class="text-center"><span class="fw-bold">750,000 Ar</span></td>
-                        <td class="text-center">5 boite</td>
+                        <td class="text-center">
+                          <table class="">
+                              <tr>
+                                <th class="text-center" scope="col">boite plaquette :</th>
+                                <th class="text-center" scope="col"><span class="fw-bold"> 50,000 Ar</span></th>
+                              </tr>
+                              <tr>
+                                <th class="text-center" scope="col">plaquette :</th>
+                                <th class="text-center" scope="col"><span class="fw-bold"> 8,000 Ar</span></th>
+                              </tr>
+                            </table>
+                        </td>
                         <td class="text-center">
                             <a href="<%= request.getContextPath() %>/pages/medicaments/liste_fournisseur_medicament.jsp"> 
                                 <button type="button" class="btn btn-info btn-sm">

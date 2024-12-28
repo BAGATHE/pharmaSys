@@ -255,6 +255,26 @@
                     </ul>
                   </div>
                 </li>
+                <li>
+                  <a data-bs-toggle="collapse" href="#prix">
+                    <span class="sub-item">Prix Medicament</span>
+                    <span class="caret"></span>
+                  </a>
+                  <div class="collapse" id="prix">
+                    <ul class="nav nav-collapse subnav">
+                      <li>
+                        <a href="<%= request.getContextPath() %>/prixMedicament/insert">
+                          <span class="sub-item">configuration</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="<%= request.getContextPath() %>/prixMedicament/list">
+                          <span class="sub-item">Liste</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
               </ul>
             </div>
           </li>

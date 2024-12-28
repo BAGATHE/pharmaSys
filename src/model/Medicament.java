@@ -5,11 +5,28 @@ public class Medicament {
     private String nom;
     private String description;
     private PrixMedicament[] prixMedicament;
-    private Traitement[] traitements;
-    private MedicamentLaboratoire[] medicamentLaboratoires;
 
     public Medicament(String idMedicament) {
         this.idMedicament = idMedicament;
+    }
+
+    public Medicament(String idMedicament, String nom, String description) {
+        this.idMedicament = idMedicament;
+        this.nom = nom;
+        this.description = description;
+    }
+
+    public Medicament(String nom, String description, PrixMedicament[] prixMedicament) {
+        this.nom = nom;
+        this.description = description;
+        this.prixMedicament = prixMedicament;
+    }
+
+    public Medicament(String idMedicament, String nom, String description, PrixMedicament[] prixMedicament) {
+        this.idMedicament = idMedicament;
+        this.nom = nom;
+        this.description = description;
+        this.prixMedicament = prixMedicament;
     }
 
     public String getIdMedicament() {
@@ -34,22 +51,6 @@ public class Medicament {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Traitement[] getTraitements() {
-        return traitements;
-    }
-
-    public void setTraitements(Traitement[] traitements) {
-        this.traitements = traitements;
-    }
-
-    public MedicamentLaboratoire[] getMedicamentLaboratoires() {
-        return medicamentLaboratoires;
-    }
-
-    public void setMedicamentLaboratoires(MedicamentLaboratoire[] medicamentLaboratoires) {
-        this.medicamentLaboratoires = medicamentLaboratoires;
     }
 
     public PrixMedicament[] getPrixMedicament() {
