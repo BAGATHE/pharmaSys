@@ -4,14 +4,17 @@ public class Unite {
 
     private String idUnite;
     private String nom;
+    private TypeUnite typeUnite;
 
-    public Unite(String nom) {
-        this.setNom(nom);
+    public Unite(String nom, TypeUnite typeUnite) {
+        this.nom = nom;
+        this.typeUnite = typeUnite;
     }
 
-    public Unite(String idUnite, String nom) {
-        this.setIdUnite(idUnite);
-        this.setNom(nom);
+    public Unite(String idUnite, String nom, TypeUnite typeUnite) {
+        this.idUnite = idUnite;
+        this.nom = nom;
+        this.typeUnite = typeUnite;
     }
 
     public String getIdUnite() {
@@ -28,6 +31,14 @@ public class Unite {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public TypeUnite getTypeUnite() {
+        return typeUnite;
+    }
+
+    public void setTypeUnite(TypeUnite typeUnite) {
+        this.typeUnite = typeUnite;
     }
 
 }

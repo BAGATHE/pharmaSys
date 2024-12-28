@@ -82,7 +82,7 @@ public class SymptomeListController extends HttpServlet {
             if (pageParam != null) {
                 page = Integer.parseInt(pageParam);
             }
-            if (pageSizeParam != null || pageSizeParam.equals("")) {
+            if (pageSizeParam != null) {
                 pageSize = Integer.parseInt(pageSizeParam);
             }
 

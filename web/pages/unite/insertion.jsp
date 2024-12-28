@@ -2,7 +2,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.TypeUnite"%>
 <%
+    TypeUnite[] type_unites = (TypeUnite[]) request.getAttribute("type_unites");
     String message = (String) request.getAttribute("message");
     if (message != null && !message.trim().isEmpty()) {
 %>
@@ -104,6 +106,23 @@
                                   placeholder="boite"
                                   required
                                 />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-6 offset-3">
+                              <div class="form-group">
+                                <label for="type_unite">Type</label>
+                                <select class="form-select" id="type_unite" name="type">
+                                  <option value="">Veuillez choisir le type</option>
+                                  <% 
+                                  if (type_unites != null) {
+                                    for (TypeUnite typeUnite : type_unites) { %>
+                                      <option value="<%= typeUnite.getIdTypeUnite() %>">
+                                        <%= typeUnite.getType() %>
+                                      </option>
+                                      <% } } %>
+                                </select>
                               </div>
                             </div>
                           </div>

@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.TypeUnite;
 import model.Unite;
 import repository.UniteRepository;
 
@@ -25,7 +26,7 @@ public class UniteUpdateController extends HttpServlet {
         try (Connection connection = Connexion.connect()) {
             String nom = request.getParameter("nom");
             String id_unite = request.getParameter("id_unite");
-            Unite unite = new Unite(id_unite, nom);
+            Unite unite = new Unite(id_unite, nom, new TypeUnite(""));
             int result = UniteRepository.update(connection, unite);
 
             String message = (result == 1) ? "Unité mise a jour avec succès" : "Unité non mise a jour";
@@ -35,6 +36,7 @@ public class UniteUpdateController extends HttpServlet {
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/unite/liste.jsp");
             dispatcher.forward(request, response);
+
         } catch (SQLException e) {
             out.print(e.getMessage());
             e.printStackTrace();

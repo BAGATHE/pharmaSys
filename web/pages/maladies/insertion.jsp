@@ -100,48 +100,7 @@
                                     </textarea>
                                 </div>
                             </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                                <div class="form-group">
-                                    <label for="">Symptomes</label>
-                                    <select id="symptomes" multiple placeholder="Select items...">
-                                        <option value="apple">symp 1</option>
-                                        <option value="banana">symp 2</option>
-                                        <option value="orange">symp 3</option>
-                                        <option value="grape">symp 4</option>
-                                        <option value="watermelon">symp 5</option>
-                                    </select>
-                                  </div>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                                <div class="form-group">
-                                    <label for="">traitement</label>
-                                    <select id="traitement" multiple placeholder="Select items...">
-                                        <option selected value="apple">traitement 1</option>
-                                        <option value="banana">traitement 2</option>
-                                        <option value="orange">traitement 3</option>
-                                        <option selected value="grape">traitement 4</option>
-                                        <option value="watermelon">traitement 5</option>
-                                    </select>
-                                  </div>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                                <div class="form-group">
-                                    <label for="">Efficacité</label>
-                                    <select id="efficacite" multiple placeholder="Select items...">
-                                        
-                                    </select>
-                                  </div>
-                            </div>
-                          </div>
+                          </div>                    
                     </div>
                   </div>
                 </div>
@@ -160,39 +119,5 @@
 
       </div>
 
-      <script>
-        // Initialiser TomSelect avec plusieurs options
-        new TomSelect('#symptomes', {
-          placeholder: 'Selection multipe symptôme',
-          plugins: ['remove_button'],   // Ajouter le bouton pour supprimer les tags
-          maxItems: null,                  // Limiter la sélection à 3 éléments maximum
-          create: false,                // Désactiver la création d'éléments personnalisés
-          searchField: 'text',          // Rechercher dans le texte des options
-        });
-        new TomSelect('#traitement', {
-          placeholder: 'Selection multiple traitement',
-          plugins: ['remove_button'],   // Ajouter le bouton pour supprimer les tags
-          maxItems: null,                  // Limiter la sélection à 3 éléments maximum
-          create: false,                // Désactiver la création d'éléments personnalisés
-          searchField: 'text',          // Rechercher dans le texte des options
-        });
-
-          // Créer dynamiquement les options pour le sélecteur de nombres de 1 à 100
-  const numberSelect = document.getElementById('efficacite');
-  for (let i = 1; i <= 100; i++) {
-    const option = document.createElement('option');
-    option.value = i;
-    option.textContent = i;
-    numberSelect.appendChild(option);
-  }
-
-  // Initialiser TomSelect pour le sélecteur de nombres
-  new TomSelect('#efficacite', {
-    placeholder: 'selectionne degre efficacite',
-    plugins: ['remove_button'],
-    create: false,
-    searchField: 'text',
-    dropdownDirection: 'up'
-  });
-      </script>
+    
 <%@ include file="../elements/footer.jsp" %>

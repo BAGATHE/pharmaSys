@@ -11,13 +11,13 @@ import model.Symptome;
 public class SymptomeRepository {
     public static Symptome[] getByNom(Connection conn, String nom, int startIndex, int pageSize) throws SQLException {
         List<Symptome> symptomes = new ArrayList<>();
-        String query = "SELECT * FROM symptomes WHERE nom ILIKE ? LIMIT ? OFFSET ?"; 
-        
+        String query = "SELECT * FROM symptomes WHERE nom LIKE ? LIMIT ? OFFSET ?";
+
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, "%" + nom + "%"); // Rechercher par nom (partie du nom avec wildcards)
             stmt.setInt(2, pageSize); // Limiter le nombre de résultats par page
-            stmt.setInt(3, startIndex);   // Décalage pour la pagination
-            
+            stmt.setInt(3, startIndex); // Décalage pour la pagination
+
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     symptomes.add(new Symptome(rs.getString("id_symptomes"), rs.getString("nom")));
@@ -26,7 +26,6 @@ public class SymptomeRepository {
         }
         return symptomes.toArray(new Symptome[0]);
     }
-    
 
     public static Symptome[] getAllPaginated(Connection conn, int startIndex, int pageSize) throws SQLException {
         List<Symptome> symptomes = new ArrayList<>();
@@ -42,7 +41,7 @@ public class SymptomeRepository {
         }
         return symptomes.toArray(new Symptome[0]);
     }
-    
+
     public static int getTotalCount(Connection conn) throws SQLException {
         String query = "SELECT COUNT(*) FROM symptomes";
         try (PreparedStatement stmt = conn.prepareStatement(query);
@@ -53,7 +52,7 @@ public class SymptomeRepository {
         }
         return 0;
     }
-    
+
     public static Symptome getById(Connection conn, String id) throws SQLException {
         String query = "SELECT * FROM symptomes WHERE id_symptomes = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
