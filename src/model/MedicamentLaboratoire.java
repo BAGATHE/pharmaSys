@@ -2,27 +2,11 @@ package model;
 
 public class MedicamentLaboratoire {
 
-    private String idMedicament;
-    private String idLaboratoire;
+    private Medicament medicament;
+    private Laboratoire laboratoire;
     private Unite unite;
     private double prixAchat;
     private int minimumAchat;
-
-    public String getIdMedicament() {
-        return idMedicament;
-    }
-
-    public void setIdMedicament(String idMedicament) {
-        this.idMedicament = idMedicament;
-    }
-
-    public String getIdLaboratoire() {
-        return idLaboratoire;
-    }
-
-    public void setIdLaboratoire(String idLaboratoire) {
-        this.idLaboratoire = idLaboratoire;
-    }
 
     public double getPrixAchat() {
         return prixAchat;
@@ -52,6 +36,22 @@ public class MedicamentLaboratoire {
 
     public void setUnite(Unite unite) {
         this.unite = unite;
+    }
+
+    public Laboratoire getLaboratoire() {
+        return laboratoire;
+    }
+
+    public void setLaboratoire(Laboratoire laboratoire) {
+        this.laboratoire = laboratoire;
+    }
+
+    public Medicament getMedicament() {
+        return medicament;
+    }
+
+    public void setMedicament(Medicament medicament) {
+        this.medicament = medicament;
     }
 
 }

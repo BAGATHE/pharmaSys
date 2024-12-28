@@ -1,1 +1,83 @@
 
+## 1. Couche Métier
+
+### MaladieRepository
+- **getAll(Connexion)** table: Maladie
+  - Fonction : Récupérer la liste basique des maladies
+  - Paramètres : Objet Connexion
+  - Retour : Tableau de Maladie[] (id, nom, description)
+
+- **getById(Connexion, idMaladie, )** table: Maladie
+  - Fonction : Récupérer une maladie avec ou sans détails
+  - Paramètres : 
+    - Objet Connexion
+    - String idMaladie
+
+- **update(Connexion, Maladie)**
+  - Fonction : Mettre à jour une maladie
+  - Paramètres : Objet Connexion, Objet Maladie(String idMaladie, String nom, String description)
+
+- **delete(Connexion, idMaladie)**
+  - Fonction : Supprimer une maladie
+  - Paramètres : Objet Connexion, String idMaladie
+  - Suppression en cascade : maladieSymptome → traitement → maladie
+
+
+### MaladieSymptomeRepository
+- **save(Connexion, MaladieSymptome)** table:maladie_symptome
+  - Fonction : Sauvegarder un nouveau MaladieSymptome pour une maladie
+  - Paramètres : Objet Connexion, Objet MaladieSymptome
+
+- **delete(Connexion, MaladieSymptome)** table:maladie_symptome
+  - Fonction : Supprimer un Maladiesymptome spécifique
+  - Paramètres : Objet Connexion, Objet MaladieSymptome
+
+- **getSymptomeByIdMaladie(Connexion, idMaladie)** table:  jointure maladie et symptome
+  - Fonction : Récupérer tous les symptômes d'une maladie
+  - Paramètres : Objet Connexion, String idMaladie
+  - Retour : Tableau de Symptomes[]
+
+### TraitementRepository
+- **save(Connexion, Traitement)** table: traitement
+  - Fonction : Sauvegarder un nouveau traitement
+  - Paramètres : Objet Connexion, Objet Traitement
+
+- **delete(Connexion, Traitement)** table: traitement
+  - Fonction : Supprimer un traitement
+  - Paramètres : Objet Connexion, Objet Traitement
+  
+
+- **getTraitementByIdMaladie(Connexion, idMaladie)** table: traitement
+  - Fonction : Récupérer tous les traitements d'une maladie
+  - Paramètres : Objet Connexion, String idMaladie
+  - Retour : Tableau de Traitement[]
+
+
+
+## 2. Interface Utilisateur
+
+### liste.jsp
+- Affichage de la liste des maladies
+  - Utilise : maladieRepository.getAll()
+- Actions disponibles :
+  1. Consulter
+     - Redirection vers controller
+     - Appel getById(Connexion, idMaladie)
+     - Redirection vers symptome_traitement_liste.jsp
+  2. Modifier
+     - Redirection vers controller
+     - Appel getById(Connexion, idMaladie)
+  3. Supprimer
+     - Suppression en cascade : maladieSymptome → traitement → maladie
+
+### symptome_traitement_liste.jsp
+- Affichage détaillé d'une maladie avec symptômes et traitements
+- Actions disponibles :
+  1. Ajouter
+     - Redirection vers ajout_symptomes.jsp ou ajout_traitement.jsp
+     - Utilise save() des repositories respectifs
+  2. Supprimer
+     - Pour symptômes : delete(Connexion, MaladieSymptome)
+     - Pour traitements : delete(Connexion, Traitement)
+
+

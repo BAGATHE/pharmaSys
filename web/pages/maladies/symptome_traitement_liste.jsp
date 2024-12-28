@@ -80,7 +80,7 @@
           <div class="row mb-3">
             <div class="col-6 offset-3">
                 <ul class="list-group">
-                    <li class="list-group-item">medicament : </li>
+                    <li class="list-group-item">Maladie : </li>
                     <li class="list-group-item">description : </li>
                   </ul>
             </div>
