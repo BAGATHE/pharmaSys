@@ -52,7 +52,7 @@
     <div class="container">
         <div class="page-inner">
           <div class="page-header">
-            <h3 class="fw-bold mb-3">Laboratoires</h3>
+            <h3 class="fw-bold mb-3">Maladies</h3>
             <ul class="breadcrumbs mb-3">
               <li class="nav-home">
                 <a href="#">
@@ -70,7 +70,7 @@
            <!--bouton retour-->
            <div class="row">
             <div class="col-3">
-                <a href="<%= request.getContextPath() %>/pages/laboratoires/detail_laboratoire.jsp">
+                <a href="<%= request.getContextPath() %>/pages/maladies/symptome_traitement_liste.jsp">
                     <button type="button" class="btn btn-outline-primary">
                         <i class="fas fa-arrow-left" style="font-size: 1.5em;"></i> Retour
                     </button>
@@ -82,55 +82,45 @@
             <div class="offset-2 col-8">
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
-                  <div class="card-title"><h2 class="text-center" style="color: white;">Insertion Médicament Laboratoire</h2></div>
+                  <div class="card-title"><h2 class="text-center" style="color: white;">Insertion Traitement</h2></div>
                 </div>
+                <!--Debut formulaire-->
+                <form action="" method="post">
                 <div class="card-body">
                   <div class="row">
                     <div class="offset-1 col-10">
 
                         <div class="row">
                             <div class="col-10 offset-1">
+                              <div class="form-group">
+                                <label for="nom">maladie</label>
+                                <input type="text" class="form-control" value="maladie" readonly/>
+                                <input type="hidden"  value="id_maladie" name="maladie"/>
+                              </div>
+                            </div>
+                          </div> 
+
+                          <div class="row">
+                            <div class="col-10 offset-1">
                                 <div class="form-group">
-                                    <label for="medicament">Selectionné médicament</label>
-                                    <select
-                                      class="form-select form-control-sm"
-                                      id="medicament"
-                                    >
-                                      <option>1</option>
-                                      <option>2</option>
-                                      <option>3</option>
-                                      <option>4</option>
-                                      <option>5</option>
+                                    <label for="">Medicament</label>
+                                    <select id="traitement" multiple placeholder="Select items...">
+                                        <option value="apple">Medicament 1</option>
+                                        <option value="banana">Medicament 2</option>
+                                        <option value="orange">Medicament 3</option>
                                     </select>
                                   </div>
                             </div>
                           </div>
+
                           <div class="row">
                             <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="prixAchat">Prix Boite</label>
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  min="0"
-                                  required
-                                  name="minimum_achat"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="minimumAchat">Minimum Achat</label>
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  min="0"
-                                  required
-                                  name="minimum_achat"
-                                />
-                              </div>
+                                <div class="form-group">
+                                    <label for="">Efficacité</label>
+                                    <select id="efficacite" multiple placeholder="Select items...">
+                                        
+                                    </select>
+                                  </div>
                             </div>
                           </div>
                     </div>
@@ -139,6 +129,8 @@
                 <div class="card-action">
                   <button class="btn btn-success">Valider</button>
                 </div>
+              </form>
+               <!--fin formulaire-->
               </div>
             </div>
           </div>
@@ -149,5 +141,32 @@
 
       </div>
 
-     
+      <script>
+      
+        new TomSelect('#traitement', {
+          placeholder: 'Selection multiple traitement',
+          plugins: ['remove_button'],   // Ajouter le bouton pour supprimer les tags
+          maxItems: null,                  // Limiter la sélection à 3 éléments maximum
+          create: false,                // Désactiver la création d'éléments personnalisés
+          searchField: 'text',          // Rechercher dans le texte des options
+        });
+
+          // Créer dynamiquement les options pour le sélecteur de nombres de 1 à 100
+  const numberSelect = document.getElementById('efficacite');
+  for (let i = 1; i <= 100; i++) {
+    const option = document.createElement('option');
+    option.value = i;
+    option.textContent = i;
+    numberSelect.appendChild(option);
+  }
+
+  // Initialiser TomSelect pour le sélecteur de nombres
+  new TomSelect('#efficacite', {
+    placeholder: 'selectionne degre efficacite',
+    plugins: ['remove_button'],
+    create: false,
+    searchField: 'text',
+    dropdownDirection: 'up'
+  });
+      </script>
 <%@ include file="../elements/footer.jsp" %>

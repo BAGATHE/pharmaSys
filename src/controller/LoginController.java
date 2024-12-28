@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -42,7 +43,7 @@ public class LoginController extends HttpServlet {
                 request.setAttribute("login_erreur", "verifiez bien vos information de connection");
             }
 
-            jakarta.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
             dispatcher.forward(request, response);
 
         } catch (Exception e) {

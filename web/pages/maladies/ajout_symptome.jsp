@@ -52,7 +52,7 @@
     <div class="container">
         <div class="page-inner">
           <div class="page-header">
-            <h3 class="fw-bold mb-3">Laboratoires</h3>
+            <h3 class="fw-bold mb-3">Maladies</h3>
             <ul class="breadcrumbs mb-3">
               <li class="nav-home">
                 <a href="#">
@@ -63,74 +63,54 @@
                 <i class="icon-arrow-right"></i>
               </li>
               <li class="nav-item">
-                <a href="#">Formulaire insertion</a>
+                <a href="#">Symptomes</a>
               </li>
             </ul>
           </div>
-           <!--bouton retour-->
-           <div class="row">
-            <div class="col-3">
-                <a href="<%= request.getContextPath() %>/pages/laboratoires/detail_laboratoire.jsp">
-                    <button type="button" class="btn btn-outline-primary">
-                        <i class="fas fa-arrow-left" style="font-size: 1.5em;"></i> Retour
-                    </button>
-                </a>
-            </div>
-          </div>
-          <!--bouton retour-->
+            <!--bouton retour-->
+            <div class="row">
+                <div class="col-3">
+                    <a href="<%= request.getContextPath() %>/pages/maladies/symptome_traitement_liste.jsp">
+                        <button type="button" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left" style="font-size: 1.5em;"></i> Retour
+                        </button>
+                    </a>
+                </div>
+              </div>
+              <!--bouton retour-->
           <div class="row">
             <div class="offset-2 col-8">
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
-                  <div class="card-title"><h2 class="text-center" style="color: white;">Insertion Médicament Laboratoire</h2></div>
+                  <div class="card-title"><h2 class="text-center" style="color: white;">ajout de symptomes</h2></div>
                 </div>
+                <!--Debut formulaire-->
+                <form action="" method="post">
                 <div class="card-body">
                   <div class="row">
                     <div class="offset-1 col-10">
 
                         <div class="row">
                             <div class="col-10 offset-1">
+                              <div class="form-group">
+                                <label for="nom">maladie</label>
+                                <input type="text" class="form-control" value="fievre" readonly/>
+                                <input type="hidden"  value="id_maladie" name="maladie"/>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-10 offset-1">
                                 <div class="form-group">
-                                    <label for="medicament">Selectionné médicament</label>
-                                    <select
-                                      class="form-select form-control-sm"
-                                      id="medicament"
-                                    >
-                                      <option>1</option>
-                                      <option>2</option>
-                                      <option>3</option>
-                                      <option>4</option>
-                                      <option>5</option>
+                                    <label for="">Symptomes</label>
+                                    <select id="symptomes" multiple placeholder="Select items...">
+                                        <option value="apple">symp 1</option>
+                                        <option value="banana">symp 2</option>
+                                        <option value="orange">symp 3</option>
+                                        <option value="grape">symp 4</option>
+                                        <option value="watermelon">symp 5</option>
                                     </select>
                                   </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="prixAchat">Prix Boite</label>
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  min="0"
-                                  required
-                                  name="minimum_achat"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="minimumAchat">Minimum Achat</label>
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  min="0"
-                                  required
-                                  name="minimum_achat"
-                                />
-                              </div>
                             </div>
                           </div>
                     </div>
@@ -139,15 +119,22 @@
                 <div class="card-action">
                   <button class="btn btn-success">Valider</button>
                 </div>
+              </form>
+               <!--fin formulaire-->
               </div>
             </div>
           </div>
         </div>
-
-       
-
-
       </div>
 
-     
+      <script>
+        // Initialiser TomSelect avec plusieurs options
+        new TomSelect('#symptomes', {
+          placeholder: 'Selection multipe symptôme',
+          plugins: ['remove_button'],   // Ajouter le bouton pour supprimer les tags
+          maxItems: null,                  // Limiter la sélection à 3 éléments maximum
+          create: false,                // Désactiver la création d'éléments personnalisés
+          searchField: 'text',          // Rechercher dans le texte des options
+        });
+      </script>
 <%@ include file="../elements/footer.jsp" %>

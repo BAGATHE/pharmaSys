@@ -118,11 +118,11 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">medicament</th>
-                        <th scope="col">description</th>
-                        <th scope="col">quantité par boite</th>
-                        <th scope="col">Prix Achat Boite</th>
-                        <th scope="col">action</th>
+                        <th class="text-center" scope="col">medicament</th>
+                        <th class="text-center" scope="col">description</th>
+                        <th class="text-center" scope="col">quantité par boite</th>
+                        <th class="text-center" scope="col">Prix Achat Boite</th>
+                        <th class="text-center" scope="col">action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -133,10 +133,18 @@
                         <td class="text-center"> 3 plaquette </td>
 
                         <td class="text-center">
-                            <span class="fw-bold">750,000 Ar</span>
-                            <a href="<%= request.getContextPath() %>/pages/laboratoires/update_prix.jsp" class="btn btn-warning btn-sm ms-3 d-inline-flex align-items-center">
+                          <table class="table table-bordered ">
+                            <th><span class="fw-bold">750,000 Ar</span></th>
+                            <th> <span class="fw-bold">Minimum Achat : 5 </span></th>
+                            <th>
+                              <a href="<%= request.getContextPath() %>/pages/laboratoires/update_medicament_labo.jsp" class="btn btn-warning btn-sm ms-3 d-inline-flex align-items-center">
                                 <i class="fas fa-edit me-2"></i> Modifier
-                            </a>
+                              </a>
+                            </th>
+                          </table>
+                            
+                           
+                            
                         </td>
                         
                      

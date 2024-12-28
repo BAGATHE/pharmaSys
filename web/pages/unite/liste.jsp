@@ -106,6 +106,7 @@
                       <tr>
                         <th scope="col">#</th>
                         <th class="text-center" scope="col">Unité</th>
+                        <th class="text-center" scope="col">Type</th>
                         <th class="text-center" scope="col">Action</th>
                       </tr>
                     </thead>
@@ -117,6 +118,7 @@
                           <tr>
                               <td class="text-center"><%= unite.getIdUnite() %></td>
                               <td class="text-center"><%= unite.getNom() %></td>
+                              <td class="text-center"><%= unite.getTypeUnite().getType() %></td>
                               <td class="text-center">
                                   <a href="<%= request.getContextPath() %>/unite/update?id_unite=<%= unite.getIdUnite() %>" class="btn btn-warning btn-sm">
                                       <i class="fas fa-edit"></i> Modifier

@@ -103,7 +103,21 @@
                               <div class="form-group">
                                 <label for="prixAchat">Prix Boite</label>
                                 <input
-                                  type="nulber"
+                                  type="number"
+                                  class="form-control"
+                                  min="0"
+                                  required
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-10 offset-1">
+                              <div class="form-group">
+                                <label for="minimuAchat">Minimum ahat</label>
+                                <input
+                                  type="number"
                                   class="form-control"
                                   min="0"
                                   required

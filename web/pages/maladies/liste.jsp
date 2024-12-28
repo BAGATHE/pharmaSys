@@ -102,50 +102,25 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">maladie</th>
-                        <th scope="col">description</th>
-                        <th scope="col">symptomes</th>
-                        <th scope="col">traitement</th>
-                        <th scope="col">action</th>
+                        <th class="text-center" scope="col">maladie</th>
+                        <th class="text-center" scope="col">description</th>
+                        <th class="text-center" scope="col">symptomes & traitement</th>
+                        <th class="text-center" scope="col">action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         <td>1</td>
-                        <td>maux de tete</td>
-                        <td>description</td>
-                        <td>
-                          <ul class="list-group">
-                            <li class="list-group-item">Douleur intense</li>
-                            <li class="list-group-item">Nausée</li>
-                            <li class="list-group-item">Sensibilité à la lumière</li>
-                          </ul>
+                        <td class="text-center">maux de tete</td>
+                        <td class="text-center">description</td>
+                        <td class="text-center">
+                          <a href="<%= request.getContextPath() %>/pages/maladies/symptome_traitement_liste.jsp"> 
+                            <button type="button" class="btn btn-info btn-sm">
+                                <i class="fas fa-eye"></i> Consulter
+                            </button>
+                        </a>
                         </td>
-                        <td>
-                            <table class="table table-bordered">
-                                <thead>
-                                  <tr>
-                                    <th scope="col">Médicament</th>
-                                    <th scope="col">Efficacité</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>Paracétamol</td>
-                                    <td>80%</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Ibuprofène</td>
-                                    <td>75%</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Aspirine</td>
-                                    <td>70%</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                        </td>
-                        <td>
+                        <td class="text-center">
                           <a href="<%= request.getContextPath() %>/pages/maladies/update.jsp">
                             <button type="button" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i> 

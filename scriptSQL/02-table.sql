@@ -11,16 +11,21 @@ CREATE TABLE medicaments (
    id_medicament VARCHAR(50) DEFAULT CONCAT('MED_', nextval('seq_medicaments')),
    nom VARCHAR(50) NOT NULL,
    description VARCHAR(250),
-   quantite_par_boite INTEGER CHECK(quantite_par_boite >= 0),
-   prix_vente_boite NUMERIC(15,2) NOT NULL CHECK(prix_vente_boite >= 0),
-   seuil_min_boite_en_stock INTEGER NOT NULL CHECK(seuil_min_boite_en_stock >= 0),
    PRIMARY KEY(id_medicament)
 );
 
+CREATE TABLE type_unite(
+   id_type_unite VARCHAR(50) DEFAULT CONCAT('TYP_',nextval('seq_type_unites')),
+   type VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(id_type_unite)
+);
+
 CREATE TABLE unites(
-   id_unite VARCHAR(50) DEFAULT CONCAT('UNI', nextval('seq_unites')) ,
+   id_unite VARCHAR(50) DEFAULT CONCAT('UNI_', nextval('seq_unites')) ,
    nom VARCHAR(50)  NOT NULL,
-   PRIMARY KEY(id_unite)
+   id_type_unite VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(id_unite),
+   FOREIGN KEY(id_type_unite) REFERENCES type_unite(id_type_unite)
 );
 
 CREATE TABLE laboratoires (
@@ -40,14 +45,13 @@ CREATE TABLE symptomes (
 CREATE TABLE mouvement_stock (
    id_mvt VARCHAR(50) DEFAULT CONCAT('MVT_', nextval('seq_mouvement_stock')),
    date_mouvement DATE,
-   total NUMERIC(15,2) NOT NULL CHECK(total >= 0),
    PRIMARY KEY(id_mvt)
 );
 
 CREATE TABLE mouvement_stock_details (
    id_mvt_stock_detail VARCHAR(50) DEFAULT CONCAT('MSD_', nextval('seq_mouvement_stock_details')),
-   entree INTEGER CHECK(entree >= 0),
-   sortie INTEGER CHECK(sortie >= 0),
+   entree NUMERIC(7,2) CHECK(entree >= 0),
+   sortie NUMERIC(7,2) CHECK(sortie >= 0),
    prix_unitaire NUMERIC(15,2) CHECK(prix_unitaire >= 0),
    id_medicament VARCHAR(50) NOT NULL,
    id_unite VARCHAR(50)  NOT NULL,
@@ -132,11 +136,50 @@ CREATE TABLE maladies_symptomes(
 CREATE TABLE medicament_laboratoire(
    id_medicament VARCHAR(50) ,
    id_laboratoire VARCHAR(50) ,
+   id_unite VARCHAR(50) ,
    prix_achat NUMERIC(15,2)  NOT NULL CHECK(prix_achat >= 0),
    minimum_achat INTEGER NOT NULL CHECK(minimum_achat >= 0),
-   PRIMARY KEY(id_medicament, id_laboratoire),
+   PRIMARY KEY(id_medicament, id_laboratoire , id_unite),
    FOREIGN KEY(id_medicament) REFERENCES medicaments(id_medicament),
-   FOREIGN KEY(id_laboratoire) REFERENCES laboratoires(id_laboratoire)
+   FOREIGN KEY(id_laboratoire) REFERENCES laboratoires(id_laboratoire),
+   FOREIGN KEY(id_unite) REFERENCES unites(id_unite)
+);
+
+CREATE TABLE stock_medicaments(
+   id_stock_medicament VARCHAR(50)  DEFAULT CONCAT('STM_', nextval('seq_stock_medicament'))  ,
+   date_peremption DATE NOT NULL,
+   quantite_boite NUMERIC(10,2)   NOT NULL,
+   id_unite VARCHAR(50)  NOT NULL,
+   id_laboratoire VARCHAR(50)  NOT NULL,
+   id_medicament VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(id_stock_medicament),
+   FOREIGN KEY(id_unite) REFERENCES unites(id_unite),
+   FOREIGN KEY(id_laboratoire) REFERENCES laboratoires(id_laboratoire),
+   FOREIGN KEY(id_medicament) REFERENCES medicaments(id_medicament)
+);
+
+
+CREATE TABLE prix_medicaments(
+   id_prix_medicament VARCHAR(50)  DEFAULT CONCAT('PRM_', nextval('seq_prix_medicament')) ,
+   prix_vente_unitaire NUMERIC(15,2)  ,
+   id_unite VARCHAR(50)  NOT NULL,
+   id_medicament VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(id_prix_medicament),
+   FOREIGN KEY(id_unite) REFERENCES unites(id_unite),
+   FOREIGN KEY(id_medicament) REFERENCES medicaments(id_medicament)
+);
+
+
+CREATE TABLE conversion(
+   id_conversion VARCHAR(50)  DEFAULT CONCAT('CON_', nextval('seq_conversion')) ,
+   quantite NUMERIC(10,2)   NOT NULL,
+   id_medicament VARCHAR(50)  NOT NULL,
+   id_unite VARCHAR(50)  NOT NULL,
+   id_unite_1 VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(id_conversion),
+   FOREIGN KEY(id_medicament) REFERENCES medicaments(id_medicament),
+   FOREIGN KEY(id_unite) REFERENCES unites(id_unite),
+   FOREIGN KEY(id_unite_1) REFERENCES unites(id_unite)
 );
 
 CREATE TABLE utilisateurs(

@@ -101,46 +101,6 @@
                                 </div>
                             </div>
                           </div>
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="qtt">quantité par boite</label>
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  min="0"
-                                  required
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="vente">Prix vente Boite</label>
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  min="0"
-                                  required
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="seuil">seuil minimum en stock</label>
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  min="0"
-                                  required
-                                />
-                              </div>
-                            </div>
-                          </div>
-                         
                     </div>
                   </div>
                 </div>
