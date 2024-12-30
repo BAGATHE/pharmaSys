@@ -6,6 +6,10 @@ public class Laboratoire {
     private String contact;
     private String adresse;
 
+    public Laboratoire(String idLaboratoire) {
+        this.idLaboratoire = idLaboratoire;
+    }
+
     public Laboratoire(String nom, String contact, String adresse) {
         this.nom = nom;
         this.contact = contact;

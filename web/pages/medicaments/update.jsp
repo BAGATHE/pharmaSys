@@ -2,6 +2,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.Medicament" %>
+<%
+Medicament medicament = (Medicament)request.getAttribute("medicament");
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -71,9 +75,10 @@
             <div class="offset-2 col-8">
               <!--debut form-->
               <form action="" method="post">
+                <input type="hidden" name="id_medicament" value="<%=medicament.getIdMedicament() %>" />
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
-                    <a href="<%= request.getContextPath() %>/pages/medicaments/liste.jsp"><button type="button"  class="btn btn-info">retour</button></a>
+                    <a href="<%= request.getContextPath() %>/medicament/list"><button type="button"  class="btn btn-info">retour</button></a>
                   <div class="card-title"><h2 class="text-center" style="color: white;">mise a jour information  Médicament</h2></div>
                 </div>
                 <div class="card-body">
@@ -87,8 +92,9 @@
                                 <input
                                   type="text"
                                   class="form-control"
-                                  placeholder="nom"
+                                  name="nom"
                                   required
+                                  value="<%=medicament.getNom()  %>"
                                 />
                               </div>
                             </div>
@@ -97,51 +103,12 @@
                             <div class="col-10 offset-1">
                                 <div class="form-group">
                                     <label for="description">Desription</label>
-                                    <textarea class="form-control"  rows="5">
+                                    <textarea class="form-control" rows="5" name="description">
+                                      <%=medicament.getDescription()%>
                                     </textarea>
                                 </div>
                             </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="qtt">quantité par boite</label>
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  min="0"
-                                  required
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="vente">Prix vente Boite</label>
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  min="0"
-                                  required
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="seuil">seuil minimum en stock</label>
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  min="0"
-                                  required
-                                />
-                              </div>
-                            </div>
-                          </div>
-                         
+                          </div>         
                     </div>
                   </div>
                 </div>

@@ -2,6 +2,35 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.Unite"%>
+<%@page import="model.Medicament"%>
+<%
+ 
+    Unite[] unites = (Unite[]) request.getAttribute("unites");
+    Medicament[] medicaments = (Medicament[]) request.getAttribute("medicaments");
+    String message = (String) request.getAttribute("message");
+    String error = (String) request.getAttribute("error");
+    String id_laboratoire = (String)request.getAttribute("id_laboratoire");
+
+    if (message != null && !message.trim().isEmpty()) {
+%>
+    <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script>
+        swal({ title: "Notification", text: "<%= message %>", icon: "success", button: "OK" });
+    </script>
+<%
+        request.setAttribute("message", "");
+    }
+    if (error != null && !error.trim().isEmpty()) {
+%>
+    <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script>
+        swal({ title: "Erreur", text: "<%= error %>", icon: "error", button: "OK" });
+    </script>
+<%
+        request.setAttribute("error", "");
+    }
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -70,7 +99,7 @@
            <!--bouton retour-->
            <div class="row">
             <div class="col-3">
-                <a href="<%= request.getContextPath() %>/pages/laboratoires/detail_laboratoire.jsp">
+                <a href="<%= request.getContextPath() %>/laboratoire-medicament/list?id_laboratoire=<%=id_laboratoire %>">
                     <button type="button" class="btn btn-outline-primary">
                         <i class="fas fa-arrow-left" style="font-size: 1.5em;"></i> Retour
                     </button>
@@ -80,41 +109,62 @@
           <!--bouton retour-->
           <div class="row">
             <div class="offset-2 col-8">
+              <form action="" method="post">
+                <input type="hidden" name="id_laboratoire" value=" <%=id_laboratoire%>">
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
                   <div class="card-title"><h2 class="text-center" style="color: white;">Insertion Médicament Laboratoire</h2></div>
                 </div>
                 <div class="card-body">
                   <div class="row">
-                    <div class="offset-1 col-10">
+                    <div class="offset-2 col-8">
 
-                        <div class="row">
+                      <div class="row">
+                        <div class="col-10 offset-1">
+                            <div class="form-group">
+                                <label for="medicament">Médicament</label>
+                                <select class="form-select" id="medicament" name="medicament">
+                                    <option value="">Veuillez choisir un Médicament</option>
+                                    <% 
+                                    if (medicaments != null) {
+                                        for (Medicament medicament : medicaments) { 
+                                    %>
+                                    <option value="<%= medicament.getIdMedicament() %>">
+                                        <%= medicament.getNom() %>
+                                    </option>
+                                    <% } } %>
+                                </select>
+                            </div>
+                        </div>
+                      </div>
+                          <div class="row">
                             <div class="col-10 offset-1">
                                 <div class="form-group">
-                                    <label for="medicament">Selectionné médicament</label>
-                                    <select
-                                      class="form-select form-control-sm"
-                                      id="medicament"
-                                    >
-                                      <option>1</option>
-                                      <option>2</option>
-                                      <option>3</option>
-                                      <option>4</option>
-                                      <option>5</option>
+                                    <label for="unite">Unité</label>
+                                    <select class="form-select" id="unite" name="unite">
+                                        <option value="">Veuillez choisir une Unité</option>
+                                        <% 
+                                        if (unites != null) {
+                                            for (Unite unite : unites) { 
+                                        %>
+                                        <option value="<%= unite.getIdUnite() %>">
+                                            <%= unite.getNom() %>
+                                        </option>
+                                        <% } } %>
                                     </select>
-                                  </div>
+                                </div>
                             </div>
                           </div>
                           <div class="row">
                             <div class="col-10 offset-1">
                               <div class="form-group">
-                                <label for="prixAchat">Prix Boite</label>
+                                <label for="prixAchat">Prix</label>
                                 <input
                                   type="number"
                                   class="form-control"
                                   min="0"
                                   required
-                                  name="minimum_achat"
+                                  name="prix"
                                 />
                               </div>
                             </div>
@@ -137,9 +187,10 @@
                   </div>
                 </div>
                 <div class="card-action">
-                  <button class="btn btn-success">Valider</button>
+                  <button class="btn btn-success" type="submit">Valider</button>
                 </div>
               </div>
+              </form>
             </div>
           </div>
         </div>

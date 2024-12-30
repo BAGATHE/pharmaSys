@@ -101,12 +101,12 @@
             <div class="collapse" id="medicamentSider">
               <ul class="nav nav-collapse">
                 <li>
-                  <a class="nav-link" href="<%= request.getContextPath() %>/pages/medicaments/insertion.jsp">
+                  <a class="nav-link" href="<%= request.getContextPath() %>/medicament/insert">
                     <span class="sub-item">Insertion</span>
                   </a>
                 </li>
                 <li>
-                  <a href="<%= request.getContextPath() %>/pages/medicaments/liste.jsp">
+                  <a href="<%= request.getContextPath() %>/medicament/list">
                     <span class="sub-item">Liste</span>
                   </a>
                 </li>
@@ -125,12 +125,12 @@
             <div class="collapse" id="labSider">
               <ul class="nav nav-collapse">
                 <li>
-                  <a class="nav-link" href="<%= request.getContextPath() %>/pages/laboratoires/insertion.jsp">
+                  <a class="nav-link" href="<%= request.getContextPath() %>/laboratoire/insert">
                     <span class="sub-item">Insertion</span>
                   </a>
                 </li>
                 <li>
-                  <a href="<%= request.getContextPath() %>/pages/laboratoires/liste.jsp">
+                  <a href="<%= request.getContextPath() %>/laboratoire/list">
                     <span class="sub-item">Liste</span>
                   </a>
                 </li>
@@ -249,26 +249,6 @@
                       </li>
                       <li>
                         <a href="<%= request.getContextPath() %>/unite/list">
-                          <span class="sub-item">Liste</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-                <li>
-                  <a data-bs-toggle="collapse" href="#prix">
-                    <span class="sub-item">Prix Medicament</span>
-                    <span class="caret"></span>
-                  </a>
-                  <div class="collapse" id="prix">
-                    <ul class="nav nav-collapse subnav">
-                      <li>
-                        <a href="<%= request.getContextPath() %>/prixMedicament/insert">
-                          <span class="sub-item">configuration</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="<%= request.getContextPath() %>/prixMedicament/list">
                           <span class="sub-item">Liste</span>
                         </a>
                       </li>

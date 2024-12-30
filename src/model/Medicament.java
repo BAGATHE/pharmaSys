@@ -10,6 +10,11 @@ public class Medicament {
         this.idMedicament = idMedicament;
     }
 
+    public Medicament(String nom, String description) {
+        this.nom = nom;
+        this.description = description;
+    }
+
     public Medicament(String idMedicament, String nom, String description) {
         this.idMedicament = idMedicament;
         this.nom = nom;

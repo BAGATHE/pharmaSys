@@ -14,19 +14,16 @@ CREATE TABLE medicaments (
    PRIMARY KEY(id_medicament)
 );
 
-CREATE TABLE type_unite(
-   id_type_unite VARCHAR(50) DEFAULT CONCAT('TYP_',nextval('seq_type_unites')),
-   type VARCHAR(50)  NOT NULL,
-   PRIMARY KEY(id_type_unite)
-);
+
 
 CREATE TABLE unites(
-   id_unite VARCHAR(50) DEFAULT CONCAT('UNI_', nextval('seq_unites')) ,
+   id_unite VARCHAR(50)  DEFAULT CONCAT('UNI_', nextval('seq_unites')) ,
    nom VARCHAR(50)  NOT NULL,
-   id_type_unite VARCHAR(50)  NOT NULL,
+   id_unite_mere VARCHAR(50) ,
    PRIMARY KEY(id_unite),
-   FOREIGN KEY(id_type_unite) REFERENCES type_unite(id_type_unite)
+   FOREIGN KEY(id_unite_mere) REFERENCES unites(id_unite)
 );
+
 
 CREATE TABLE laboratoires (
    id_laboratoire VARCHAR(50) DEFAULT CONCAT('LAB_', nextval('seq_laboratoires')),
@@ -171,16 +168,15 @@ CREATE TABLE prix_medicaments(
 
 
 CREATE TABLE conversion(
-   id_conversion VARCHAR(50)  DEFAULT CONCAT('CON_', nextval('seq_conversion')) ,
-   quantite NUMERIC(10,2)   NOT NULL,
-   id_medicament VARCHAR(50)  NOT NULL,
-   id_unite VARCHAR(50)  NOT NULL,
-   id_unite_1 VARCHAR(50)  NOT NULL,
-   PRIMARY KEY(id_conversion),
+   id_medicament VARCHAR(50),
+   id_unite_mere VARCHAR(50),
+   quantite INTEGER,
+   PRIMARY KEY(id_medicament, id_unite_mere),
    FOREIGN KEY(id_medicament) REFERENCES medicaments(id_medicament),
-   FOREIGN KEY(id_unite) REFERENCES unites(id_unite),
-   FOREIGN KEY(id_unite_1) REFERENCES unites(id_unite)
+   FOREIGN KEY(id_unite_mere) REFERENCES unites(id_unite)
 );
+
+
 
 CREATE TABLE utilisateurs(
    id_utilisateur VARCHAR(50)   DEFAULT CONCAT('UTI_', nextval('seq_utilisateurs')),

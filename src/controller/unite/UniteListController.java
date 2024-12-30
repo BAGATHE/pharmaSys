@@ -22,8 +22,7 @@ public class UniteListController extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try (Connection connection = Connexion.connect()) {
-
-            request.setAttribute("unites", UniteRepository.getAll(connection));
+            request.setAttribute("unites", UniteRepository.getAllWithParents(connection));
             RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/unite/liste.jsp");
             dispatcher.forward(request, response);
         } catch (SQLException e) {

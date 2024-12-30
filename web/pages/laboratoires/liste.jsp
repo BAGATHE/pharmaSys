@@ -1,6 +1,21 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.Laboratoire"%>
+
+<%
+    Laboratoire[] laboratoires = (Laboratoire[]) request.getAttribute("laboratoires");
+    String message = (String) request.getAttribute("message");
+    if (message != null && !message.trim().isEmpty()) {
+%>
+    <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script>
+        swal({ title: "Notification",text: "<%= message %>",icon: "info", button: "OK"});
+    </script>
+<%
+        request.setAttribute("message", "");
+    }
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -88,56 +103,64 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">laboratoire</th>
-                        <th scope="col">contact</th>
-                        <th scope="col">adresse</th>
-                        <th scope="col">Medicament proposée</th>
-                        <th scope="col">action</th>
+                        <th class="text-center" scope="col">laboratoire</th>
+                        <th  class="text-center" scope="col">contact</th>
+                        <th  class="text-center" scope="col">adresse</th>
+                        <th  class="text-center" scope="col">Medicament proposée</th>
+                        <th  class="text-center" scope="col">action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>DrugMade</td>
-                        <td>drug@gmailcom/td>
-                        <td>Soanierana </td>
-
-                        <td>
-                            <a href="<%= request.getContextPath() %>/pages/laboratoires/detail_laboratoire.jsp"> 
-                                <button type="button" class="btn btn-info btn-sm">
-                                    <i class="fas fa-eye"></i> Consulter
+                      <%
+                      if(laboratoires!=null || laboratoires.length > 0){
+                        for(Laboratoire laboratoire : laboratoires){ %>
+                          <tr>
+                            <td class="text-center"><%=laboratoire.getIdLaboratoire() %></td>
+                            <td class="text-center"><%=laboratoire.getNom() %></td>
+                            <td class="text-center"><%=laboratoire.getContact() %></td> 
+                            <td class="text-center"><%=laboratoire.getAdresse() %></td>     
+                            <td>
+                                <a href="<%= request.getContextPath() %>/laboratoire-medicament/list?id_laboratoire=<%=laboratoire.getIdLaboratoire() %>"> 
+                                    <button type="button" class="btn btn-info btn-sm">
+                                        <i class="fas fa-eye"></i> Consulter
+                                    </button>
+                                </a>
+                            </td>
+                         
+                            <td>
+                                <a href="<%= request.getContextPath() %>/laboratoire/update">
+                                <button type="button" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i> Modifier
                                 </button>
-                            </a>
-                        </td>
-                     
-                        <td>
-                            <a href="<%= request.getContextPath() %>/pages/laboratoires/update.jsp">
-                            <button type="button" class="btn btn-warning btn-sm">
-                                <i class="fas fa-edit"></i> Modifier
-                            </button>
-                            </a>
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal1">
-                                <i class="fas fa-trash-alt"></i> Supprimer
-                            </button>
-                            <div class="modal fade" id="deleteModal1" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </a>
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%=laboratoire.getIdLaboratoire() %>">
+                                    <i class="fas fa-trash-alt"></i> Supprimer
+                                </button>
+                                <div class="modal fade" id="deleteModal<%=laboratoire.getIdLaboratoire() %>" tabindex="-1" aria-labelledby="deleteModalLabel<%=laboratoire.getIdLaboratoire() %>" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          cette action est irreversible.
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                          <a href=""><button type="button" class="btn btn-danger">Supprimer</button></a>
+                                        </div>
+                                      </div>
                                     </div>
-                                    <div class="modal-body">
-                                      cette action est irreversible.
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                      <a href=""><button type="button" class="btn btn-danger">Supprimer</button></a>
-                                    </div>
-                                  </div>
                                 </div>
-                            </div>
-                        </td>
-                      </tr>
+                            </td>
+                          </tr>
+                     <%} } else{ %>
+                      <tr>
+                        <td colspan="6" class="text-center">Aucun laboratoire trouvé</td>
+                    </tr>
+                      <%} %> 
+                      
                     </tbody>
                   </table>
 

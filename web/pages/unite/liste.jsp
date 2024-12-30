@@ -2,10 +2,11 @@
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
 
+<%@page import="dto.UniteDTO"%>
 <%@page import="model.Unite"%>
 
 <%
-    Unite[] unites = (Unite[]) request.getAttribute("unites");
+    UniteDTO[] unites = (UniteDTO[]) request.getAttribute("unites");
     String message = (String) request.getAttribute("message");
     if (message != null && !message.trim().isEmpty()) {
 %>
@@ -100,68 +101,77 @@
                         </div>
                       </form>
                   </div>
-                  <table class="table table-bordered table-head-bg-success  mt-3">
-                    <thead >
-                      
-                      <tr>
-                        <th scope="col">#</th>
-                        <th class="text-center" scope="col">Unité</th>
-                        <th class="text-center" scope="col">Type</th>
-                        <th class="text-center" scope="col">Action</th>
-                      </tr>
+                  <table class="table table-bordered table-head-bg-success mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th class="text-center" scope="col">Unité </th>
+                            <th class="text-center" scope="col">Unité Mere</th>
+                            <th class="text-center" scope="col">Action</th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <% 
-                          if (unites != null && unites.length > 0) {
-                              for (Unite unite : unites) { 
-                      %>
-                          <tr>
-                              <td class="text-center"><%= unite.getIdUnite() %></td>
-                              <td class="text-center"><%= unite.getNom() %></td>
-                              <td class="text-center"><%= unite.getTypeUnite().getType() %></td>
-                              <td class="text-center">
-                                  <a href="<%= request.getContextPath() %>/unite/update?id_unite=<%= unite.getIdUnite() %>" class="btn btn-warning btn-sm">
-                                      <i class="fas fa-edit"></i> Modifier
-                                  </a>
-                                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= unite.getIdUnite() %>">
-                                      <i class="fas fa-trash-alt"></i> Supprimer
-                                  </button>
-                                  
-                                  <!-- Modal -->
-                                  <div class="modal fade" id="deleteModal<%= unite.getIdUnite() %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= unite.getIdUnite() %>" aria-hidden="true">
-                                      <div class="modal-dialog">
+                        <% 
+                            if (unites != null && unites.length > 0) {
+                                int index = 1; // Compteur pour l'index des unités
+                                for (UniteDTO dto : unites) { 
+                                    Unite uniteEnfant = dto.getUniteEnfant();
+                                    Unite uniteParent = dto.getUniteParent();
+                        %>
+                        <tr>
+                            <td class="text-center"><%= index++ %></td>
+                            <td class="text-center"><%= uniteEnfant != null ? uniteEnfant.getNom() : "N/A" %></td>
+                            <td class="text-center"><%= uniteParent != null ? uniteParent.getNom() : "" %></td>
+                            <td class="text-center">
+                                <!-- Bouton Modifier -->
+                                <a href="<%= request.getContextPath() %>/unite/update?id_unite=<%= uniteEnfant.getIdUnite() %>" 
+                                   class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </a>
+                
+                                <!-- Bouton Supprimer -->
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" 
+                                        data-bs-target="#deleteModal<%= uniteEnfant.getIdUnite() %>">
+                                    <i class="fas fa-trash-alt"></i> Supprimer
+                                </button>
+                                
+                                <!-- Modal -->
+                                <div class="modal fade" id="deleteModal<%= uniteEnfant.getIdUnite() %>" tabindex="-1" 
+                                     aria-labelledby="deleteModalLabel<%= uniteEnfant.getIdUnite() %>" aria-hidden="true">
+                                    <div class="modal-dialog">
                                         <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteModalLabel<%= unite.getIdUnite() %>">Confirmer la suppression</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                          </div>
-                                          <div class="modal-body">
-                                            Êtes-vous sûr de vouloir supprimer cette unité ?
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                            <a href="<%= request.getContextPath() %>/unite/delete?id_unite=<%= unite.getIdUnite() %>">
-                                              <button type="button" class="btn btn-danger">Supprimer</button>
-                                            </a>
-                                          </div>
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteModalLabel<%= uniteEnfant.getIdUnite() %>">
+                                                    Confirmer la suppression
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Êtes-vous sûr de vouloir supprimer l'unité "<%= uniteEnfant.getNom() %>" ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                <a href="<%= request.getContextPath() %>/unite/delete?id_unite=<%= uniteEnfant.getIdUnite() %>">
+                                                    <button type="button" class="btn btn-danger">Supprimer</button>
+                                                </a>
+                                            </div>
                                         </div>
-                                      </div>
-                                  </div>
-                              </td>
-                          </tr>
-                      <% 
-                              }
-                          } else { 
-                      %>
-                          <tr>
-                              <td colspan="4">Aucune unité trouvée.</td>
-                          </tr>
-                      <% 
-                          }
-                      %>
-                  </tbody>
-                  </table>
-
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <% 
+                                }
+                            } else { 
+                        %>
+                        <tr>
+                            <td colspan="4" class="text-center">Aucune unité trouvée.</td>
+                        </tr>
+                        <% 
+                            }
+                        %>
+                    </tbody>
+                </table>
                 </div>
               </div>
             

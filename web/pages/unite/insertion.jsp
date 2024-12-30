@@ -2,9 +2,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
-<%@page import="model.TypeUnite"%>
+<%@page import="model.Unite"%>
 <%
-    TypeUnite[] type_unites = (TypeUnite[]) request.getAttribute("type_unites");
+    Unite[] unites = (Unite[]) request.getAttribute("unites");
     String message = (String) request.getAttribute("message");
     if (message != null && !message.trim().isEmpty()) {
 %>
@@ -13,7 +13,7 @@
         swal({ title: "Notification",text: "<%= message %>",icon: "info", button: "OK"});
     </script>
 <%
-        request.setAttribute("message", "");
+        request.setAttribute("message","");
     }
 %>
 <div class="main-panel">
@@ -96,7 +96,7 @@
                     <div class="offset-md-3 col-md-6 offset-lg-2 col-lg-8">
 
                         <div class="row">
-                            <div class="col-6 offset-3">
+                            <div class="col-8 offset-2">
                               <div class="form-group">
                                 <label for="nom">unité </label>
                                 <input
@@ -110,16 +110,16 @@
                             </div>
                           </div>
                           <div class="row">
-                            <div class="col-6 offset-3">
+                            <div class="col-8 offset-2">
                               <div class="form-group">
                                 <label for="type_unite">Type</label>
-                                <select class="form-select" id="type_unite" name="type">
-                                  <option value="">Veuillez choisir le type</option>
+                                <select class="form-select" id="type_unite" name="unite_mere">
+                                  <option value="">Veuillez choisir l'Unité Mère</option>
                                   <% 
-                                  if (type_unites != null) {
-                                    for (TypeUnite typeUnite : type_unites) { %>
-                                      <option value="<%= typeUnite.getIdTypeUnite() %>">
-                                        <%= typeUnite.getType() %>
+                                  if (unites != null) {
+                                    for (Unite unite : unites) { %>
+                                      <option value="<%= unite.getIdUnite() %>">
+                                        <%= unite.getNom() %>
                                       </option>
                                       <% } } %>
                                 </select>

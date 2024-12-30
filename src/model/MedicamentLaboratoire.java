@@ -8,6 +8,15 @@ public class MedicamentLaboratoire {
     private double prixAchat;
     private int minimumAchat;
 
+    public MedicamentLaboratoire(Medicament medicament, Laboratoire laboratoire, Unite unite, double prixAchat,
+            int minimumAchat) {
+        this.medicament = medicament;
+        this.laboratoire = laboratoire;
+        this.unite = unite;
+        this.prixAchat = prixAchat;
+        this.minimumAchat = minimumAchat;
+    }
+
     public double getPrixAchat() {
         return prixAchat;
     }
