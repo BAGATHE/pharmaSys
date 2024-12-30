@@ -127,12 +127,6 @@
                                   <td class="text-center"><span class="fw-bold"><%= medLab.getPrixAchat() %> Ar</span></td>
                                   <td class="text-center"><%= medLab.getMinimumAchat() %></td>
                                   <td class="text-center">
-                                      <a href="<%= request.getContextPath() %>/laboratoire/update %>">
-                                          <button type="button" class="btn btn-warning btn-sm">
-                                              <i class="fas fa-edit"></i> Modifier
-                                          </button>
-                                      </a>
-                      
                                       <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= i %>">
                                           <i class="fas fa-trash-alt"></i> Supprimer
                                       </button>
@@ -151,7 +145,7 @@
                                                   </div>
                                                   <div class="modal-footer">
                                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                                      <a href="<%= request.getContextPath() %>/laboratoire/delete">
+                                                      <a href="<%= request.getContextPath() %>/laboratoire-medicament/delete?id_medicament=<%= medLab.getMedicament().getIdMedicament() %>&id_unite=<%= medLab.getUnite().getIdUnite() %>&id_laboratoire=<%=id_laboratoire%>">
                                                           <button type="button" class="btn btn-danger">Supprimer</button>
                                                       </a>
                                                   </div>

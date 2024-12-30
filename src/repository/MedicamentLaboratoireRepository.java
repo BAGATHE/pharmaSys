@@ -125,4 +125,21 @@ public class MedicamentLaboratoireRepository {
             return 0;
         }
     }
+
+    public static int delete(Connection conn, MedicamentLaboratoire medicamentLaboratoire) throws SQLException {
+        String query = "DELETE FROM medicament_laboratoire WHERE id_medicament = ? AND id_laboratoire = ? AND id_unite = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            // Paramètres pour identifier l'enregistrement unique
+            stmt.setString(1, medicamentLaboratoire.getMedicament().getIdMedicament());
+            stmt.setString(2, medicamentLaboratoire.getLaboratoire().getIdLaboratoire());
+            stmt.setString(3, medicamentLaboratoire.getUnite().getIdUnite());
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                return 1;
+            }
+            return 0;
+        }
+    }
 }

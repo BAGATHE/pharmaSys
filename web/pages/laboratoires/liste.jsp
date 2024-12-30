@@ -102,7 +102,6 @@
                   <table class="table table-bordered table-head-bg-success  mt-3">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
                         <th class="text-center" scope="col">laboratoire</th>
                         <th  class="text-center" scope="col">contact</th>
                         <th  class="text-center" scope="col">adresse</th>
@@ -115,7 +114,6 @@
                       if(laboratoires!=null || laboratoires.length > 0){
                         for(Laboratoire laboratoire : laboratoires){ %>
                           <tr>
-                            <td class="text-center"><%=laboratoire.getIdLaboratoire() %></td>
                             <td class="text-center"><%=laboratoire.getNom() %></td>
                             <td class="text-center"><%=laboratoire.getContact() %></td> 
                             <td class="text-center"><%=laboratoire.getAdresse() %></td>     
@@ -128,7 +126,7 @@
                             </td>
                          
                             <td>
-                                <a href="<%= request.getContextPath() %>/laboratoire/update">
+                                <a href="<%= request.getContextPath() %>/laboratoire/update?id_laboratoire=<%=laboratoire.getIdLaboratoire() %>">
                                 <button type="button" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i> Modifier
                                 </button>
