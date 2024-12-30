@@ -1,57 +1,38 @@
 package model;
 
 public class Conversion {
-    private String idConversion;
-    private String idMedicament;
-    private Unite unite_1;
-    private Unite unite_2;
+    private Medicament medicament;
+    private Unite uniteMere;
+    private Unite uniteFille;
     private double quantite;
 
-    public Conversion(String idMedicament, Unite unite_1, Unite unite_2, double quantite) {
-        this.idMedicament = idMedicament;
-        this.unite_1 = unite_1;
-        this.unite_2 = unite_2;
+    public Conversion(Medicament medicament, Unite uniteMere, double quantite) {
+        this.medicament = medicament;
+        this.uniteMere = uniteMere;
         this.quantite = quantite;
     }
 
-    public Conversion(String idConversion, String idMedicament, Unite unite_1, Unite unite_2, double quantite) {
-        this.idConversion = idConversion;
-        this.idMedicament = idMedicament;
-        this.unite_1 = unite_1;
-        this.unite_2 = unite_2;
+    public Conversion(Medicament medicament, Unite uniteMere, Unite uniteFille, double quantite) {
+        this.medicament = medicament;
+        this.uniteMere = uniteMere;
+        this.uniteFille = uniteFille;
         this.quantite = quantite;
     }
 
-    public String getIdConversion() {
-        return idConversion;
+    public Unite getUniteMere() {
+        return uniteMere;
     }
 
-    public void setIdConversion(String idConversion) {
-        this.idConversion = idConversion;
+    public void setUniteMere(Unite uniteMere) {
+        this.uniteMere = uniteMere;
     }
 
-    public String getIdMedicament() {
-        return idMedicament;
+    public Unite getUniteFille() {
+        return uniteFille;
     }
 
-    public void setIdMedicament(String idMedicament) {
-        this.idMedicament = idMedicament;
-    }
-
-    public Unite getUnite_1() {
-        return unite_1;
-    }
-
-    public void setUnite_1(Unite unite_1) {
-        this.unite_1 = unite_1;
-    }
-
-    public Unite getUnite_2() {
-        return unite_2;
-    }
-
-    public void setUnite_2(Unite unite_2) {
-        this.unite_2 = unite_2;
+    public void setUniteFille(Unite uniteFille) {
+        this.uniteFille = uniteFille;
     }
 
     public double getQuantite() {
@@ -60,6 +41,14 @@ public class Conversion {
 
     public void setQuantite(double quantite) {
         this.quantite = quantite;
+    }
+
+    public Medicament getMedicament() {
+        return medicament;
+    }
+
+    public void setMedicament(Medicament medicament) {
+        this.medicament = medicament;
     }
 
 }

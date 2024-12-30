@@ -1,6 +1,11 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.MedicamentLaboratoire"%>
+<% 
+   MedicamentLaboratoire[] medicament_laboratoires = (MedicamentLaboratoire[]) request.getAttribute("medicament_laboratoires");
+   String id_laboratoire = (String) request.getAttribute("id_laboratoire");
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -66,31 +71,15 @@
               </li>
             </ul>
           </div>
-          <!--bouton retour-->
-          <div class="row">
-            <div class="col-3">
-                <a href="<%= request.getContextPath() %>/pages/laboratoires/liste.jsp">
-                    <button type="button" class="btn btn-outline-primary">
-                        <i class="fas fa-arrow-left" style="font-size: 1.5em;"></i> Retour
-                    </button>
-                </a>
-            </div>
-          </div>
-          <!--bouton retour-->
-          <div class="row mb-3">
-            <div class="col-6 offset-3">
-                <ul class="list-group">
-                    <li class="list-group-item">Laboratoire : </li>
-                    <li class="list-group-item">Contact : </li>
-                    <li class="list-group-item">Adresse : </li>
-                  </ul>
-            </div>
-          </div>
-
           <div class="row">
             <div class="col-12">
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
+                  <a href="<%= request.getContextPath() %>/laboratoire/list">
+                    <button type="button" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left" style="font-size: 1.5em;"></i> Retour
+                    </button>
+                </a>
                   <div class="card-title" ><h2 class="text-center" style="color: white;">Liste medicament proposé </h2></div>
                 </div>
                 <div class="card-body">
@@ -109,75 +98,77 @@
                             </div>
                             <!-- fin zone de recherche-->
                             <div class="col-auto">
-                                <a href="<%= request.getContextPath() %>/pages/laboratoires/ajout_medicament.jsp" class="btn btn-primary">
+                                <a href="<%= request.getContextPath() %>/laboratoire-medicament/insert?id_laboratoire=<%= id_laboratoire %>" class="btn btn-primary">
                                     <i class="fas fa-plus"></i> Ajouter un médicament
                                 </a>
+                                <a href="<%= request.getContextPath() %>/laboratoire-medicament/insert?id_laboratoire=<%= id_laboratoire %>" class="btn btn-primary">
+                                  <i class="fas fa-shopping-cart"></i> Passez commande
+                              </a>
                             </div>
                         </div>
-                  <table class="table table-bordered table-head-bg-success  mt-3">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th class="text-center" scope="col">medicament</th>
-                        <th class="text-center" scope="col">description</th>
-                        <th class="text-center" scope="col">quantité par boite</th>
-                        <th class="text-center" scope="col">Prix Achat Boite</th>
-                        <th class="text-center" scope="col">action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="text-center">1</td>
-                        <td class="text-center">Paracetamol</td>
-                        <td class="text-center">medicament ----</td>
-                        <td class="text-center"> 3 plaquette </td>
-
-                        <td class="text-center">
-                          <table class="table table-bordered ">
-                            <th><span class="fw-bold">750,000 Ar</span></th>
-                            <th> <span class="fw-bold">Minimum Achat : 5 </span></th>
-                            <th>
-                              <a href="<%= request.getContextPath() %>/pages/laboratoires/update_medicament_labo.jsp" class="btn btn-warning btn-sm ms-3 d-inline-flex align-items-center">
-                                <i class="fas fa-edit me-2"></i> Modifier
-                              </a>
-                            </th>
-                          </table>
-                            
-                           
-                            
-                        </td>
-                        
-                     
-                        <td>
-                            <a href="<%= request.getContextPath() %>/pages/achats/insertion.jsp">
-                            <button type="button" class="btn btn-primary btn-sm">
-                                <i class="fas fa-shopping-cart"></i> passez commande
-                            </button>
-                            </a>
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal1">
-                                <i class="fas fa-trash-alt"></i> Supprimer
-                            </button>
-                            <div class="modal fade" id="deleteModal1" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                      cette action est irreversible.
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                      <a href=""><button type="button" class="btn btn-danger">Supprimer</button></a>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                        <table class="table table-bordered table-head-bg-success mt-3">
+                          <thead>
+                              <tr>
+                                  <th class="text-center" scope="col">Médicament</th>
+                                  <th class="text-center" scope="col">Unité</th>
+                                  <th class="text-center" scope="col">Prix Achat</th>
+                                  <th class="text-center" scope="col">Minimum Achat</th>
+                                  <th class="text-center" scope="col">Action</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <% if (medicament_laboratoires != null && medicament_laboratoires.length > 0) { 
+                                  for (int i = 0; i < medicament_laboratoires.length; i++) { 
+                                      MedicamentLaboratoire medLab = medicament_laboratoires[i];
+                              %>
+                              <tr>
+                                  <td class="text-center"><%= medLab.getMedicament().getNom() %></td>
+                                  <td class="text-center"><%= medLab.getUnite().getNom() %></td>
+                                  <td class="text-center"><span class="fw-bold"><%= medLab.getPrixAchat() %> Ar</span></td>
+                                  <td class="text-center"><%= medLab.getMinimumAchat() %></td>
+                                  <td class="text-center">
+                                      <a href="<%= request.getContextPath() %>/laboratoire/update %>">
+                                          <button type="button" class="btn btn-warning btn-sm">
+                                              <i class="fas fa-edit"></i> Modifier
+                                          </button>
+                                      </a>
+                      
+                                      <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= i %>">
+                                          <i class="fas fa-trash-alt"></i> Supprimer
+                                      </button>
+                      
+                                      <!-- Modal de confirmation -->
+                                      <div class="modal fade" id="deleteModal<%= i %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= i %>" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                              <div class="modal-content">
+                                                  <div class="modal-header">
+                                                      <h5 class="modal-title" id="deleteModalLabel<%= i %>">Confirmer la suppression</h5>
+                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                      Voulez-vous vraiment supprimer le médicament "<%= medLab.getMedicament().getNom() %>" ?
+                                                      Cette action est irréversible.
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                      <a href="<%= request.getContextPath() %>/laboratoire/delete">
+                                                          <button type="button" class="btn btn-danger">Supprimer</button>
+                                                      </a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <%  } // Fin du for 
+                                } else { %>
+                              <tr>
+                                  <td class="text-center" colspan="5">Aucun médicament trouvé pour ce laboratoire.</td>
+                              </tr>
+                              <% } // Fin du if %>
+                          </tbody>
+                      </table>
+                      
 
                     <!-- Pagination -->
         <nav>

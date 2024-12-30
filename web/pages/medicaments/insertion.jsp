@@ -2,6 +2,18 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%
+    String message = (String) request.getAttribute("message");
+    if (message != null && !message.trim().isEmpty()) {
+%>
+    <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script>
+        swal({ title: "Notification",text: "<%= message %>",icon: "info", button: "OK"});
+    </script>
+<%
+        request.setAttribute("message", "");
+    }
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -88,6 +100,7 @@
                                   class="form-control"
                                   placeholder="nom"
                                   required
+                                  name="nom"
                                 />
                               </div>
                             </div>
@@ -96,7 +109,7 @@
                             <div class="col-10 offset-1">
                                 <div class="form-group">
                                     <label for="description">Desription</label>
-                                    <textarea class="form-control"  rows="5">
+                                    <textarea class="form-control"  rows="5" name="description">
                                     </textarea>
                                 </div>
                             </div>

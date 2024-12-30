@@ -1,6 +1,11 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.MedicamentLaboratoire"%>
+<% 
+   MedicamentLaboratoire[] medicament_laboratoires = (MedicamentLaboratoire[]) request.getAttribute("medicament_laboratoires");
+   String id_medicament = (String) request.getAttribute("id_medicament");
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -66,32 +71,19 @@
               </li>
             </ul>
           </div>
-          <!--bouton retour-->
-          <div class="row">
-            <div class="col-3">
-                <a href="<%= request.getContextPath() %>/pages/medicaments/liste.jsp">
-                    <button type="button" class="btn btn-outline-primary">
-                        <i class="fas fa-arrow-left" style="font-size: 1.5em;"></i> Retour
-                    </button>
-                </a>
-            </div>
-          </div>
-          <!--bouton retour-->
-          <div class="row mb-3">
-            <div class="col-6 offset-3">
-                <ul class="list-group">
-                    <li class="list-group-item">medicament : </li>
-                    <li class="list-group-item">description : </li>
-                    <li class="list-group-item">quantité par boite : </li>
-                  </ul>
-            </div>
-          </div>
-
+       
           <div class="row">
             <div class="col-12">
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
-                  <div class="card-title" ><h2 class="text-center" style="color: white;">Liste proposition Fournisseur </h2></div>
+                  <div class="card-title" >
+                    <a href="<%= request.getContextPath() %>/medicament/list">
+                      <button type="button" class="btn btn-outline-primary">
+                          <i class="fas fa-arrow-left" style="font-size: 1.5em;"></i> Retour
+                      </button>
+                    </a>
+                    <h2 class="text-center" style="color: white;">Liste proposition Fournisseur </h2>
+                  </div>
                 </div>
                 <div class="card-body">
                     <div class="card-sub">
@@ -114,29 +106,41 @@
                   <table class="table table-bordered table-head-bg-success  mt-3">
                     <thead>
                       <tr>
-                        <th class="text-center" scope="col">#</th>
                         <th class="text-center" scope="col">Laboratoire</th>
+                        <th class="text-center" scope="col">Unité</th>
                         <th class="text-center" scope="col">Prix achat</th>
+                        <th class="text-center" scope="col">Minimum Achat</th>
                         <th class="text-center" scope="col">action</th>
                       </tr>
                     </thead>
                     <tbody>
+                      <% if (medicament_laboratoires != null && medicament_laboratoires.length > 0) { 
+                          for (int i = 0; i < medicament_laboratoires.length; i++) { 
+                              MedicamentLaboratoire medLab = medicament_laboratoires[i];
+                      %>
                       <tr>
-                        <td class="text-center">1</td>
-                        <td class="text-center">Labo 1</td>
-                        <td class="text-center">75800</td>
-                         
-                        <td class="text-center">
+                          <td class="text-center"><%= medLab.getLaboratoire().getNom() %></td>
+                          <td class="text-center"><%= medLab.getUnite().getNom() %></td>
+                          <td class="text-center"><span class="fw-bold"><%= medLab.getPrixAchat() %> Ar</span></td>
+                          <td class="text-center"><%= medLab.getMinimumAchat() %></td>
+                          <td class="text-center">
                             <a href="<%= request.getContextPath() %>/pages/achats/insertion.jsp">
                             <button type="button" class="btn btn-primary btn-sm">
                                 <i class="fas fa-shopping-cart"></i> passez commande
                             </button>
                             </a>
-                        </td>
+                          </td>
                       </tr>
-                    </tbody>
+                      <%  } // Fin du for 
+                        } else { %>
+                      <tr>
+                          <td class="text-center" colspan="5">Aucun Laboratoire trouvé pour ce Medicament</td>
+                      </tr>
+                      <% } // Fin du if %>
+                  </tbody>
                   </table>
 
+                  
                     <!-- Pagination -->
         <nav>
             <ul class="pagination justify-content-center">

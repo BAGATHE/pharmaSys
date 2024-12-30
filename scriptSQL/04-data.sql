@@ -9,9 +9,6 @@ VALUES (
 );
 
 
-INSERT INTO type_unite (type) VALUES ('Boite');
-INSERT INTO type_unite (type) VALUES ('Unitaire');
-
 
 
 INSERT INTO medicaments (nom, description)VALUES ('Paracetamol','Antalgique et antipyretique');

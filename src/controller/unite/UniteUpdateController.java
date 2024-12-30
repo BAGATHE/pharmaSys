@@ -12,7 +12,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.TypeUnite;
 import model.Unite;
 import repository.UniteRepository;
 
@@ -26,7 +25,7 @@ public class UniteUpdateController extends HttpServlet {
         try (Connection connection = Connexion.connect()) {
             String nom = request.getParameter("nom");
             String id_unite = request.getParameter("id_unite");
-            Unite unite = new Unite(id_unite, nom, new TypeUnite(""));
+            Unite unite = new Unite(id_unite, nom);
             int result = UniteRepository.update(connection, unite);
 
             String message = (result == 1) ? "Unité mise a jour avec succès" : "Unité non mise a jour";

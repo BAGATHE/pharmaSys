@@ -3,17 +3,31 @@
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
 <%@page import="model.Unite"%>
+<%@page import="model.Medicament"%>
 <%
+ 
     Unite[] unites = (Unite[]) request.getAttribute("unites");
+    Medicament[] medicaments = (Medicament[]) request.getAttribute("medicaments");
     String message = (String) request.getAttribute("message");
+    String error = (String) request.getAttribute("error");
+
     if (message != null && !message.trim().isEmpty()) {
 %>
     <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
     <script>
-        swal({ title: "Notification",text: "<%= message %>",icon: "info", button: "OK"});
+        swal({ title: "Notification", text: "<%= message %>", icon: "success", button: "OK" });
     </script>
 <%
         request.setAttribute("message", "");
+    }
+    if (error != null && !error.trim().isEmpty()) {
+%>
+    <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script>
+        swal({ title: "Erreur", text: "<%= error %>", icon: "error", button: "OK" });
+    </script>
+<%
+        request.setAttribute("error", "");
     }
 %>
 <div class="main-panel">
@@ -97,36 +111,38 @@
 
                         <div class="row">
                             <div class="col-6 offset-3">
-                              <div class="form-group">
-                                <label for="type_unite">Type</label>
-                                <select class="form-select" id="type_unite" name="type">
-                                  <option value="">Veuillez choisir le type</option>
-                                  <% 
-                                  if (type_unites != null) {
-                                    for (TypeUnite typeUnite : type_unites) { %>
-                                      <option value="<%= typeUnite.getIdTypeUnite() %>">
-                                        <%= typeUnite.getType() %>
-                                      </option>
-                                      <% } } %>
-                                </select>
-                              </div>
+                                <div class="form-group">
+                                    <label for="medicament">Médicament</label>
+                                    <select class="form-select" id="medicament" name="id_medicament">
+                                        <option value="">Veuillez choisir un Médicament</option>
+                                        <% 
+                                        if (medicaments != null) {
+                                            for (Medicament medicament : medicaments) { 
+                                        %>
+                                        <option value="<%= medicament.getIdMedicament() %>">
+                                            <%= medicament.getNom() %>
+                                        </option>
+                                        <% } } %>
+                                    </select>
+                                </div>
                             </div>
                           </div>
                           <div class="row">
-                            <div class="col-6 offset-3">
-                              <div class="form-group">
-                                <label for="type_unite">Type</label>
-                                <select class="form-select" id="type_unite" name="type">
-                                  <option value="">Veuillez choisir le type</option>
-                                  <% 
-                                  if (type_unites != null) {
-                                    for (TypeUnite typeUnite : type_unites) { %>
-                                      <option value="<%= typeUnite.getIdTypeUnite() %>">
-                                        <%= typeUnite.getType() %>
-                                      </option>
-                                      <% } } %>
-                                </select>
-                              </div>
+                            <div class="col-6 offset-3 mt-3">
+                                <div class="form-group">
+                                    <label for="unite">Unité</label>
+                                    <select class="form-select" id="unite" name="unite">
+                                        <option value="">Veuillez choisir une Unité</option>
+                                        <% 
+                                        if (unites != null) {
+                                            for (Unite unite : unites) { 
+                                        %>
+                                        <option value="<%= unite.getIdUnite() %>">
+                                            <%= unite.getNom() %>
+                                        </option>
+                                        <% } } %>
+                                    </select>
+                                </div>
                             </div>
                           </div>
                           <div class="row">
