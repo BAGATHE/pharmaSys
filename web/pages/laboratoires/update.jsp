@@ -2,6 +2,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.Laboratoire" %>
+<%
+Laboratoire laboratoire = (Laboratoire) request.getAttribute("laboratoire");
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -71,60 +75,65 @@
             <div class="offset-2 col-8">
               <!--debut formulaire-->
               <form action="" method="post">
-              <div class="card">
-                <div class="card-header" style="background-color: #1b1d38;">
-                    <a href="<%= request.getContextPath() %>/pages/laboratoires/liste.jsp"><button type="button" class="btn btn-info">retour</button></a>
-                  <div class="card-title"><h2 class="text-center" style="color: white;">Mise a jour  Laboratoire</h2></div>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="offset-1 col-10">
-
+                <input type="hidden" name="id_laboratoire" value="<%= laboratoire.getIdLaboratoire() %>">
+                <div class="card">
+                    <div class="card-header" style="background-color: #1b1d38;">
+                        <a href="<%= request.getContextPath() %>/laboratoire/list"><button type="button" class="btn btn-info">retour</button></a>
+                        <div class="card-title"><h2 class="text-center" style="color: white;">Mise a jour Laboratoire</h2></div>
+                    </div>
+                    <div class="card-body">
                         <div class="row">
-                            <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="nom">Nom</label>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Entrer Laboratoire"
-                                  required
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="nom">contact email</label>
-                                <input
-                                  type="email"
-                                  class="form-control"
-                                  placeholder="exemple@gmail.com"
-                                  required
-                                />
-                              </div>
-                            </div>
-                            
-                          </div>
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                                <div class="form-group">
-                                    <label for="description">Adresse</label>
-                                    <textarea class="form-control"  rows="5">
-                                    </textarea>
+                            <div class="offset-1 col-10">
+                                <div class="row">
+                                    <div class="col-10 offset-1">
+                                        <div class="form-group">
+                                            <label for="nom">Nom</label>
+                                            <input
+                                                type="text"
+                                                name="nom"
+                                                class="form-control"
+                                                placeholder="Entrer Laboratoire"
+                                                value="<%= laboratoire.getNom() %>"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-10 offset-1">
+                                        <div class="form-group">
+                                            <label for="contact">contact email</label>
+                                            <input
+                                                type="email"
+                                                name="contact"
+                                                class="form-control"
+                                                placeholder="exemple@gmail.com"
+                                                value="<%= laboratoire.getContact() %>"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-10 offset-1">
+                                        <div class="form-group">
+                                            <label for="adresse">Adresse</label>
+                                            <textarea 
+                                                name="adresse" 
+                                                class="form-control" 
+                                                rows="5"
+                                            ><%= laboratoire.getAdresse() %></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                          </div>
- 
+                        </div>
                     </div>
-                  </div>
+                    <div class="card-action">
+                        <button type="submit" class="btn btn-success">Valider</button>
+                    </div>
                 </div>
-                <div class="card-action">
-                  <button class="btn btn-success">Valider</button>
-                </div>
-              </div>
-              </form>
+            </form>
               <!--fin formulaire-->
             </div>
           </div>
