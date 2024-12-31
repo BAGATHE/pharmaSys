@@ -1,6 +1,11 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.Laboratoire"%>
+
+<%
+    Laboratoire[] laboratoires = (Laboratoire[]) request.getAttribute("laboratoires");
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -76,11 +81,15 @@
           <div class="row mb-3">
             <div class="col-6 offset-3">
                 <ul class="list-group">
-                    <li class="list-group-item bg-transparent d-flex justify-content-center align-items-center gap-3" >
-                      <a href="<%= request.getContextPath() %>/pages/achats/insertion.jsp">Lab 1</a> 
-                    </li>
-                    <li class="list-group-item bg-transparent d-flex justify-content-center align-items-center gap-3"><a href="">Lab 2</a>  </li>
-                    <li class="list-group-item bg-transparent d-flex justify-content-center align-items-center gap-3"><a href="">Lab 3</a> </li>
+                  <% if(laboratoires != null && laboratoires.length > 0) {
+                    for(Laboratoire laboratoire : laboratoires) { %>
+                        <li class="list-group-item bg-transparent d-flex justify-content-center align-items-center gap-3">
+                            <a href="<%= request.getContextPath() %>/achat/laboratoire/insert?id_laboratoire=<%=laboratoire.getIdLaboratoire()%>"><%=laboratoire.getNom()%></a> 
+                        </li>
+                    <% } 
+                } else { %>
+                    <li class="list-group-item bg-transparent d-flex justify-content-center align-items-center gap-3">Aucun Laboratoire</li>
+                <% } %>
                   </ul>
             </div>
           </div>

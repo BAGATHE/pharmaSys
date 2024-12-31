@@ -121,10 +121,10 @@
                       <tr>
                           <td class="text-center"><%= medLab.getLaboratoire().getNom() %></td>
                           <td class="text-center"><%= medLab.getUnite().getNom() %></td>
-                          <td class="text-center"><span class="fw-bold"><%= medLab.getPrixAchat() %> Ar</span></td>
+                          <td class="text-center"><span class="fw-bold"><%= String.format("%,.2f",medLab.getPrixAchat()) %> Ar</span></td>
                           <td class="text-center"><%= medLab.getMinimumAchat() %></td>
                           <td class="text-center">
-                            <a href="<%= request.getContextPath() %>/pages/achats/insertion.jsp">
+                            <a href="<%= request.getContextPath() %>/achat/laboratoire/insert?id_laboratoire=<%=medLab.getLaboratoire().getIdLaboratoire()%>">
                             <button type="button" class="btn btn-primary btn-sm">
                                 <i class="fas fa-shopping-cart"></i> passez commande
                             </button>

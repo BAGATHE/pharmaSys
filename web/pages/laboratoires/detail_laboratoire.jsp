@@ -101,7 +101,7 @@
                                 <a href="<%= request.getContextPath() %>/laboratoire-medicament/insert?id_laboratoire=<%= id_laboratoire %>" class="btn btn-primary">
                                     <i class="fas fa-plus"></i> Ajouter un médicament
                                 </a>
-                                <a href="<%= request.getContextPath() %>/laboratoire-medicament/insert?id_laboratoire=<%= id_laboratoire %>" class="btn btn-primary">
+                                <a href="<%= request.getContextPath() %>/achat/laboratoire/insert?id_laboratoire=<%=id_laboratoire%>" class="btn btn-primary">
                                   <i class="fas fa-shopping-cart"></i> Passez commande
                               </a>
                             </div>
@@ -124,7 +124,7 @@
                               <tr>
                                   <td class="text-center"><%= medLab.getMedicament().getNom() %></td>
                                   <td class="text-center"><%= medLab.getUnite().getNom() %></td>
-                                  <td class="text-center"><span class="fw-bold"><%= medLab.getPrixAchat() %> Ar</span></td>
+                                  <td class="text-center"><span class="fw-bold"><%=String.format("%,.2f", medLab.getPrixAchat()) %> Ar</span></td>
                                   <td class="text-center"><%= medLab.getMinimumAchat() %></td>
                                   <td class="text-center">
                                       <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= i %>">

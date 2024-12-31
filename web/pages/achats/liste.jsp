@@ -2,6 +2,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@ page import="model.Achat" %>
+<%
+    Achat[] achats = (Achat[]) request.getAttribute("achats");
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -107,22 +111,34 @@
                   </div>
                   <table class="table table-hover mt-3">
                     <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">fournisseur</th>
-                        <th scope="col">date</th>
-                        <th scope="col">total</th>
-                      </tr>
+                        <tr>
+                            <th scope="col">Fournisseur</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Détail</th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td><a href="<%= request.getContextPath() %>/pages/achats/detail_achat.jsp">mouvement</a></td>
-                        <td>Fournisseur</td>
-                        <td>27/02/12</td>
-                        <td><span class="fw-bold">750,000 Ar</span></td>
-                      </tr>
+                        <% if (achats != null && achats.length > 0) { 
+                            for (Achat achat : achats) { %>
+                                <tr>
+                                    <td><%= achat.getLaboratoire().getNom() %></td> 
+                                    <td><%= achat.getDateAchat() %></td>
+                                    <td><span class="fw-bold"><%= String.format("%,.2f", achat.getTotal()) %> Ar</span></td>
+                                    <td>
+                                        <a href="<%= request.getContextPath() %>/achat/laboratoire/detail?id_achat=<%= achat.getIdAchat() %>" class="btn btn-primary btn-sm">
+                                            Voir détail
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% }
+                        } else { %>
+                            <tr>
+                                <td colspan="4" class="text-center">Aucun achat trouvé</td>
+                            </tr>
+                        <% } %>
                     </tbody>
-                  </table>
+                </table>
 
                     <!-- Pagination -->
         <nav>

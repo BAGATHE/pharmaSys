@@ -2,6 +2,12 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@ page import="model.AchatDetail" %>
+<%@ page import="model.Medicament" %>
+<%@ page import="model.Unite" %>
+<%
+    AchatDetail[] achatDetails = (AchatDetail[]) request.getAttribute("achat_details");
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -77,32 +83,45 @@
             <div class="offset-md-2 col-md-8">
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
-                    <a href="<%= request.getContextPath() %>/pages/etat_stock.jsp"><button type="submit" class="btn btn-info">retour</button></a>
+                    <a href="<%= request.getContextPath() %>/achat/laboratoire/list"><button type="submit" class="btn btn-info">retour</button></a>
                   <div class="card-title" ><h2 class="text-center" style="color: white;">Detail Achat </h2></div>
                 </div>
                 <div class="card-body">
                   <table class="table table-hover mt-3">
                     <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th class="text-center" scope="col">médicament</th>
-                        <th class="text-center" scope="col">quantité</th>
-                        <th class="text-center" scope="col">unité</th>
-                        <th class="text-center" scope="col">prix unitaire</th>
-                        <th class="text-center" scope="col">total</th>
-                      </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th class="text-center" scope="col">Médicament</th>
+                            <th class="text-center" scope="col">Quantité</th>
+                            <th class="text-center" scope="col">Unité</th>
+                            <th class="text-center" scope="col">Prix unitaire</th>
+                            <th class="text-center" scope="col">Total</th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td class="text-center"></td>
-                        <td class="text-center">Paracetamol</td>
-                        <td class="text-center">35</td>
-                        <td class="text-center">boite</td>
-                        <td class="text-center">45000</td>
-                        <td class="text-center">90000</td>
-                      </tr>
+                        <% 
+                        if (achatDetails != null && achatDetails.length > 0) {
+                            int index = 1;
+                            for (AchatDetail detail : achatDetails) { 
+                        %>
+                        <tr>
+                            <td class="text-center"><%= index++ %></td>
+                            <td class="text-center"><%= detail.getMedicament().getNom() %></td> 
+                            <td class="text-center"><%= detail.getQuantite() %></td>
+                            <td class="text-center"><%= detail.getUnite().getNom() %></td>
+                            <td class="text-center"><%= String.format("%,.2f", detail.getPrixAchat()) %> Ar</td> 
+                            <td class="text-center"><%= String.format("%,.2f", detail.getQuantite() * detail.getPrixAchat()) %> Ar</td> 
+                        </tr>
+                        <% 
+                            }
+                        } else { 
+                        %>
+                        <tr>
+                            <td colspan="6" class="text-center">Aucun détail trouvé pour cet achat</td>
+                        </tr>
+                        <% } %>
                     </tbody>
-                  </table>
+                </table>
 
                     <!-- Pagination -->
         <nav>

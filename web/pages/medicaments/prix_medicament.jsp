@@ -159,7 +159,7 @@
                             <td class="text-center"><%= pm.getMedicament().getNom() %></td>
                             <td class="text-center"><%= pm.getUnite().getNom() %></td>
                             <td class="text-center">
-                              <span class="fw-bold  me-3"><%= pm.getPrixVenteUnitaire() %> Ar</span>
+                              <span class="fw-bold  me-3"><%= String.format("%,.2f",  pm.getPrixVenteUnitaire()) %> Ar</span>
                               <a href="<%= request.getContextPath() %>/medicament/prix/update?id_prix_medicament=<%= pm.getIdPrixMedicament() %>" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i> Modifier
                               </a>
