@@ -1,6 +1,17 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.maladie.Maladie"%>
+<%@page import="model.Symptome"%>
+<%@page import="model.Traitement"%>
+
+
+<% 
+  Maladie maladie = (Maladie) request.getAttribute("maladie"); 
+  Symptome[] symptomes = (Symptome[]) request.getAttribute("symptomes");
+  Traitement[] traitements = (Traitement[]) request.getAttribute("traitements");
+%>
+
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -69,7 +80,7 @@
           <!--bouton retour-->
           <div class="row mb-3">
             <div class="col-3">
-                <a href="<%= request.getContextPath() %>/pages/maladies/liste.jsp">
+                <a href="<%= request.getContextPath() %>/maladies/liste">
                     <button type="button" class="btn btn-outline-primary">
                         <i class="fas fa-arrow-left" style="font-size: 1.5em;"></i> Retour
                     </button>
@@ -80,8 +91,8 @@
           <div class="row mb-3">
             <div class="col-6 offset-3">
                 <ul class="list-group">
-                    <li class="list-group-item">Maladie : </li>
-                    <li class="list-group-item">description : </li>
+                    <li class="list-group-item">Maladie : <%= maladie.getNom() %></li>
+                    <li class="list-group-item">description : <%= maladie.getDescription() %></li>
                   </ul>
             </div>
           </div>
@@ -92,13 +103,17 @@
                   <div class="card-title" ><h2 class="text-center" style="color: white;">Symptomes </h2></div>
                 </div>
                 <div class="card-body">
+                <%
+                  for (int i = 0; i < symptomes.length; i++) {
+                    Symptome symptome = symptomes[i];
+                %>
                     <ul class="list-group">
                       <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Douleur intense</span>
-                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal1">
+                        <span><%= symptome.getNom() %></span>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= symptome.getIdSymptome() %>">
                           <i class="fas fa-trash-alt"></i> Supprimer
                         </button>
-                        <div class="modal fade" id="deleteModal1" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="deleteModal<%= symptome.getIdSymptome() %>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -116,10 +131,11 @@
                           </div>
                       </div>
                       </li>
-                      </ul>
+                    </ul>
+                  <% } %>
                 </div>
                 <div class="card-action">
-                  <a href="<%= request.getContextPath() %>/pages/maladies/ajout_symptome.jsp">
+                  <a href="<%= request.getContextPath() %>/maladies/symptome_traitement_liste?action=symptome&&idMaladie=<%= maladie.getIdMaladie() %>">
                     <button type="button" class="btn btn-outline-primary">
                          Ajouter
                     </button>
@@ -143,9 +159,13 @@
                           </tr>
                         </thead>
                         <tbody>
+                        <%
+                          for (int i = 0; i < traitements.length; i++) {
+                            Traitement traitement = traitements[i];
+                        %>
                           <tr>
-                            <td>Paracétamol</td>
-                            <td>80%</td>
+                            <td><%= traitement.getMedicament().getNom() %></td>
+                            <td><%= traitement.getEfficacite() %> %</td>
                             <td>
                               <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal2">
                                 <i class="fas fa-trash-alt"></i> Supprimer
@@ -169,6 +189,7 @@
                             </div>
                             </td>
                           </tr>
+                        <% } %>
                         </tbody>
                       </table>
                   </div>

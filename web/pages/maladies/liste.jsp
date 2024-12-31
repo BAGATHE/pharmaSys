@@ -126,7 +126,7 @@
                           <td class="text-center"><%= maladie.getNom() %></td>
                           <td class="text-center"><%= maladie.getDescription() %></td>
                           <td class="text-center">
-                            <a href="<%= request.getContextPath() %>/maladies/symptome_traitement_liste?idMaladie=<%= maladie.getIdMaladie() %>"> 
+                            <a href="<%= request.getContextPath() %>/maladies/symptome_traitement_liste?action=lister&&idMaladie=<%= maladie.getIdMaladie() %>"> 
                               <button type="button" class="btn btn-info btn-sm">
                                   <i class="fas fa-eye"></i> Consulter
                               </button>
