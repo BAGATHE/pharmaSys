@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import connection.Connexion;
 import jakarta.servlet.RequestDispatcher;
@@ -22,7 +24,10 @@ public class MaladieInsertController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        try (Connection connection = Connexion.connect()) {
+        Connection connection = null;
+
+        try  {
+            connection = Connexion.connect();
             String nom = request.getParameter("nom");
             String description = request.getParameter("description");
             
@@ -46,6 +51,15 @@ public class MaladieInsertController extends HttpServlet {
             out.print(e.getMessage());
             e.printStackTrace();
             throw new ServletException("Erreur générale lors du traitement de la requête", e);
+        }  finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    Logger.getLogger(MaladieListController.class.getName()).log(Level.SEVERE,
+                            "Erreur lors de la fermeture de la connexion", e);
+                }
+            }
         }
     }
 
