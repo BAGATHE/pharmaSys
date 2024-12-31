@@ -125,7 +125,7 @@
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                <a href=""><button type="button" class="btn btn-danger">Supprimer</button></a>
+                                <a href="<%= request.getContextPath() %>/maladies/maladieSymptomeDelete?idSymptome=<%= symptome.getIdSymptome() %>&&idMaladie=<%= maladie.getIdMaladie() %>"><button type="button" class="btn btn-danger">Supprimer</button></a>
                               </div>
                             </div>
                           </div>
@@ -135,7 +135,7 @@
                   <% } %>
                 </div>
                 <div class="card-action">
-                  <a href="<%= request.getContextPath() %>/maladies/symptome_traitement_liste?action=symptome&&idMaladie=<%= maladie.getIdMaladie() %>">
+                  <a href="<%= request.getContextPath() %>/maladies/maladieSymptome?idMaladie=<%= maladie.getIdMaladie() %>">
                     <button type="button" class="btn btn-outline-primary">
                          Ajouter
                     </button>
@@ -194,7 +194,7 @@
                       </table>
                   </div>
                   <div class="card-action">
-                    <a href="<%= request.getContextPath() %>/pages/maladies/ajout_traitement.jsp">
+                    <a href="<%= request.getContextPath() %>/maladies/maladieTraitement?idMaladie=<%= maladie.getIdMaladie() %>">
                       <button type="button" class="btn btn-outline-primary">
                            Ajouter
                       </button>

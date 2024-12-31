@@ -91,7 +91,7 @@
             <!--bouton retour-->
             <div class="row">
                 <div class="col-3">
-                    <a href="<%= request.getContextPath() %>/pages/maladies/symptome_traitement_liste.jsp">
+                    <a href="<%= request.getContextPath() %>/maladies/symptome_traitement_liste?idMaladie=<%= maladie.getIdMaladie() %>">
                         <button type="button" class="btn btn-outline-primary">
                             <i class="fas fa-arrow-left" style="font-size: 1.5em;"></i> Retour
                         </button>
@@ -106,7 +106,7 @@
                   <div class="card-title"><h2 class="text-center" style="color: white;">ajout de symptomes</h2></div>
                 </div>
                 <!--Debut formulaire-->
-                <form action="<%= request.getContextPath() %>/maladies/symptome_traitement_liste" method="post">
+                <form action="<%= request.getContextPath() %>/maladies/maladieSymptome" method="post">
                 <div class="card-body">
                   <div class="row">
                     <div class="offset-1 col-10">
@@ -117,7 +117,6 @@
                                 <label for="nom">Maladie</label>
                                 <input type="text" class="form-control" value="<%= maladie.getNom() %>" readonly/>
                                 <input type="hidden"  value="<%= maladie.getIdMaladie() %>" name="idMaladie"/>
-                                <input type="hidden"  value="symptome" name="action"/>
                               </div>
                             </div>
                           </div>

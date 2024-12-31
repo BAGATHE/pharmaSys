@@ -1,6 +1,5 @@
 package controller.maladie;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -32,29 +31,28 @@ public class SymptomeTraiteListController extends HttpServlet {
 
         try {
             connection = Connexion.connect();
-            String action = request.getParameter("action");
-            if (action.equals("lister")) {
-                lister(request, response, connection);
-            }
-            if (action.equals("symptome")) {
-                String idMaladie = request.getParameter("idMaladie");
+            lister(request, response, connection);
+            // if (action.equals("symptome")) {
+            // String idMaladie = request.getParameter("idMaladie");
 
-                Maladie maladie = MaladieRepository.getById(connection, idMaladie);
-                Symptome[] symptomes = SymptomeRepository.getAll(connection);
+            // Maladie maladie = MaladieRepository.getById(connection, idMaladie);
+            // Symptome[] symptomes = SymptomeRepository.getAll(connection);
 
-                request.setAttribute("maladie", maladie);
-                request.setAttribute("symptomes", symptomes);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/maladies/ajout_symptome.jsp");
-                dispatcher.forward(request, response);
-            }
-            if (action.equals("traitement")) {
-                String idMaladie = request.getParameter("idMaladie");
+            // request.setAttribute("maladie", maladie);
+            // request.setAttribute("symptomes", symptomes);
+            // RequestDispatcher dispatcher =
+            // request.getRequestDispatcher("/pages/maladies/ajout_symptome.jsp");
+            // dispatcher.forward(request, response);
+            // }
+            // if (action.equals("traitement")) {
+            // String idMaladie = request.getParameter("idMaladie");
 
-                Maladie maladie = MaladieRepository.getById(connection, idMaladie);
-                request.setAttribute("maladie", maladie);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/maladies/ajout_traitement.jsp");
-                dispatcher.forward(request, response);
-            }
+            // Maladie maladie = MaladieRepository.getById(connection, idMaladie);
+            // request.setAttribute("maladie", maladie);
+            // RequestDispatcher dispatcher =
+            // request.getRequestDispatcher("/pages/maladies/ajout_traitement.jsp");
+            // dispatcher.forward(request, response);
+            // }
         } catch (Exception e) {
             out.print(e.getMessage());
             e.printStackTrace();
@@ -69,53 +67,14 @@ public class SymptomeTraiteListController extends HttpServlet {
             }
         }
 
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        Connection connection = null;
-        try {
-            connection = Connexion.connect();
-            String action = request.getParameter("action");
-            if (action.equals("symptome")) {
-                String idMaladie = request.getParameter("idMaladie");
-                String[] symptomesIds = request.getParameterValues("symptomes[]");
-                String message = null;
-                if (symptomesIds != null) {
-                    for (String id : symptomesIds) {
-                        MaladieRepository.insertMaladieSymptome(connection, idMaladie, id);
-                    }
-                    message = "Insertion réussie";
-                } else {
-                    message = "Insertion invalide";
-                    out.println("Aucun symptôme sélectionné.");
-                }
-
-                connection.commit();
-                request.setAttribute("message", message);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/maladies/ajout_symptome.jsp");
-                dispatcher.forward(request, response);
-            }
-        } catch (Exception e) {
-            out.print(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    Logger.getLogger(MaladieListController.class.getName()).log(Level.SEVERE,
-                            "Erreur lors de la fermeture de la connexion", e);
-                }
-            }
-        }
     }
 
     public void lister(HttpServletRequest request, HttpServletResponse response, Connection connection)
             throws ServletException, IOException {
-        String idMaladie = request.getParameter("idMaladie");
+        String id = (String) request.getAttribute("idMaladie");
+        String id2 = request.getParameter("idMaladie");
+
+        String idMaladie = id != null ? id : id2;
         try {
             Symptome[] symptomeArray = SymptomeRepository.getSymptomeByIdMaladie(connection, idMaladie);
             Traitement[] traitementsArray = TraitementRepository.getByMaladieId(connection, idMaladie);

@@ -12,18 +12,19 @@ public class MaladieRepository {
     public static void insertMaladieSymptome(Connection conn, String idMaladie, String idSymptome) throws SQLException {
         String query = "INSERT INTO maladies_symptomes (id_maladie, id_symptomes) VALUES (?, ?)";
         PreparedStatement stmt = null;
-    
+
         try {
             stmt = conn.prepareStatement(query);
             stmt.setString(1, idMaladie);
             stmt.setString(2, idSymptome);
-    
+
             stmt.executeUpdate();
             System.out.println("Insertion réussie : Maladie ID = " + idMaladie + ", Symptôme ID = " + idSymptome);
         } catch (SQLException e) {
             // Gérer les erreurs spécifiques, comme une violation de clé primaire
             if ("23505".equals(e.getSQLState())) { // Code SQL pour violation de clé primaire
-                System.out.println("Le couple (idMaladie, idSymptome) existe déjà : Maladie ID = " + idMaladie + ", Symptôme ID = " + idSymptome);
+                System.out.println("Le couple (idMaladie, idSymptome) existe déjà : Maladie ID = " + idMaladie
+                        + ", Symptôme ID = " + idSymptome);
             } else {
                 throw e; // Relancer l'exception si ce n'est pas un cas connu
             }
@@ -38,7 +39,30 @@ public class MaladieRepository {
             }
         }
     }
-    
+
+    public static void deleteMaladieSymptome(Connection conn, String idMaladie, String idSymptome) throws SQLException {
+        String query = "DELETE FROM maladies_symptomes WHERE id_maladie= ? AND id_symptomes=? ";
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, idMaladie);
+            stmt.setString(2, idSymptome);
+            stmt.executeUpdate();
+            
+        } catch (SQLException e) {
+                throw e; 
+        } finally {
+            // Fermeture explicite des ressources
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture du PreparedStatement : " + e.getMessage());
+                }
+            }
+        }
+    }
 
     public static Maladie getById(Connection conn, String id) throws SQLException {
         String query = "SELECT * FROM maladies WHERE id_maladie = ?";
