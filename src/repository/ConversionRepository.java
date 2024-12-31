@@ -86,4 +86,33 @@ public class ConversionRepository {
             return rowsAffected > 0 ? 1 : 0;
         }
     }
+
+    public static Conversion getById(Connection con, String idUniteMere, String idMedicament) throws Exception {
+        Conversion conversion = null;
+        String sql = "SELECT c.id_medicament, c.id_unite_mere, c.quantite, " +
+                "u1.id_unite AS id_unite_depart, u1.nom AS nom_unite_depart, " +
+                "u2.id_unite AS id_unite_arrivee, u2.nom AS nom_unite_arrivee " +
+                "FROM conversion c " +
+                "LEFT JOIN unite u1 ON c.id_unite_mere = u1.id_unite " +
+                "LEFT JOIN unite u2 ON u2.id_unite_mere = u1.id_unite " +
+                "WHERE c.id_unite_mere = ? AND c.id_medicament = ?";
+        try (PreparedStatement prst = con.prepareStatement(sql)) {
+            prst.setString(1, idUniteMere);
+            prst.setString(2, idMedicament);
+            ResultSet res = prst.executeQuery();
+            if (res.next()) {
+                Unite uniteDepart = new Unite(res.getString("id_unite_depart"), res.getString("nom_unite_depart"));
+                Unite uniteArrivee = res.getString("id_unite_arrivee") != null
+                        ? new Unite(res.getString("id_unite_arrivee"), res.getString("nom_unite_arrivee"))
+                        : null;
+                double quantite = res.getDouble("quantite");
+                Medicament medicament = new Medicament(idMedicament);
+                conversion = new Conversion(medicament, uniteDepart, uniteArrivee, quantite);
+            }
+        } catch (Exception e) {
+            throw new Exception("Erreur lors de la recuperation de la conversion : " + e.getMessage());
+        }
+        return conversion;
+    }
+
 }

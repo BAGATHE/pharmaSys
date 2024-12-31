@@ -1,5 +1,11 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import repository.UniteRepository;
+
 public class Unite {
 
     private String idUnite;
@@ -43,6 +49,27 @@ public class Unite {
 
     public void setIdUniteMere(String idUniteMere) {
         this.idUniteMere = idUniteMere;
+    }
+
+    public Unite getMere(Connection con) throws Exception {
+        String sql = "SELECT id_unite_mere FROM unite WHERE id_unite=?";
+        Unite mere = null;
+        try (PreparedStatement prst = con.prepareStatement(sql)) {
+            prst.setString(1, this.getIdUnite());
+            ResultSet res = prst.executeQuery();
+            if (res.next()) {
+                String idUniteMere = res.getString("id_unite_mere");
+                mere = UniteRepository.getById(con, idUniteMere);
+            }
+            res.close();
+        } catch (Exception e) {
+            throw new Exception("Erreur lors de la verification du type unite " + e.getMessage());
+        }
+        return mere;
+    }
+
+    public Unite cloner() {
+        return new Unite(this.getIdUnite(), this.getNom(), this.getIdUniteMere());
     }
 
 }

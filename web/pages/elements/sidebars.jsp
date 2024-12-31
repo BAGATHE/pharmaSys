@@ -149,12 +149,12 @@
             <div class="collapse" id="achatSider">
               <ul class="nav nav-collapse">
                 <li>
-                  <a class="nav-link" href="<%= request.getContextPath() %>/pages/achats/liste_fournisseur.jsp">
+                  <a class="nav-link" href="<%= request.getContextPath() %>/achat/laboratoire">
                     <span class="sub-item">faire une commande</span>
                   </a>
                 </li>
                 <li>
-                  <a href="<%= request.getContextPath() %>/pages/achats/liste.jsp">
+                  <a href="<%= request.getContextPath() %>/achat/laboratoire/list">
                     <span class="sub-item">Historique Commandes</span>
                   </a>
                 </li>
