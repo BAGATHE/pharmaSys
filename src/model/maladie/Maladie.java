@@ -1,9 +1,17 @@
-package model;
+package model.maladie;
+
+import model.Symptome;
+import model.Traitement;
 
 public class Maladie {
     private String idMaladie;
     private String nom;
     private String description;
+
+    public Maladie(String nom, String description) {
+        this.nom = nom;
+        this.description = description;
+    }
 
     public Maladie(String idMaladie) {
         this.idMaladie = idMaladie;

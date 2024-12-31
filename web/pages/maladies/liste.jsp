@@ -1,6 +1,21 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.maladie.Maladie"%>
+
+<%
+    String message = (String) request.getAttribute("message");
+    if (message != null && !message.trim().isEmpty()) {
+%>
+    <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script>
+        swal({ title: "Notification",text: "<%= message %>",icon: "info", button: "OK"});
+    </script>
+<%
+        request.setAttribute("message", "");
+    }
+%>
+
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -75,126 +90,107 @@
                 </div>
                 <div class="card-body">
                   <div class="card-sub">
-                    <form method="GET" action="/your-filter-endpoint" class="row g-3">
+                      <form method="GET" action="" class="row g-3">
                         <div class="col-3">
-                          <input type="text" class="form-control" name="maladie" placeholder="Filtrer par maladie">
+                          <input type="text" class="form-control" name="maladie" placeholder="Filtrer par maladie" value="<%= request.getParameter("maladie") != null ? request.getParameter("maladie") : "" %>">
                         </div>
                         <div class="col-3">
-                          <select class="form-select form-control-sm">
-                            <option value="">Symptomes</option>
-                            <option>1</option>
-                            <option>2</option>
-                           </select>
+                          <input type="text" class="form-control" name="symptome" placeholder="Filtrer par symptome" value="<%= request.getParameter("symptome") != null ? request.getParameter("symptome") : "" %>">
                         </div>
                         <div class="col-3">
-                          <select class="form-select form-control-sm">
-                            <option value="">Medicament</option>
-                            <option>1</option>
-                            <option>2</option>
-                           </select>
+                          <input type="text" class="form-control" name="medicament" placeholder="Filtrer par medicament" value="<%= request.getParameter("medicament") != null ? request.getParameter("medicament") : "" %>">
                         </div>
                         <div class="col-md-2">
                           <button type="submit" class="btn btn-success">Valider</button>
                         </div>
                       </form>
                   </div>
-                  <table class="table table-bordered table-head-bg-success  mt-3">
+                  <table class="table table-bordered table-head-bg-success mt-3">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th class="text-center" scope="col">maladie</th>
-                        <th class="text-center" scope="col">description</th>
-                        <th class="text-center" scope="col">symptomes & traitement</th>
-                        <th class="text-center" scope="col">action</th>
+                        <th class="text-center" scope="col">Maladie</th>
+                        <th class="text-center" scope="col">Description</th>
+                        <th class="text-center" scope="col">Symptômes & Traitement</th>
+                        <th class="text-center" scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td class="text-center">maux de tete</td>
-                        <td class="text-center">description</td>
-                        <td class="text-center">
-                          <a href="<%= request.getContextPath() %>/pages/maladies/symptome_traitement_liste.jsp"> 
-                            <button type="button" class="btn btn-info btn-sm">
-                                <i class="fas fa-eye"></i> Consulter
-                            </button>
-                        </a>
-                        </td>
-                        <td class="text-center">
-                          <a href="<%= request.getContextPath() %>/pages/maladies/update.jsp">
-                            <button type="button" class="btn btn-warning btn-sm">
-                                <i class="fas fa-edit"></i> 
-                               Modifier
-                            </button>
-                          </a>
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal1">
+                      <% 
+                        Maladie[] maladies = (Maladie[]) request.getAttribute("maladies");
+                        for (int i = 0; i < maladies.length; i++) {
+                          Maladie maladie = maladies[i];
+                      %>
+                        <tr>
+                          <td><%= maladie.getIdMaladie() %></td>
+                          <td class="text-center"><%= maladie.getNom() %></td>
+                          <td class="text-center"><%= maladie.getDescription() %></td>
+                          <td class="text-center">
+                            <a href="<%= request.getContextPath() %>/maladies/symptome_traitement_liste?idMaladie=<%= maladie.getIdMaladie() %>"> 
+                              <button type="button" class="btn btn-info btn-sm">
+                                  <i class="fas fa-eye"></i> Consulter
+                              </button>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="<%= request.getContextPath() %>/maladies/update?idMaladie=<%= maladie.getIdMaladie() %>">
+                              <button type="button" class="btn btn-warning btn-sm">
+                                  <i class="fas fa-edit"></i> Modifier
+                              </button>
+                            </a>
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= maladie.getIdMaladie() %>">
                                 <i class="fas fa-trash-alt"></i> Supprimer
                             </button>
-                            <div class="modal fade" id="deleteModal1" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="deleteModal<%= maladie.getIdMaladie() %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= maladie.getIdMaladie() %>" aria-hidden="true">
                                 <div class="modal-dialog">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+                                      <h5 class="modal-title" id="deleteModalLabel<%= maladie.getIdMaladie() %>">Confirmer la suppression</h5>
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                      cette action est irreversible.
+                                      Êtes-vous sûr de vouloir supprimer cette Maladie ?
                                     </div>
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                      <a href=""><button type="button" class="btn btn-danger">Supprimer</button></a>
+                                      <a href="<%= request.getContextPath() %>/maladies/delete?idMaladie=<%= maladie.getIdMaladie() %>">
+                                        <button type="button" class="btn btn-danger">Supprimer</button>
+                                      </a>
                                     </div>
                                   </div>
                                 </div>
                             </div>
-                        </td>
-                      </tr>
+                          </td>
+                        </tr>
+                      <% } %>
                     </tbody>
                   </table>
 
-                    <!-- Pagination -->
-        <nav>
-            <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
+                  <!-- Pagination -->
+                  <nav>
+                    <ul class="pagination justify-content-center">
+                      <% if ((int) request.getAttribute("currentPage") > 1) { %>
+                        <li class="page-item">
+                          <a class="page-link" href="<%= request.getContextPath() %>/maladies/liste?page=<%= (int) request.getAttribute("currentPage") - 1 %>">Précédent</a>
+                        </li>
+                      <% } %>
+                      <% for (int i = 1; i <= (int) request.getAttribute("totalPages"); i++) { %>
+                        <li class="page-item <%= (i == (int) request.getAttribute("currentPage")) ? "active" : "" %>">
+                          <a class="page-link" href="<%= request.getContextPath() %>/maladies/liste?page=<%= i %>"><%= i %></a>
+                        </li>
+                      <% } %>
+                      <% if ((int) request.getAttribute("currentPage") < (int) request.getAttribute("totalPages")) { %>
+                        <li class="page-item">
+                          <a class="page-link" href="<%= request.getContextPath() %>/maladies/liste?page=<%= (int) request.getAttribute("currentPage") + 1 %>">Suivant</a>
+                        </li>
+                      <% } %>
+                    </ul>
+                  </nav>
+
                 </div>
               </div>
-            
-              
             </div>
-            
           </div>
-
-         
-
-
-
         </div>
-
-       
-
-
-
-
-
-
-
-
-
       </div>
 <%@ include file="../elements/footer.jsp" %>

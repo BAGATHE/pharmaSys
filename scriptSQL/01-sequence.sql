@@ -1,3 +1,4 @@
+-- Active: 1735576927584@@127.0.0.1@5432@pharmacie
 -- Séquences pour les tables
 CREATE SEQUENCE seq_maladies  START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE seq_medicaments  START WITH 1 INCREMENT BY 1;

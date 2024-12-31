@@ -1,5 +1,7 @@
 package model;
 
+import model.maladie.Maladie;
+
 public class Traitement {
     private Maladie Maladie;
     private Medicament Medicament;

@@ -1,4 +1,4 @@
-package model;
+package model.maladie;
 
 public class MaladieSymptome {
     private String idMaladie;
