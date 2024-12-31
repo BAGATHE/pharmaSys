@@ -19,7 +19,6 @@ import model.maladie.MaladieFilter;
 @WebServlet("/maladies/update")
 public class MaladieUpdateController extends HttpServlet {
 
-    // Afficher le formulaire de modification de la maladie
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,21 +26,18 @@ public class MaladieUpdateController extends HttpServlet {
         try {
             connection = Connexion.connect();
 
-            // Récupérer l'ID de la maladie à modifier
             String maladieIdParam = request.getParameter("idMaladie");
             if (maladieIdParam == null || maladieIdParam.isEmpty()) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID de la maladie manquant.");
                 return;
             }
 
-            // Récupérer les informations de la maladie depuis la base de données
             Maladie maladie = MaladieRepository.getById(connection, maladieIdParam);
             if (maladie == null) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Maladie non trouvée.");
                 return;
             }
 
-            // Passer les données de la maladie à la vue JSP pour l'afficher
             request.setAttribute("maladie", maladie);
             request.getRequestDispatcher("/pages/maladies/update.jsp").forward(request, response);
 
@@ -59,7 +55,6 @@ public class MaladieUpdateController extends HttpServlet {
         }
     }
 
-    // Traiter la mise à jour de la maladie
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -85,12 +80,10 @@ public class MaladieUpdateController extends HttpServlet {
             request.setAttribute("message", message);
             connection.commit();
 
-            // Paramètres de pagination pour rediriger vers la liste après suppression
             String pageParam = request.getParameter("page");
             int pageSize = 3; // Nombre d'éléments par page
             int page = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
 
-            // Récupération des paramètres de filtre (si présents)
             String nomMaladieFilter = null;
             String nomSymptome = null;
             String medicament = null;
@@ -98,23 +91,18 @@ public class MaladieUpdateController extends HttpServlet {
             // Création du filtre pour la recherche
             MaladieFilter filter = new MaladieFilter(nomMaladieFilter, nomSymptome, medicament, page, pageSize);
 
-            // Récupérer le nombre total d'enregistrements après suppression
             int totalRecords = MaladieRepository.countMaladie(connection, filter);
 
-            // Calcul du nombre total de pages
             int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
-            // Récupération de la liste des maladies après suppression
             Maladie[] maladiesArray = MaladieRepository.getAllMaladies(connection, filter);
 
-            // Passer les données à la vue JSP
             request.setAttribute("maladies", maladiesArray);
             request.setAttribute("totalRecords", totalRecords);
             request.setAttribute("currentPage", page);
             request.setAttribute("pageSize", pageSize);
             request.setAttribute("totalPages", totalPages);
 
-            // Rediriger vers la page JSP d'affichage de la liste mise à jour
             jakarta.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/maladies/liste.jsp");
             dispatcher.forward(request, response);
 

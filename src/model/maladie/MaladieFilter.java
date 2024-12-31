@@ -7,13 +7,11 @@ public class MaladieFilter {
     private int page;
     private int pageSize;
 
-    // Constructeur par défaut
     public MaladieFilter() {
         this.page = 1; // Page par défaut
         this.pageSize = 10; // Taille de page par défaut
     }
 
-    // Constructeur avec tous les paramètres
     public MaladieFilter(String nom, String nomSymptome, String medicament, int page, int pageSize) {
         this.nom = nom;
         this.nomSymptome = nomSymptome;
@@ -22,7 +20,6 @@ public class MaladieFilter {
         setPageSize(pageSize); // Utilisation du setter pour validation
     }
 
-    // Getters et Setters
     public String getNom() {
         return nom;
     }

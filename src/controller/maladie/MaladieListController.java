@@ -29,7 +29,6 @@ public class MaladieListController extends HttpServlet {
         try {
             connection = Connexion.connect();
 
-            // Récupération des paramètres de recherche
             String nomMaladie = (request.getParameter("nom") != null
                     && !request.getParameter("nom").isEmpty()
                     && !"null".equalsIgnoreCase(request.getParameter("nom")))
@@ -48,31 +47,24 @@ public class MaladieListController extends HttpServlet {
                             ? request.getParameter("medicament")
                             : null;
 
-            // Paramètres de pagination
             String pageParam = request.getParameter("page");
             int pageSize = 3; // Nombre d'éléments par page
             int page = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
 
-            // Création du filtre pour la recherche
             MaladieFilter filter = new MaladieFilter(nomMaladie, nomSymptome, medicament, page, pageSize);
 
-            // Récupérer le nombre total d'enregistrements
             int totalRecords = MaladieRepository.countMaladie(connection, filter);
 
-            // Calcul du nombre total de pages
             int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
-            // Récupération de la liste des maladies
             Maladie[] maladiesArray = MaladieRepository.getAllMaladies(connection, filter);
 
-            // Passer les données à la vue JSP
             request.setAttribute("maladies", maladiesArray);
             request.setAttribute("totalRecords", totalRecords);
             request.setAttribute("currentPage", page);
             request.setAttribute("pageSize", pageSize);
             request.setAttribute("totalPages", totalPages);
 
-            // Rediriger vers la page JSP d'affichage
             jakarta.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/maladies/liste.jsp");
             dispatcher.forward(request, response);
 

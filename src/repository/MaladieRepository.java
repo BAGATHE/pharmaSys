@@ -24,21 +24,21 @@ public class MaladieRepository {
                         rs.getString("description"));
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Log error
-            throw e; // Rethrow the exception if needed
+            e.printStackTrace(); 
+            throw e; 
         } finally {
             if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException e) {
-                    e.printStackTrace(); // Log error while closing ResultSet
+                    e.printStackTrace(); 
                 }
             }
             if (stmt != null) {
                 try {
                     stmt.close();
                 } catch (SQLException e) {
-                    e.printStackTrace(); // Log error while closing PreparedStatement
+                    e.printStackTrace(); 
                 }
             }
         }
@@ -55,18 +55,18 @@ public class MaladieRepository {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                return 1; // succès
+                return 1; 
             }
-            return 0; // échec
+            return 0;
         } catch (SQLException e) {
-            e.printStackTrace(); // Log error
-            throw e; // Rethrow the exception if needed
+            e.printStackTrace(); 
+            throw e; 
         } finally {
             if (stmt != null) {
                 try {
                     stmt.close();
                 } catch (SQLException e) {
-                    e.printStackTrace(); // Log error while closing PreparedStatement
+                    e.printStackTrace(); 
                 }
             }
         }
@@ -83,18 +83,18 @@ public class MaladieRepository {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                return 1; // succès
+                return 1; 
             }
-            return 0; // échec
+            return 0;
         } catch (SQLException e) {
-            e.printStackTrace(); // Log error
-            throw e; // Rethrow the exception if needed
+            e.printStackTrace(); 
+            throw e; 
         } finally {
             if (stmt != null) {
                 try {
                     stmt.close();
                 } catch (SQLException e) {
-                    e.printStackTrace(); // Log error while closing PreparedStatement
+                    e.printStackTrace(); 
                 }
             }
         }
@@ -109,18 +109,18 @@ public class MaladieRepository {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                return 1; // succès
+                return 1; 
             }
-            return 0; // échec
+            return 0;
         } catch (SQLException e) {
-            e.printStackTrace(); // Log error
-            throw e; // Rethrow the exception if needed
+            e.printStackTrace(); 
+            throw e; 
         } finally {
             if (stmt != null) {
                 try {
                     stmt.close();
                 } catch (SQLException e) {
-                    e.printStackTrace(); // Log error while closing PreparedStatement
+                    e.printStackTrace(); 
                 }
             }
         }
@@ -130,7 +130,6 @@ public class MaladieRepository {
         List<Object> parameters = new ArrayList<>();
         ArrayList<Maladie> maladieList = new ArrayList<>();
 
-        // Construction de la requête SQL avec les filtres
         StringBuilder query = new StringBuilder(
                 "SELECT m.id_maladie, m.nom AS nom_maladie, m.description AS description_maladie " +
                         "FROM maladies m " +
@@ -140,19 +139,16 @@ public class MaladieRepository {
                         "LEFT JOIN medicaments med ON t.id_medicament = med.id_medicament " +
                         "WHERE 1=1");
 
-        // Ajout du filtre pour le nom de la maladie
         if (filter.getNom() != null && !filter.getNom().isEmpty()) {
             query.append(" AND m.nom ILIKE ?");
             parameters.add("%" + filter.getNom() + "%");
         }
 
-        // Ajout du filtre pour le nom du symptôme
         if (filter.getNomSymptome() != null && !filter.getNomSymptome().isEmpty()) {
             query.append(" AND s.nom ILIKE ?");
             parameters.add("%" + filter.getNomSymptome() + "%");
         }
 
-        // Ajout du filtre pour le nom du médicament
         if (filter.getMedicament() != null && !filter.getMedicament().isEmpty()) {
             query.append(" AND med.nom ILIKE ?");
             parameters.add("%" + filter.getMedicament() + "%");
@@ -164,20 +160,16 @@ public class MaladieRepository {
         parameters.add(filter.getPageSize());
         parameters.add(offset);
 
-        // Initialisation des ressources
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
-        // Exécution de la requête
         try {
             statement = connection.prepareStatement(query.toString());
-            // Paramétrage des valeurs
             for (int i = 0; i < parameters.size(); i++) {
                 statement.setObject(i + 1, parameters.get(i));
             }
 
             resultSet = statement.executeQuery();
-            // Traitement des résultats
             while (resultSet.next()) {
                 String idMaladie = resultSet.getString("id_maladie");
                 String nomMaladie = resultSet.getString("nom_maladie");
@@ -201,7 +193,7 @@ public class MaladieRepository {
                     statement.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace(); // Log error while closing resources
+                e.printStackTrace();  
             }
         }
 
@@ -220,19 +212,16 @@ public class MaladieRepository {
                         "LEFT JOIN medicaments med ON t.id_medicament = med.id_medicament " +
                         "WHERE 1=1");
 
-        // Filtre par nom de la maladie
         if (filter.getNom() != null && !filter.getNom().isEmpty()) {
             query.append(" AND m.nom LIKE ?");
             parameters.add("%" + filter.getNom() + "%");
         }
 
-        // Filtre par nom de symptôme
         if (filter.getNomSymptome() != null && !filter.getNomSymptome().isEmpty()) {
             query.append(" AND s.nom LIKE ?");
             parameters.add("%" + filter.getNomSymptome() + "%");
         }
 
-        // Filtre par médicament
         if (filter.getMedicament() != null && !filter.getMedicament().isEmpty()) {
             query.append(" AND med.nom LIKE ?");
             parameters.add("%" + filter.getMedicament() + "%");
@@ -263,7 +252,7 @@ public class MaladieRepository {
                     statement.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace(); // Log error while closing resources
+                e.printStackTrace();  
             }
         }
 

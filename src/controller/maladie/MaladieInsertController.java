@@ -23,26 +23,19 @@ public class MaladieInsertController extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try (Connection connection = Connexion.connect()) {
-            // Récupération des paramètres de la requête
             String nom = request.getParameter("nom");
             String description = request.getParameter("description");
             
-            // Création d'un objet Maladie
             Maladie maladie = new Maladie(nom, description);
 
-            // Insertion de la maladie dans la base de données
             int result = MaladieRepository.save(connection, maladie);
 
-            // Message de retour selon le résultat de l'insertion
             String message = (result == 1) ? "Insertion réussie" : "Insertion invalide";
 
-            // Passer le message à la vue JSP
             request.setAttribute("message", message);
 
-            // Validation de la transaction
             connection.commit();
 
-            // Redirection vers la page JSP pour afficher le résultat
             RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/maladies/insertion.jsp");
             dispatcher.forward(request, response);
         } catch (SQLException e) {
@@ -60,7 +53,6 @@ public class MaladieInsertController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Redirection vers la page JSP pour l'insertion
         RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/maladies/insertion.jsp");
         dispatcher.forward(request, response);
     }
