@@ -1,7 +1,14 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
+<%@page import="model.maladie.Maladie"%>
 <%@ include file="../elements/sidebars.jsp" %>
+
+<%
+    Maladie maladie = (Maladie) request.getAttribute("maladie");
+%>
+
+
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -71,7 +78,7 @@
             <div class="offset-2 col-8">
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
-                  <a href="<%= request.getContextPath() %>/pages/maladies/liste.jsp"><button type="button" class="btn btn-info">retour</button></a>
+                  <a href="<%= request.getContextPath() %>/maladies/liste"><button type="button" class="btn btn-info">retour</button></a>
                   <div class="card-title"><h2 class="text-center" style="color: white;">Mise a Jour Maladie</h2></div>
                 </div>
                 <!--Debut formulaire-->
@@ -79,29 +86,35 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="offset-1 col-10">
-
-                        <div class="row">
-                            <div class="col-10 offset-1">
-                              <div class="form-group">
-                                <label for="nom">maladie</label>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Entrer maladie"
-                                  required
-                                />
-                              </div>
-                            </div>
+                      <input
+                          type="hidden"
+                          value="<%= maladie.getIdMaladie() %>"
+                          name="idMaladie"
+                      />
+                      <div class="row">
+                        <div class="col-10 offset-1">
+                          <div class="form-group">
+                            <label for="nom">maladie</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              value="<%= maladie.getNom() %>"
+                              required
+                              name="nom"
+                            />
                           </div>
-                          <div class="row">
-                            <div class="col-10 offset-1">
-                                <div class="form-group">
-                                    <label for="description">description</label>
-                                    <textarea class="form-control"  rows="5">
-                                    </textarea>
-                                </div>
-                            </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-10 offset-1">
+                          <div class="form-group">
+                            <label for="description">description</label>
+                              <textarea name="description" class="form-control"  rows="5" value="">
+                                <%= maladie.getDescription() %>
+                              </textarea>
                           </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
