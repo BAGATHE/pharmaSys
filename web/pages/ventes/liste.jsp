@@ -2,6 +2,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@ page import="model.Vente" %>
+<%
+Vente[] ventes = (Vente[]) request.getAttribute("ventes");
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -83,6 +87,12 @@
                   <div class="card-sub">
                     <form method="GET" action="/your-filter-endpoint" class="row g-3">
                         <div class="col-2">
+                          <select class="form-select form-control-sm">
+                            <option>1</option>
+                            <option>2</option>
+                        </select>
+                        </div>
+                        <div class="col-2">
                           <input type="date" class="form-control" name="date_min">
                         </div>
                         <div class="col-2">
@@ -101,20 +111,32 @@
                   </div>
                   <table class="table table-hover mt-3">
                     <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">date</th>
-                        <th scope="col">total</th>
-                      </tr>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Détail</th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td><a href="<%= request.getContextPath() %>/pages/ventes/detail_vente.jsp">mouvement</a></td>
-                        <td>27/02/12</td>
-                        <td><span class="fw-bold">750,000 Ar</span></td>
-                      </tr>
+                        <% if (ventes != null && ventes.length > 0) { 
+                            for (Vente vente : ventes) { %>
+                                <tr>
+                                    <td><%= vente.getDateVente() %></td>
+                                    <td><span class="fw-bold"><%= String.format("%,.2f", vente.getTotal()) %> Ar</span></td>
+                                    <td>
+                                        <a href="<%= request.getContextPath() %>/vente/detail?id_vente=<%= vente.getIdVente() %>" class="btn btn-primary btn-sm">
+                                            Voir détail
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% }
+                        } else { %>
+                            <tr>
+                                <td colspan="4" class="text-center">Aucun vente trouvé</td>
+                            </tr>
+                        <% } %>
                     </tbody>
-                  </table>
+                </table>
 
                     <!-- Pagination -->
         <nav>

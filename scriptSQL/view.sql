@@ -54,7 +54,6 @@ JOIN
 LEFT JOIN 
     unites u ON um.id_unite = u.id_unite_mere;
 
-
 CREATE VIEW medicament_details AS
 SELECT 
     ml.id_medicament,

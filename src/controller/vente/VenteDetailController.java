@@ -1,4 +1,4 @@
-package controller.unite;
+package controller.vente;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,22 +12,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import repository.UniteRepository;
+import model.VenteDetail;
+import repository.VenteDetailRepository;
 
-@WebServlet("/unite/delete")
-public class UniteDeleteController extends HttpServlet {
-    /*** DELETE ***/
+@WebServlet("/vente/detail")
+public class VenteDetailController extends HttpServlet {
+    /*** GET ***/
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try (Connection connection = Connexion.connect()) {
-
-            String id_unite = request.getParameter("id_unite");
-            UniteRepository.delete(connection, id_unite);
-            request.setAttribute("unites", UniteRepository.getAllWithParents(connection));
-            connection.commit();
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/unite/liste.jsp");
+            String id_vente = (String) request.getParameter("id_vente");
+            VenteDetail[] vente_details = VenteDetailRepository.getByIdVente(connection, id_vente);
+            request.setAttribute("vente_details", vente_details);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/ventes/detail_vente.jsp");
             dispatcher.forward(request, response);
         } catch (SQLException e) {
             out.print(e.getMessage());
@@ -38,6 +37,5 @@ public class UniteDeleteController extends HttpServlet {
             e.printStackTrace();
             throw new ServletException("Erreur générale lors du traitement de la requête", e);
         }
-
     }
 }

@@ -2,6 +2,10 @@ temp_src/
 bin/
 # Ignorer deploy.bat
 deploy.bat
+deploy.sh
+build.bat
+build.sh
+
 
 # Ignorer Connexion.java
 src/connection/Connexion.java
