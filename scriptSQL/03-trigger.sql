@@ -28,9 +28,9 @@ BEGIN
    SET total = (
       SELECT COALESCE(SUM(quantite * prix_unitaire * (1 - COALESCE(reduction, 0) / 100)), 0)
       FROM vente_details
-      WHERE ide_vente = NEW.ide_vente
+      WHERE id_vente = NEW.id_vente
    )
-   WHERE ide_vente = NEW.ide_vente;
+   WHERE id_vente = NEW.id_vente;
 
    RETURN NEW;
 END;

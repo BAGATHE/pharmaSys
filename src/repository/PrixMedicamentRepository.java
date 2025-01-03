@@ -155,4 +155,33 @@ public class PrixMedicamentRepository {
             return rowsAffected > 0 ? 1 : 0;
         }
     }
+
+    public static PrixMedicament getPrixById(Connection conn, String idMedicament, String idUnite) throws SQLException {
+        String query = "SELECT * FROM v_prix_medicaments WHERE id_medicament = ? and id_unite=?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, idMedicament);
+            stmt.setString(2, idUnite);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Medicament medicament = new Medicament(
+                            rs.getString("id_medicament"),
+                            rs.getString("nom_medicament"),
+                            rs.getString("description_medicament"));
+
+                    Unite unite = new Unite(
+                            rs.getString("id_unite"),
+                            rs.getString("nom_unite"),
+                            rs.getString("id_unite_mere"));
+                    PrixMedicament prixMedicament = new PrixMedicament(
+                            rs.getString("id_prix_medicament"),
+                            medicament,
+                            rs.getDouble("prix_vente_unitaire"),
+                            unite);
+                    return prixMedicament;
+                }
+            }
+        }
+        return null;
+    }
 }

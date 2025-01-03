@@ -93,8 +93,8 @@ public class ConversionRepository {
                 "u1.id_unite AS id_unite_depart, u1.nom AS nom_unite_depart, " +
                 "u2.id_unite AS id_unite_arrivee, u2.nom AS nom_unite_arrivee " +
                 "FROM conversion c " +
-                "LEFT JOIN unite u1 ON c.id_unite_mere = u1.id_unite " +
-                "LEFT JOIN unite u2 ON u2.id_unite_mere = u1.id_unite " +
+                "LEFT JOIN unites u1 ON c.id_unite_mere = u1.id_unite " +
+                "LEFT JOIN unites u2 ON u2.id_unite_mere = u1.id_unite " +
                 "WHERE c.id_unite_mere = ? AND c.id_medicament = ?";
         try (PreparedStatement prst = con.prepareStatement(sql)) {
             prst.setString(1, idUniteMere);

@@ -52,7 +52,7 @@ public class Unite {
     }
 
     public Unite getMere(Connection con) throws Exception {
-        String sql = "SELECT id_unite_mere FROM unite WHERE id_unite=?";
+        String sql = "SELECT id_unite_mere FROM unites WHERE id_unite=?";
         Unite mere = null;
         try (PreparedStatement prst = con.prepareStatement(sql)) {
             prst.setString(1, this.getIdUnite());

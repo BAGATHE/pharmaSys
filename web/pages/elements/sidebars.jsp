@@ -173,12 +173,12 @@
             <div class="collapse" id="venteSider">
               <ul class="nav nav-collapse">
                 <li>
-                  <a class="nav-link" href="<%= request.getContextPath() %>/pages/ventes/insertion.jsp">
+                  <a class="nav-link" href="<%= request.getContextPath() %>/vente/medicament">
                     <span class="sub-item">Insertion</span>
                   </a>
                 </li>
                 <li>
-                  <a href="<%= request.getContextPath() %>/pages/ventes/liste.jsp">
+                  <a href="<%= request.getContextPath() %>/vente/list">
                     <span class="sub-item">Liste</span>
                   </a>
                 </li>
@@ -198,7 +198,12 @@
               <ul class="nav nav-collapse">
                 <li>
                   <a href="<%= request.getContextPath() %>/pages/stock/etat_stock.jsp">
-                    <span class="sub-item">Etat Stock produit</span>
+                    <span class="sub-item">Etat Stock </span>
+                  </a>
+                </li>
+                <li>
+                  <a href="<%= request.getContextPath() %>/pages/stock/etat_stock.jsp">
+                    <span class="sub-item">Mouvement Stock</span>
                   </a>
                 </li>
               </ul>
