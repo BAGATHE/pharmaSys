@@ -35,9 +35,23 @@ public class MaladieDeleteController extends HttpServlet {
                 return;
             }
 
+            String message = null;
 
-            MaladieRepository.delete(connection, maladieIdParam);
-            connection.commit();
+
+            try {
+                int result = MaladieRepository.delete(connection, maladieIdParam);
+                
+                if (result > 0) {
+                    connection.commit();
+                    message = "Maladie supprimée avec succès.";
+                } else {
+                    connection.rollback();
+                    message = "Aucune maladie trouvée avec l'ID spécifié.";
+                }
+            } catch (Exception e) {
+                connection.rollback();
+                message = "Erreur lors de la suppression : Violation des Relations ";
+            }
 
             String pageParam = request.getParameter("page");
             int pageSize = 3; // Nombre d'éléments par page
@@ -55,6 +69,7 @@ public class MaladieDeleteController extends HttpServlet {
 
             Maladie[] maladiesArray = MaladieRepository.getAllMaladies(connection, filter);
 
+            request.setAttribute("message", message);
             request.setAttribute("maladies", maladiesArray);
             request.setAttribute("totalRecords", totalRecords);
             request.setAttribute("currentPage", page);

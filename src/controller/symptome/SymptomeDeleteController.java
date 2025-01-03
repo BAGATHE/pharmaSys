@@ -29,6 +29,23 @@ public class SymptomeDeleteController extends HttpServlet {
 
             String pageParam = request.getParameter("page");
             String pageSizeParam = request.getParameter("pageSize");
+            String id_Symptome = request.getParameter("id_symptomes");
+            String message = null;
+
+            try {
+                 int result = SymptomeRepository.delete(connection, id_Symptome);
+
+                if (result > 0) {
+                    connection.commit();
+                    message = "Symptome supprimé avec succès.";
+                } else {
+                    connection.rollback();
+                    message = "Aucune Symptome trouvé avec l'ID spécifié.";
+                }
+            } catch (Exception e) {
+                connection.rollback();
+                message = "Erreur lors de la suppression : Violation des Relations ";
+            }
 
             if (pageParam != null) {
                 page = Integer.parseInt(pageParam);
@@ -45,14 +62,11 @@ public class SymptomeDeleteController extends HttpServlet {
             int totalItems = SymptomeRepository.getTotalCount(connection);
             int totalPages = (int) Math.ceil((double) totalItems / pageSize);
 
-            // Ajouter les données dans la requête
+            request.setAttribute("message", message);
             request.setAttribute("symptomes", symptomes);
             request.setAttribute("currentPage", page);
             request.setAttribute("totalPages", totalPages);
 
-            String id_Symptome = request.getParameter("id_symptomes");
-            SymptomeRepository.delete(connection, id_Symptome);
-            connection.commit();
             RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/symptomes/liste.jsp");
             dispatcher.forward(request, response);
         } catch (SQLException e) {

@@ -29,10 +29,10 @@ public class MaladieListController extends HttpServlet {
         try {
             connection = Connexion.connect();
 
-            String nomMaladie = (request.getParameter("nom") != null
-                    && !request.getParameter("nom").isEmpty()
-                    && !"null".equalsIgnoreCase(request.getParameter("nom")))
-                            ? request.getParameter("nom")
+            String nomMaladie = (request.getParameter("maladie") != null
+                    && !request.getParameter("maladie").isEmpty()
+                    && !"null".equalsIgnoreCase(request.getParameter("maladie")))
+                            ? request.getParameter("maladie")
                             : null;
 
             String nomSymptome = (request.getParameter("symptome") != null

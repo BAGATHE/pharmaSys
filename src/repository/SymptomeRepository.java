@@ -9,6 +9,51 @@ import java.util.List;
 import model.Symptome;
 
 public class SymptomeRepository {
+
+    public static Symptome[] getSymptomeByIdMaladie(Connection conn, String id) throws SQLException {
+        String query = "SELECT " +
+                       "ms.id_symptomes AS id_symptome, " +
+                       "s.nom AS nom_symptom " +
+                       "FROM maladies_symptomes ms " +
+                       "INNER JOIN symptomes s " +
+                       "ON ms.id_symptomes = s.id_symptomes " +
+                       "WHERE ms.id_maladie = ?";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Symptome> symptomes = new ArrayList<>();
+        try {
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, id);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Symptome temp = new Symptome(
+                        rs.getString("id_symptome"),
+                        rs.getString("nom_symptom"));
+                symptomes.add(temp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return symptomes.toArray(new Symptome[0]);
+    }
+    
+
     public static Symptome[] getByNom(Connection conn, String nom, int startIndex, int pageSize) throws SQLException {
         List<Symptome> symptomes = new ArrayList<>();
         String query = "SELECT * FROM symptomes WHERE nom LIKE ? LIMIT ? OFFSET ?";
