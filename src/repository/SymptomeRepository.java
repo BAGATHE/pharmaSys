@@ -6,18 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Symptome;
+
+import model.maladie.Symptome;
 
 public class SymptomeRepository {
 
     public static Symptome[] getSymptomeByIdMaladie(Connection conn, String id) throws SQLException {
         String query = "SELECT " +
-                       "ms.id_symptomes AS id_symptome, " +
-                       "s.nom AS nom_symptom " +
-                       "FROM maladies_symptomes ms " +
-                       "INNER JOIN symptomes s " +
-                       "ON ms.id_symptomes = s.id_symptomes " +
-                       "WHERE ms.id_maladie = ?";
+                "ms.id_symptomes AS id_symptome, " +
+                "s.nom AS nom_symptom " +
+                "FROM maladies_symptomes ms " +
+                "INNER JOIN symptomes s " +
+                "ON ms.id_symptomes = s.id_symptomes " +
+                "WHERE ms.id_maladie = ?";
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Symptome> symptomes = new ArrayList<>();
@@ -52,7 +53,6 @@ public class SymptomeRepository {
         }
         return symptomes.toArray(new Symptome[0]);
     }
-    
 
     public static Symptome[] getByNom(Connection conn, String nom, int startIndex, int pageSize) throws SQLException {
         List<Symptome> symptomes = new ArrayList<>();

@@ -3,7 +3,7 @@
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
 <%@page import="model.maladie.Maladie"%>
-<%@page import="model.Medicament"%>
+<%@page import="model.medicament.Medicament"%>
 
 <% 
   Maladie maladie = (Maladie) request.getAttribute("maladie"); 

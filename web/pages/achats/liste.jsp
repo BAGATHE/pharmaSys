@@ -2,7 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
-<%@ page import="model.Achat" %>
+<%@ page import="model.achat.Achat" %>
 <%
     Achat[] achats = (Achat[]) request.getAttribute("achats");
 %>

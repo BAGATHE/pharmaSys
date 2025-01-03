@@ -2,8 +2,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
-<%@page import="model.Unite"%>
-<%@page import="model.Medicament"%>
+<%@page import="model.configuration.Unite"%>
+<%@page import="model.medicament.Medicament"%>
 <%
  
     Unite[] unites = (Unite[]) request.getAttribute("unites");

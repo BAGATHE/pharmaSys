@@ -2,7 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
-<%@page import="model.Unite"%>
+<%@page import="model.configuration.Unite"%>
 <%
     Unite[] unites = (Unite[]) request.getAttribute("unites");
     String message = (String) request.getAttribute("message");

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Medicament;
+import model.medicament.Medicament;
 
 public class MedicamentRepository {
 

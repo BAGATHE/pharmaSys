@@ -1,4 +1,8 @@
-package model;
+package model.achat;
+
+import model.configuration.Unite;
+import model.medicament.Laboratoire;
+import model.medicament.Medicament;
 
 public class AchatDetail {
     private String idAchatDetail;

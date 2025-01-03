@@ -1,4 +1,6 @@
-package model;
+package model.medicament;
+
+import model.configuration.Unite;
 
 public class PrixMedicament {
     private String idPrixMedicament;

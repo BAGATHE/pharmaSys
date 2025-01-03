@@ -12,7 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Symptome;
+import model.maladie.Symptome;
 import repository.SymptomeRepository;
 
 @WebServlet("/symptomes/liste")

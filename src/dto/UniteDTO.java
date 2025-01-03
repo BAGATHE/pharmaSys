@@ -1,6 +1,6 @@
 package dto;
 
-import model.Unite;
+import model.configuration.Unite;
 
 public class UniteDTO {
     private Unite uniteParent;

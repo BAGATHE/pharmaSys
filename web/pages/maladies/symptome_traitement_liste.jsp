@@ -2,8 +2,8 @@
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
 <%@page import="model.maladie.Maladie"%>
-<%@page import="model.Symptome"%>
-<%@page import="model.Traitement"%>
+<%@page import="model.maladie.Symptome"%>
+<%@page import="model.maladie.Traitement"%>
 
 
 <% 

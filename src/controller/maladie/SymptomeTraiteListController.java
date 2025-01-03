@@ -16,9 +16,9 @@ import connection.Connexion;
 import repository.MaladieRepository;
 import repository.SymptomeRepository;
 import repository.TraitementRepository;
-import model.Symptome;
-import model.Traitement;
 import model.maladie.Maladie;
+import model.maladie.Symptome;
+import model.maladie.Traitement;
 
 @WebServlet("/maladies/symptome_traitement_liste")
 public class SymptomeTraiteListController extends HttpServlet {

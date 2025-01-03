@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
-<%@page import="model.MedicamentLaboratoire"%>
+<%@page import="model.medicament.MedicamentLaboratoire"%>
 <% 
    MedicamentLaboratoire[] medicament_laboratoires = (MedicamentLaboratoire[]) request.getAttribute("medicament_laboratoires");
    String id_laboratoire = (String) request.getAttribute("id_laboratoire");

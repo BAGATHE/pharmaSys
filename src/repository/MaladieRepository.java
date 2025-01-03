@@ -49,9 +49,9 @@ public class MaladieRepository {
             stmt.setString(1, idMaladie);
             stmt.setString(2, idSymptome);
             stmt.executeUpdate();
-            
+
         } catch (SQLException e) {
-                throw e; 
+            throw e;
         } finally {
             // Fermeture explicite des ressources
             if (stmt != null) {
@@ -186,30 +186,14 @@ public class MaladieRepository {
         ArrayList<Maladie> maladieList = new ArrayList<>();
 
         StringBuilder query = new StringBuilder(
-                "SELECT m.id_maladie, m.nom AS nom_maladie, m.description AS description_maladie " +
-                        "FROM maladies m " +
-                        "LEFT JOIN maladies_symptomes ms ON m.id_maladie = ms.id_maladie " +
-                        "LEFT JOIN symptomes s ON ms.id_symptomes = s.id_symptomes " +
-                        "LEFT JOIN traitements t ON m.id_maladie = t.id_maladie " +
-                        "LEFT JOIN medicaments med ON t.id_medicament = med.id_medicament " +
+                "SELECT id_maladie, nom AS nom_maladie, description AS description_maladie " +
+                        "FROM maladies  " +
                         "WHERE 1=1");
 
         if (filter.getNom() != null && !filter.getNom().isEmpty()) {
-            query.append(" AND m.nom ILIKE ?");
+            query.append(" AND nom ILIKE ?");
             parameters.add("%" + filter.getNom() + "%");
-            System.out.println("nom :"+filter.getNom());
-        }
-
-        if (filter.getNomSymptome() != null && !filter.getNomSymptome().isEmpty()) {
-            query.append(" AND s.nom ILIKE ?");
-            parameters.add("%" + filter.getNomSymptome() + "%");
-            System.out.println("sympt:" + filter.getNomSymptome());
-        }
-
-        if (filter.getMedicament() != null && !filter.getMedicament().isEmpty()) {
-            query.append(" AND med.nom ILIKE ?");
-            parameters.add("%" + filter.getMedicament() + "%");
-            System.out.println("medocs: " + filter.getMedicament());
+            System.out.println("nom :" + filter.getNom());
         }
 
         // Pagination (limit et offset)

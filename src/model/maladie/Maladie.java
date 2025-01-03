@@ -1,8 +1,5 @@
 package model.maladie;
 
-import model.Symptome;
-import model.Traitement;
-
 public class Maladie {
     private String idMaladie;
     private String nom;

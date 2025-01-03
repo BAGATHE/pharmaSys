@@ -2,7 +2,7 @@
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
 
-<%@page import="model.PrixMedicament"%>
+<%@page import="model.medicament.PrixMedicament"%>
 
 <%
 PrixMedicament[] prix_medicaments = (PrixMedicament[]) request.getAttribute("prix_medicaments");

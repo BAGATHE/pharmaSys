@@ -1,4 +1,7 @@
-package model;
+package model.vente;
+
+import model.configuration.Unite;
+import model.medicament.Medicament;
 
 public class VenteDetail {
     private String idVente;

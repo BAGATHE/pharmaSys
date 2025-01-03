@@ -4,9 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Traitement;
 import model.maladie.Maladie;
-import model.Medicament;
+import model.maladie.Traitement;
+import model.medicament.Medicament;
 
 public class TraitementRepository {
 

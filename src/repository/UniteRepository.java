@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.UniteDTO;
-import model.Unite;
+import model.configuration.Unite;
 
 public class UniteRepository {
     public static Unite getById(Connection conn, String id) throws SQLException {

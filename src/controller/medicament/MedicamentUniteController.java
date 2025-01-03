@@ -12,9 +12,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Conversion;
-import model.Medicament;
-import model.Unite;
+import model.configuration.Conversion;
+import model.configuration.Unite;
+import model.medicament.Medicament;
 import repository.ConversionRepository;
 import repository.UniteRepository;
 

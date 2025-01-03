@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Laboratoire;
+import model.medicament.Laboratoire;
 
 public class LaboratoireRepository {
     public static int save(Connection conn, Laboratoire laboratoire) throws SQLException {

@@ -1,6 +1,11 @@
-package model;
+package model.stock;
 
 import java.sql.Date;
+
+import model.achat.Achat;
+import model.achat.AchatDetail;
+import model.vente.Vente;
+import model.vente.VenteDetail;
 
 public class MouvementStock {
     private String idMouvementStock;

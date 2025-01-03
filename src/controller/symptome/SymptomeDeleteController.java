@@ -12,7 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Symptome;
+import model.maladie.Symptome;
 import repository.SymptomeRepository;
 
 @WebServlet("/symptomes/delete")
@@ -33,7 +33,7 @@ public class SymptomeDeleteController extends HttpServlet {
             String message = null;
 
             try {
-                 int result = SymptomeRepository.delete(connection, id_Symptome);
+                int result = SymptomeRepository.delete(connection, id_Symptome);
 
                 if (result > 0) {
                     connection.commit();
