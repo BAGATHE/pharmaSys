@@ -2,6 +2,27 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.maladie.Maladie"%>
+<%@page import="model.Symptome"%>
+
+<% 
+  Maladie maladie = (Maladie) request.getAttribute("maladie"); 
+  Symptome[] symptomes = (Symptome[]) request.getAttribute("symptomes");
+%>
+
+<%
+    String message = (String) request.getAttribute("message");
+    if (message != null && !message.trim().isEmpty()) {
+%>
+    <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script>
+        swal({ title: "Notification",text: "<%= message %>",icon: "info", button: "OK"});
+    </script>
+<%
+        request.setAttribute("message", "");
+    }
+%>
+
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -70,7 +91,7 @@
             <!--bouton retour-->
             <div class="row">
                 <div class="col-3">
-                    <a href="<%= request.getContextPath() %>/pages/maladies/symptome_traitement_liste.jsp">
+                    <a href="<%= request.getContextPath() %>/maladies/symptome_traitement_liste?idMaladie=<%= maladie.getIdMaladie() %>">
                         <button type="button" class="btn btn-outline-primary">
                             <i class="fas fa-arrow-left" style="font-size: 1.5em;"></i> Retour
                         </button>
@@ -85,7 +106,7 @@
                   <div class="card-title"><h2 class="text-center" style="color: white;">ajout de symptomes</h2></div>
                 </div>
                 <!--Debut formulaire-->
-                <form action="" method="post">
+                <form action="<%= request.getContextPath() %>/maladies/maladieSymptome" method="post">
                 <div class="card-body">
                   <div class="row">
                     <div class="offset-1 col-10">
@@ -93,9 +114,9 @@
                         <div class="row">
                             <div class="col-10 offset-1">
                               <div class="form-group">
-                                <label for="nom">maladie</label>
-                                <input type="text" class="form-control" value="fievre" readonly/>
-                                <input type="hidden"  value="id_maladie" name="maladie"/>
+                                <label for="nom">Maladie</label>
+                                <input type="text" class="form-control" value="<%= maladie.getNom() %>" readonly/>
+                                <input type="hidden"  value="<%= maladie.getIdMaladie() %>" name="idMaladie"/>
                               </div>
                             </div>
                           </div>
@@ -103,12 +124,10 @@
                             <div class="col-10 offset-1">
                                 <div class="form-group">
                                     <label for="">Symptomes</label>
-                                    <select id="symptomes" multiple placeholder="Select items...">
-                                        <option value="apple">symp 1</option>
-                                        <option value="banana">symp 2</option>
-                                        <option value="orange">symp 3</option>
-                                        <option value="grape">symp 4</option>
-                                        <option value="watermelon">symp 5</option>
+                                    <select id="symptomes" name="symptomes[]" multiple placeholder="Select items...">
+                                        <% for(int i = 0; i < symptomes.length; i++) { %>
+                                            <option value="<%= symptomes[i].getIdSymptome() %>"><%= symptomes[i].getNom() %></option>
+                                        <% } %>
                                     </select>
                                   </div>
                             </div>
