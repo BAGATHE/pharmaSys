@@ -15,9 +15,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Medicament;
+import model.Traitement;
 import model.maladie.Maladie;
 import repository.MaladieRepository;
 import repository.MedicamentRepository;
+import repository.TraitementRepository;
 
 @WebServlet("/maladies/maladieTraitement")
 public class MaladieTraiteController extends HttpServlet {
@@ -66,16 +68,20 @@ public class MaladieTraiteController extends HttpServlet {
         try {
             connection = Connexion.connect();
             String idMaladie = request.getParameter("idMaladie");
-            String[] symptomesIds = request.getParameterValues("symptomes[]");
+            String[] medicamentsIds = request.getParameterValues("medicaments[]");
+            String[] efficacites = request.getParameterValues("efficacite[]");
             String message = null;
 
-            if (symptomesIds != null) {
-                for (String id : symptomesIds) {
-                    MaladieRepository.insertMaladieSymptome(connection, idMaladie, id);
+            if (medicamentsIds != null && efficacites != null) {
+                for (int i = 0; i < medicamentsIds.length; i++) {
+                    Maladie m = MaladieRepository.getById(connection, idMaladie);
+                    Medicament medoc = MedicamentRepository.getById(connection, medicamentsIds[i]);
+                    Traitement t = new Traitement(m, medoc, Integer.parseInt(efficacites[i]));
+                    TraitementRepository.save(connection, t);
                 }
-                message = "Insertion reussie.";
+                message = "Ajouter avec succes.";
             } else {
-                message = "Aucun symptôme sélectionné.";
+                message = "Aucun Medicament sélectionné.";
             }
 
             connection.commit();
@@ -87,7 +93,7 @@ public class MaladieTraiteController extends HttpServlet {
             e.printStackTrace();
             try {
                 if (connection != null) {
-                    connection.rollback(); 
+                    connection.rollback();
                 }
             } catch (SQLException rollbackEx) {
                 Logger.getLogger(SymptomeTraiteListController.class.getName()).log(Level.SEVERE,

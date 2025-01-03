@@ -11,7 +11,8 @@ import model.Medicament;
 public class TraitementRepository {
 
     public static Traitement[] getByMaladieId(Connection conn, String idMaladie) throws SQLException {
-        String query = "SELECT t.efficacite, m.id_medicament, m.nom AS nom_medicament, m.description AS description_medicament, "+
+        String query = "SELECT t.efficacite, m.id_medicament, m.nom AS nom_medicament, m.description AS description_medicament, "
+                +
                 "mal.id_maladie, mal.nom AS nom_maladie, mal.description AS description_maladie " +
                 "FROM traitements t " +
                 "JOIN maladies mal ON t.id_maladie = mal.id_maladie " +
@@ -64,6 +65,41 @@ public class TraitementRepository {
             }
         }
 
+        return traitements.toArray(new Traitement[0]);
+    }
+
+    public static Traitement[] getAll(Connection conn) throws SQLException {
+        List<Traitement> traitements = new ArrayList<>();
+        String query = "SELECT * FROM traitements";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = conn.prepareStatement(query);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Maladie maladie = MaladieRepository.getById(conn, rs.getString("id_maladie"));
+                Medicament medicament = MedicamentRepository.getById(conn, rs.getString("id_medicament"));
+                traitements.add(new Traitement(maladie, medicament, rs.getInt("efficacite")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return traitements.toArray(new Traitement[0]);
     }
 

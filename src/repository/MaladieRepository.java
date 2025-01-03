@@ -197,16 +197,19 @@ public class MaladieRepository {
         if (filter.getNom() != null && !filter.getNom().isEmpty()) {
             query.append(" AND m.nom ILIKE ?");
             parameters.add("%" + filter.getNom() + "%");
+            System.out.println("nom :"+filter.getNom());
         }
 
         if (filter.getNomSymptome() != null && !filter.getNomSymptome().isEmpty()) {
             query.append(" AND s.nom ILIKE ?");
             parameters.add("%" + filter.getNomSymptome() + "%");
+            System.out.println("sympt:" + filter.getNomSymptome());
         }
 
         if (filter.getMedicament() != null && !filter.getMedicament().isEmpty()) {
             query.append(" AND med.nom ILIKE ?");
             parameters.add("%" + filter.getMedicament() + "%");
+            System.out.println("medocs: " + filter.getMedicament());
         }
 
         // Pagination (limit et offset)

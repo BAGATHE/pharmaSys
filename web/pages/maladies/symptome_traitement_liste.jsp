@@ -167,10 +167,10 @@
                             <td><%= traitement.getMedicament().getNom() %></td>
                             <td><%= traitement.getEfficacite() %> %</td>
                             <td>
-                              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal2">
+                              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= traitement.getMedicament().getIdMedicament() %>">
                                 <i class="fas fa-trash-alt"></i> Supprimer
                             </button>
-                            <div class="modal fade" id="deleteModal2" tabindex="-1" aria-labelledby="deleteModalLabel-2" aria-hidden="true">
+                            <div class="modal fade" id="deleteModal<%= traitement.getMedicament().getIdMedicament() %>" tabindex="-1" aria-labelledby="deleteModalLabel-2" aria-hidden="true">
                                 <div class="modal-dialog">
                                   <div class="modal-content">
                                     <div class="modal-header">
@@ -182,7 +182,7 @@
                                     </div>
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                      <a href=""><button type="button" class="btn btn-danger">Supprimer</button></a>
+                                      <a href="<%= request.getContextPath() %>/maladies/maladieTraiteDelete?idMedicament=<%= traitement.getMedicament().getIdMedicament() %>&&idMaladie=<%= maladie.getIdMaladie() %>"><button type="button" class="btn btn-danger">Supprimer</button></a>
                                     </div>
                                   </div>
                                 </div>

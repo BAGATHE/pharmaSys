@@ -125,7 +125,7 @@
                             <div class="col-10 offset-1">
                                 <div class="form-group">
                                     <label for="">Medicament</label>
-                                    <select id="traitement" multiple placeholder="Select items...">
+                                    <select name="medicaments[]" id="traitement" multiple placeholder="Select items...">
                                         <% for(int i = 0; i < medicaments.length; i++) { %>
                                             <option value="<%= medicaments[i].getIdMedicament() %>"><%= medicaments[i].getNom() %></option>
                                         <% } %>
@@ -138,7 +138,7 @@
                             <div class="col-10 offset-1">
                                 <div class="form-group">
                                     <label for="">Efficacité</label>
-                                    <select id="efficacite" multiple placeholder="Select items...">
+                                    <select name="efficacite[]" id="efficacite" multiple placeholder="Select items...">
                                         
                                     </select>
                                   </div>
