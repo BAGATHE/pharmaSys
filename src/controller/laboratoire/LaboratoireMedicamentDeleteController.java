@@ -11,10 +11,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Laboratoire;
-import model.Medicament;
-import model.MedicamentLaboratoire;
-import model.Unite;
+import model.configuration.Unite;
+import model.medicament.Laboratoire;
+import model.medicament.Medicament;
+import model.medicament.MedicamentLaboratoire;
 import repository.MedicamentLaboratoireRepository;
 
 @WebServlet("/laboratoire-medicament/delete")

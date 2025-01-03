@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import model.MouvementStock;
-import model.MouvementStockDetail;
+import model.stock.MouvementStock;
+import model.stock.MouvementStockDetail;
 
 public class MouvementStockRepository {
     public static void save(Connection con, MouvementStock mouvementStock) throws Exception {

@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
-<%@page import="model.Symptome"%>
+<%@page import="model.maladie.Symptome"%>
 
 <%
     Symptome[] symptomes = (Symptome[]) request.getAttribute("symptomes");
@@ -93,7 +93,7 @@
           </div>
 
           <div class="row">
-            <div class="offset-md-2 col-md-8">
+            <div class="offset-2 col-10">
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
                   <div class="card-title" ><h2 class="text-center" style="color: white;">Liste Symptômes </h2></div>

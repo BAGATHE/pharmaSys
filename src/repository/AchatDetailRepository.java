@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.AchatDetail;
-import model.Medicament;
-import model.Unite;
+import model.achat.AchatDetail;
+import model.configuration.Unite;
+import model.medicament.Medicament;
 
 public class AchatDetailRepository {
 

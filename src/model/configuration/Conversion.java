@@ -1,4 +1,6 @@
-package model;
+package model.configuration;
+
+import model.medicament.Medicament;
 
 public class Conversion {
     private Medicament medicament;

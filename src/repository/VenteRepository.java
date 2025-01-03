@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Vente;
+import model.vente.Vente;
 
 public class VenteRepository {
     public static String save(Connection con, Vente vente) throws Exception {

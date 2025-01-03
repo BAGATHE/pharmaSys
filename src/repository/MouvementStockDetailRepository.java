@@ -3,7 +3,7 @@ package repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import model.MouvementStockDetail;
+import model.stock.MouvementStockDetail;
 
 public class MouvementStockDetailRepository {
     public static void save(Connection con, MouvementStockDetail detail) throws Exception {

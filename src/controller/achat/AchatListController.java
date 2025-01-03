@@ -11,7 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Achat;
+import model.achat.Achat;
 import repository.AchatRepository;
 
 @WebServlet("/achat/laboratoire/list")

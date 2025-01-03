@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Laboratoire;
-import model.Medicament;
-import model.MedicamentLaboratoire;
-import model.Unite;
+import model.configuration.Unite;
+import model.medicament.Laboratoire;
+import model.medicament.Medicament;
+import model.medicament.MedicamentLaboratoire;
 
 public class MedicamentLaboratoireRepository {
     public static MedicamentLaboratoire[] getMedicamentByIdLaboratoire(Connection conn, String idLaboratoire)

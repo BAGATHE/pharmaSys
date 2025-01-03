@@ -1,6 +1,6 @@
-package model;
+package model.maladie;
 
-import model.maladie.Maladie;
+import model.medicament.Medicament;
 
 public class Traitement {
     private Maladie Maladie;

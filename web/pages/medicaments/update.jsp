@@ -2,7 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
-<%@page import="model.Medicament" %>
+<%@page import="model.medicament.Medicament" %>
 <%
 Medicament medicament = (Medicament)request.getAttribute("medicament");
 %>

@@ -15,11 +15,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import model.MouvementStock;
-import model.PrixMedicament;
-import model.Vente;
-import model.VenteDetail;
+import model.medicament.PrixMedicament;
+import model.stock.MouvementStock;
+import model.vente.Vente;
+import model.vente.VenteDetail;
 import repository.MedicamentRepository;
 import repository.MouvementStockRepository;
 import repository.PrixMedicamentRepository;

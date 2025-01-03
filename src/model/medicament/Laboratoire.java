@@ -1,4 +1,4 @@
-package model;
+package model.medicament;
 
 public class Laboratoire {
     private String idLaboratoire;

@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Conversion;
-import model.Medicament;
-import model.Unite;
+import model.configuration.Conversion;
+import model.configuration.Unite;
+import model.medicament.Medicament;
 
 public class ConversionRepository {
     public static Conversion[] getConversionsByMedicamentId(Connection conn, String idMedicament) throws SQLException {

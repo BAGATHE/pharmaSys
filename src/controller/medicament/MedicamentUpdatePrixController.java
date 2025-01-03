@@ -12,9 +12,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Medicament;
-import model.PrixMedicament;
-import model.Unite;
+import model.configuration.Unite;
+import model.medicament.Medicament;
+import model.medicament.PrixMedicament;
 import repository.PrixMedicamentRepository;
 
 @WebServlet("/medicament/prix/update")

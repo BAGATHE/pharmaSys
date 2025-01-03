@@ -14,8 +14,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Symptome;
 import model.maladie.Maladie;
+import model.maladie.Symptome;
 import repository.MaladieRepository;
 import repository.SymptomeRepository;
 
@@ -87,7 +87,7 @@ public class MaladieSymptomeController extends HttpServlet {
             e.printStackTrace();
             try {
                 if (connection != null) {
-                    connection.rollback(); 
+                    connection.rollback();
                 }
             } catch (SQLException rollbackEx) {
                 Logger.getLogger(SymptomeTraiteListController.class.getName()).log(Level.SEVERE,

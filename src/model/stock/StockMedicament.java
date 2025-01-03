@@ -1,6 +1,10 @@
-package model;
+package model.stock;
 
 import java.sql.Date;
+
+import model.configuration.Unite;
+import model.medicament.Laboratoire;
+import model.medicament.Medicament;
 
 public class StockMedicament {
     private String idStockMedicament;

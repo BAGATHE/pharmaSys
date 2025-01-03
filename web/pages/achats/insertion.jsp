@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
-<%@page import="model.MedicamentLaboratoire"%>
+<%@page import="model.medicament.MedicamentLaboratoire"%>
 <% 
    MedicamentLaboratoire[] medicament_laboratoires = (MedicamentLaboratoire[]) request.getAttribute("medicament_laboratoires");
    String id_laboratoire = (String) request.getAttribute("id_laboratoire");
@@ -129,7 +129,7 @@
                                     <input type="number" name="quantite_<%= i %>" class="form-control quantite" min="0" value="0" onchange="calculerTotal()"/>
                                   </td>
                                   <td class="text-center">
-                                    <input type="date" class="form-control" name="date_peremption_<%= i %>" required>
+                                    <input type="date" class="form-control" name="date_peremption_<%= i %>" >
                                   </td>
                                   <td class="text-center">
                                       <span class="ligne-total">0</span> Ar

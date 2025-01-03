@@ -1,4 +1,7 @@
-package model;
+package model.stock;
+
+import model.configuration.Unite;
+import model.medicament.Medicament;
 
 public class MouvementStockDetail {
     private String idMouvementStockDetail;

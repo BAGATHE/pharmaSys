@@ -1,9 +1,13 @@
-package model;
+package model.vente;
 
 import repository.ConversionRepository;
 import repository.StockMedicamentRepository;
 import java.sql.Connection;
 import java.sql.Date;
+
+import model.configuration.Conversion;
+import model.configuration.Unite;
+import model.stock.StockMedicament;
 
 public class Vente {
     private String idVente;

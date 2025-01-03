@@ -1,6 +1,8 @@
-package model;
+package model.achat;
 
 import java.sql.Date;
+
+import model.medicament.Laboratoire;
 
 public class Achat {
     private String idAchat;

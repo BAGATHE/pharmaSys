@@ -3,7 +3,7 @@
 <%@ include file="../elements/sidebars.jsp" %>
 
 <%@page import="dto.UniteDTO"%>
-<%@page import="model.Unite"%>
+<%@page import="model.configuration.Unite"%>
 
 <%
     UniteDTO[] unites = (UniteDTO[]) request.getAttribute("unites");
