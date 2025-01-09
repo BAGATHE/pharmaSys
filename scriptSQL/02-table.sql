@@ -112,15 +112,27 @@ CREATE TABLE reductions (
    FOREIGN KEY(id_medicament) REFERENCES medicaments(id_medicament)
 );
 
+CREATE TABLE categorie(
+   id_categorie VARCHAR(50) DEFAULT CONCAT('CAT_',nextval('seq_categorie')),
+   categorie VARCHAR(240)  NOT NULL,
+   age_max INTEGER,
+   PRIMARY KEY(id_categorie),
+   UNIQUE(categorie)
+);
+
+
 
 CREATE TABLE traitements(
    id_maladie VARCHAR(50) ,
    id_medicament VARCHAR(50) ,
+   id_categorie VARCHAR(50) ,
    efficacite INTEGER,
-   PRIMARY KEY(id_maladie, id_medicament),
+   PRIMARY KEY(id_maladie, id_medicament, id_categorie),
    FOREIGN KEY(id_maladie) REFERENCES maladies(id_maladie),
-   FOREIGN KEY(id_medicament) REFERENCES medicaments(id_medicament)
+   FOREIGN KEY(id_medicament) REFERENCES medicaments(id_medicament),
+   FOREIGN KEY(id_categorie) REFERENCES categorie(id_categorie)
 );
+
 
 CREATE TABLE maladies_symptomes(
    id_maladie VARCHAR(50) ,

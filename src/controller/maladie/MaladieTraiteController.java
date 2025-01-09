@@ -14,9 +14,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.categorie.Categorie;
 import model.maladie.Maladie;
 import model.maladie.Traitement;
 import model.medicament.Medicament;
+import repository.CategorieRepository;
 import repository.MaladieRepository;
 import repository.MedicamentRepository;
 import repository.TraitementRepository;
@@ -42,6 +44,7 @@ public class MaladieTraiteController extends HttpServlet {
 
             request.setAttribute("maladie", maladie);
             request.setAttribute("medicaments", medicaments);
+            request.setAttribute("categories", CategorieRepository.getAll(connection));
             RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/maladies/ajout_traitement.jsp");
             dispatcher.forward(request, response);
         } catch (Exception e) {
@@ -70,13 +73,15 @@ public class MaladieTraiteController extends HttpServlet {
             String idMaladie = request.getParameter("idMaladie");
             String[] medicamentsIds = request.getParameterValues("medicaments[]");
             String[] efficacites = request.getParameterValues("efficacite[]");
+            String id_categorie = request.getParameter("categorie");
+            Categorie categorie = new Categorie(id_categorie, "", 0);
             String message = null;
 
             if (medicamentsIds != null && efficacites != null) {
                 for (int i = 0; i < medicamentsIds.length; i++) {
                     Maladie m = MaladieRepository.getById(connection, idMaladie);
                     Medicament medoc = MedicamentRepository.getById(connection, medicamentsIds[i]);
-                    Traitement t = new Traitement(m, medoc, Integer.parseInt(efficacites[i]));
+                    Traitement t = new Traitement(m, medoc, categorie, Integer.parseInt(efficacites[i]));
                     TraitementRepository.save(connection, t);
                 }
                 message = "Ajouter avec succes.";

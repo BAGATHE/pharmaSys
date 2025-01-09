@@ -101,3 +101,4 @@ ORDER BY niveau, nom;
 SELECT id_maladie, nom AS nom_maladie, description AS description_maladie 
 FROM maladies 
 WHERE 1=1
+

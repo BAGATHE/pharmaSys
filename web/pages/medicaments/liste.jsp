@@ -2,17 +2,22 @@
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
 <%@page import="model.medicament.Medicament"%>
+<%@page import="model.maladie.Maladie"%>
+<%@page import="model.categorie.Categorie"%>
 <%@page import="model.medicament.PrixMedicament"%>
-<%@page import="model.configuration.Unite"%>
 
+<%@page import="model.configuration.Unite"%>
 <%
     Medicament[] medicaments = (Medicament[]) request.getAttribute("medicaments");
+    Categorie[] categories = (Categorie[]) request.getAttribute("categorie");
+    Maladie[] maladies = (Maladie[]) request.getAttribute("maladies");
+
     String message = (String) request.getAttribute("message");
     if (message != null && !message.trim().isEmpty()) {
 %>
     <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
     <script>
-        swal({ title: "Notification",text: "<%= message %>",icon: "info", button: "OK"});
+        swal({ title: "Notification", text: "<%= message %>", icon: "info", button: "OK" });
     </script>
 <%
         request.setAttribute("message", "");
@@ -91,20 +96,45 @@
                 </div>
                 <div class="card-body">
                   <div class="card-sub">
-                    <form method="GET" action="/your-filter-endpoint" class="row g-3">
-                        <div class="col-3">
-                          <input type="text" class="form-control" name="medicament" placeholder="Filtrer par nom">
-                        </div>
-                        <div class="col-3">
-                          <input type="number" class="form-control" name="prix_vente_min" placeholder="prix minimum"  >
-                        </div>
-                        <div class="col-3">
-                         <input type="number" class="form-control" name="prix_vente_max" placeholder="prix maximum"  >
-                        </div>
-                        <div class="col-md-2">
+                    <form method="POST" action="" class="row g-3">
+                      <!-- Liste déroulante pour les catégories -->
+                      <div class="col-3">
+                          <label for="categorie" class="form-label">Catégorie</label>
+                          <select name="categorie" id="categorie" class="form-select">
+                              <option value="">-- Toutes les catégories --</option>
+                              <%
+                                  if (categories != null) {
+                                      for (Categorie cat : categories) {
+                              %>
+                                          <option value="<%= cat.getIdCategorie() %>"><%= cat.getCategorie() %></option>
+                              <%
+                                      }
+                                  }
+                              %>
+                          </select>
+                      </div>
+              
+                      <!-- Liste déroulante pour les maladies -->
+                      <div class="col-3">
+                          <label for="maladie" class="form-label">Maladie</label>
+                          <select name="maladie" id="maladie" class="form-select">
+                              <option value="">-- Toutes les maladies --</option>
+                              <%
+                                  if (maladies != null) {
+                                      for (Maladie mal : maladies) {
+                              %>
+                                          <option value="<%= mal.getIdMaladie() %>"><%= mal.getNom() %></option>
+                              <%
+                                      }
+                                  }
+                              %>
+                          </select>
+                      </div>
+                      <!-- Bouton de soumission -->
+                      <div class="col-md-2">
                           <button type="submit" class="btn btn-success">Valider</button>
-                        </div>
-                      </form>
+                      </div>
+                  </form>
                   </div>
                   <table class="table table-bordered table-head-bg-success  mt-3">
                     <thead>
@@ -187,26 +217,7 @@
                     </tbody>                    
                   </table>
 
-                    <!-- Pagination -->
-        <nav>
-            <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
+      
                 </div>
               </div>
             

@@ -4,10 +4,12 @@
 <%@ include file="../elements/sidebars.jsp" %>
 <%@page import="model.maladie.Maladie"%>
 <%@page import="model.medicament.Medicament"%>
+<%@page import="model.categorie.Categorie"%>
 
 <% 
   Maladie maladie = (Maladie) request.getAttribute("maladie"); 
   Medicament[] medicaments = (Medicament[]) request.getAttribute("medicaments");
+  Categorie[] categories = (Categorie[]) request.getAttribute("categories");
 %>
 
 <%
@@ -120,6 +122,25 @@
                               </div>
                             </div>
                           </div> 
+                          <div class="row">
+                          <div class="col-10 offset-1">
+                            <div class="form-group">
+                              <label for="categorie" class="form-label">Catégorie</label>
+                              <select name="categorie" id="categorie" class="form-select">
+                                  <option value="">-- Toutes les catégories --</option>
+                                  <%
+                                      if (categories != null) {
+                                          for (Categorie cat : categories) {
+                                  %>
+                                              <option value="<%= cat.getIdCategorie() %>"><%= cat.getCategorie() %></option>
+                                  <%
+                                          }
+                                      }
+                                  %>
+                              </select>
+                            </div>
+                          </div>
+                          </div>
 
                           <div class="row">
                             <div class="col-10 offset-1">

@@ -154,6 +154,7 @@
                         <thead>
                           <tr>
                             <th scope="col">Médicament</th>
+                            <th scope="col">Catégorie</th>
                             <th scope="col">Efficacité</th>
                             <th scope="col">Action</th>
                           </tr>
@@ -165,6 +166,7 @@
                         %>
                           <tr>
                             <td><%= traitement.getMedicament().getNom() %></td>
+                            <td><%= traitement.getCategorie().getCategorie() %></td>
                             <td><%= traitement.getEfficacite() %> %</td>
                             <td>
                               <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= traitement.getMedicament().getIdMedicament() %>">
