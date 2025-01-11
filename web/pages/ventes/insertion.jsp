@@ -92,6 +92,7 @@
                           <thead>
                               <tr>
                                   <th class="text-center" scope="col">Médicament</th>
+                                  <th class="text-center" scope="col">Type</th>
                                   <th class="text-center" scope="col">Catalogue et prix</th>
                                   <th class="text-center" scope="col">quantité</th>
                                   <th class="text-center" scope="col">Unité</th>
@@ -113,6 +114,9 @@
                                             <%= medicament.getNom() %>
                                             <input type="hidden" name="idMedicament_<%=indice  %>" value="<%= idMedicament %>">
                                         </td>
+                                        <td class="text-center">
+                                          <%= medicament.getTypeMedicament().getTypeMedicament() %>
+                                        </td> 
                                         <td class="text-center">
                                             <!-- Bouton pour afficher le modal -->
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPrix_<%=indice %>">

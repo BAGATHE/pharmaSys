@@ -301,4 +301,21 @@ public class MaladieRepository {
         return count;
     }
 
+    public static Maladie[] getAll(Connection conn) throws SQLException {
+        List<Maladie> maladies = new ArrayList<>();
+        String query = "SELECT * FROM maladies";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                maladies.add(new Maladie(
+                        rs.getString("id_maladie"),
+                        rs.getString("nom"),
+                        rs.getString("description")));
+            }
+        }
+        return maladies.toArray(new Maladie[0]);
+    }
+
 }

@@ -2,8 +2,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.medicament.TypeMedicament"%>
 <%
     String message = (String) request.getAttribute("message");
+    TypeMedicament[] type_medicaments = (TypeMedicament[]) request.getAttribute("types");
     if (message != null && !message.trim().isEmpty()) {
 %>
     <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
@@ -114,6 +116,26 @@
                                 </div>
                             </div>
                           </div>
+
+                          <div class="row">
+                            <div class="col-10 offset-1">
+                              <div class="form-group">
+                                <label for="categorie" class="form-label">Catégorie</label>
+                                <select name="type" id="categorie" class="form-select">
+                                    <option value="">-- Toutes les Type  --</option>
+                                    <%
+                                        if (type_medicaments != null) {
+                                            for (TypeMedicament typeMedicament : type_medicaments) {
+                                    %>
+                                                <option value="<%= typeMedicament.getIdType()%>"><%= typeMedicament.getTypeMedicament()%></option>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </select>
+                              </div>
+                            </div>
+                            </div>
                     </div>
                   </div>
                 </div>

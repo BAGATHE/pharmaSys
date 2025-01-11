@@ -123,23 +123,19 @@
                   <table class="table table-hover mt-3">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
                         <th class="text-center" scope="col">Médicament</th>
-                        <th class="text-center" scope="col">Total entrée</th>
-                        <th class="text-center" scope="col">Total Sortie</th>
-                        <th class="text-center" scope="col">Reste</th>
-                        <th class="text-center" scope="col">Prix moyenne ponderée</th>
-                        <th class="text-center" scope="col">Date Dernier Mouvement</th>
+                        <th class="text-center" scope="col">Type</th>
+                        <th class="text-center" scope="col">Quantité en stock</th>
+                        <th class="text-center" scope="col">Unité</th>
+                        <th class="text-center" scope="col">Date dernier mouvement</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td><a href="<%= request.getContextPath() %>/pages/stock/mouvement.jsp">mouvement</a></td>
                         <td  class="text-center">Paracetamol</td>
                         <td class="text-center">15000</td>
                         <td class="text-center">10000</td>
                         <td class="text-center">5000</td>
-                        <td class="text-center">7000</td>
                         <td class="text-center">27/12/2024</td>
                       </tr>
                     </tbody>

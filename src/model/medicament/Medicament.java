@@ -4,7 +4,21 @@ public class Medicament {
     private String idMedicament;
     private String nom;
     private String description;
+    private TypeMedicament typeMedicament;
     private PrixMedicament[] prixMedicament;
+
+    public Medicament(String nom, String description, TypeMedicament typeMedicament, PrixMedicament[] prixMedicament) {
+        this.nom = nom;
+        this.description = description;
+        this.typeMedicament = typeMedicament;
+        this.prixMedicament = prixMedicament;
+    }
+
+    public Medicament(String nom, String description, TypeMedicament typeMedicament) {
+        this.nom = nom;
+        this.description = description;
+        this.typeMedicament = typeMedicament;
+    }
 
     public Medicament(String idMedicament) {
         this.idMedicament = idMedicament;
@@ -66,4 +80,11 @@ public class Medicament {
         this.prixMedicament = prixMedicament;
     }
 
+    public TypeMedicament getTypeMedicament() {
+        return typeMedicament;
+    }
+
+    public void setTypeMedicament(TypeMedicament typeMedicament) {
+        this.typeMedicament = typeMedicament;
+    }
 }

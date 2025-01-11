@@ -92,6 +92,7 @@ VenteDetail[] venteDetails = (VenteDetail[]) request.getAttribute("vente_details
                         <tr>
                             <th scope="col">#</th>
                             <th class="text-center" scope="col">Médicament</th>
+                            <th class="text-center" scope="col">categorie</th>
                             <th class="text-center" scope="col">Quantité</th>
                             <th class="text-center" scope="col">Unité</th>
                             <th class="text-center" scope="col">Prix unitaire</th>
@@ -107,6 +108,7 @@ VenteDetail[] venteDetails = (VenteDetail[]) request.getAttribute("vente_details
                         <tr>
                             <td class="text-center"><%= index++ %></td>
                             <td class="text-center"><%= detail.getMedicament().getNom() %></td> 
+                            <td class="text-center"><%= detail.getMedicament().getTypeMedicament().getTypeMedicament() %></td> 
                             <td class="text-center"><%= detail.getQuantite() %></td>
                             <td class="text-center"><%= detail.getUnite().getNom() %></td>
                             <td class="text-center"><%= String.format("%,.2f", detail.getPrixVente()) %> Ar</td> 
@@ -123,26 +125,7 @@ VenteDetail[] venteDetails = (VenteDetail[]) request.getAttribute("vente_details
                     </tbody>
                 </table>
 
-                    <!-- Pagination -->
-        <nav>
-            <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
+    
                 </div>
               </div>
             
