@@ -12,10 +12,12 @@ import model.medicament.Medicament;
 public class MedicamentRepository {
 
     public static int save(Connection conn, Medicament medicament) throws SQLException {
-        String query = "INSERT INTO medicaments (nom,description) VALUES (?,?)";
+        String query = "INSERT INTO medicaments (nom,description,id_type) VALUES (?,?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, medicament.getNom());
             stmt.setString(2, medicament.getDescription());
+            stmt.setString(3, medicament.getTypeMedicament().getIdType());
+
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
                 return 1;
@@ -32,8 +34,11 @@ public class MedicamentRepository {
             while (rs.next()) {
                 Medicament medicament = new Medicament(rs.getString("id_medicament"), rs.getString("nom"),
                         rs.getString("description"));
+
                 medicament.setPrixMedicament(
                         PrixMedicamentRepository.getPrixByIdMedicament(conn, medicament.getIdMedicament()));
+
+                medicament.setTypeMedicament(TypeMedicamentRepository.getById(conn, rs.getString("id_type")));
                 medicaments.add(medicament);
             }
         }
@@ -46,7 +51,11 @@ public class MedicamentRepository {
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Medicament(rs.getString("id_medicament"), rs.getString("nom"), rs.getString("description"));
+                Medicament medicament = new Medicament(rs.getString("id_medicament"), rs.getString("nom"),
+                        rs.getString("description"));
+                medicament.setTypeMedicament(
+                        TypeMedicamentRepository.getById(conn, rs.getString("id_type")));
+                return medicament;
             }
         }
         return null;

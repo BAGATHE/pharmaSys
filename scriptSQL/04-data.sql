@@ -34,7 +34,9 @@ INSERT INTO symptomes (nom) VALUES ('Raideur matinale');
 INSERT INTO symptomes (nom) VALUES ('Mal de gorge intense');
 INSERT INTO symptomes (nom) VALUES ('Difficultés à avaler');
 
-
+INSERT INTO categorie (categorie, age_max)VALUES ('Bébé',3);
+INSERT INTO categorie (categorie, age_max)VALUES ('Enfant',12);
+INSERT INTO categorie (categorie, age_max)VALUES ('Adulte',60);
 
 SELECT * FROM utilisateurs
 WHERE email = 'admin@email.com'
@@ -53,4 +55,9 @@ INSERT INTO traitements (id_maladie, id_medicament, id_categorie, efficacite) VA
   ('MAL_6', 'MED_4', 'CAT_1', 70),  
   ('MAL_6', 'MED_5', 'CAT_2', 70);
   
+INSERT INTO type_medicament (type_medicament)VALUES ('Injectable');
+INSERT INTO type_medicament (type_medicament)VALUES ('Consommable');
 
+
+select vd.id_vente from vente_details vd join medicaments m on vd.id_medicament = m.id_medicament
+join traitements t on t.id_medicament = m.id_medicament WHERE t.id_categorie='CAT_1' AND m.id_type='TYP_1';

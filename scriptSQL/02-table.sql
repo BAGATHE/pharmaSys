@@ -6,12 +6,20 @@ CREATE TABLE maladies (
    description VARCHAR(250),
    PRIMARY KEY(id_maladie)
 );
+CREATE TABLE type_medicament(
+   id_type VARCHAR(50)  DEFAULT CONCAT('TYP_', nextval('seq_types')) ,
+   type_medicament VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(id_type)
+);
+
 
 CREATE TABLE medicaments (
    id_medicament VARCHAR(50) DEFAULT CONCAT('MED_', nextval('seq_medicaments')),
    nom VARCHAR(50) NOT NULL,
    description VARCHAR(250),
-   PRIMARY KEY(id_medicament)
+   id_type varchar(10) not null ,
+   PRIMARY KEY(id_medicament),
+    foreign key (id_type) references type_medicament(id_type)
 );
 
 

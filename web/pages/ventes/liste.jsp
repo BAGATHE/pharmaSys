@@ -3,7 +3,11 @@
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
 <%@ page import="model.vente.Vente" %>
+<%@page import="model.categorie.Categorie"%>
+<%@page import="model.medicament.TypeMedicament"%>
 <%
+TypeMedicament[] type_medicaments = (TypeMedicament[]) request.getAttribute("types");
+Categorie[] categories = (Categorie[]) request.getAttribute("categorie");
 Vente[] ventes = (Vente[]) request.getAttribute("ventes");
 %>
 <div class="main-panel">
@@ -85,28 +89,41 @@ Vente[] ventes = (Vente[]) request.getAttribute("ventes");
                 </div>
                 <div class="card-body">
                   <div class="card-sub">
-                    <form method="GET" action="/your-filter-endpoint" class="row g-3">
-                        <div class="col-2">
-                          <select class="form-select form-control-sm">
-                            <option>1</option>
-                            <option>2</option>
-                        </select>
+                    <form  method="POST" action=""class="row g-3">
+                        <div class="col-3">
+                              <div class="form-group">
+                                <select name="type" id="categorie" class="form-select">
+                                    <option value="">-- Toutes les Type  --</option>
+                                    <%
+                                        if (type_medicaments != null) {
+                                            for (TypeMedicament typeMedicament : type_medicaments) {
+                                    %>
+                                                <option value="<%= typeMedicament.getIdType()%>"><%= typeMedicament.getTypeMedicament()%></option>
+                                    <%
+                                            }
+                                        }
+                                    %>
+                                </select>
+                              </div>
+                         
                         </div>
-                        <div class="col-2">
-                          <input type="date" class="form-control" name="date_min">
-                        </div>
-                        <div class="col-2">
-                          <input type="date" class="form-control" name="date_max">
-                        </div>
-                        <div class="col-2">
-                          <input type="number" name="somme_min" class="form-control" placeholder="total minimum">
-                        </div>
-                        <div class="col-2">
-                          <input type="number" name="somme_min" class="form-control" placeholder="total maximum">
-                        </div>
-                        <div class="col-2">
-                          <button type="submit" class="btn btn-success">Valider</button>
-                        </div>
+                        <div class="col-3">
+                          <select name="categorie" id="categorie" class="form-select">
+                              <option value="">-- Toutes les catégories --</option>
+                              <%
+                                  if (categories != null) {
+                                      for (Categorie cat : categories) {
+                              %>
+                                          <option value="<%= cat.getIdCategorie() %>"><%= cat.getCategorie() %></option>
+                              <%
+                                      }
+                                  }
+                              %>
+                          </select>
+                      </div>
+                      <div class="col-md-2">
+                        <button type="submit" class="btn btn-success">Valider</button>
+                    </div>
                       </form>
                   </div>
                   <table class="table table-hover mt-3">
@@ -138,26 +155,7 @@ Vente[] ventes = (Vente[]) request.getAttribute("ventes");
                     </tbody>
                 </table>
 
-                    <!-- Pagination -->
-        <nav>
-            <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
+      
                 </div>
               </div>
             
