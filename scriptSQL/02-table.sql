@@ -128,6 +128,23 @@ CREATE TABLE categorie(
    UNIQUE(categorie)
 );
 
+CREATE TABLE status(
+   id_status VARCHAR(50)  DEFAULT CONCAT('STA',nextval('seq_status')) ,
+   nom VARCHAR(100)  NOT NULL,
+   PRIMARY KEY(id_status),
+   UNIQUE(nom)
+);
+
+CREATE TABLE medicament_status_stock (
+    id_medicament VARCHAR(50),
+    id_status VARCHAR(50),
+    minimum INTEGER,
+    maximum INTEGER,
+    PRIMARY KEY (id_medicament, id_status),
+    FOREIGN KEY (id_medicament) REFERENCES medicaments(id_medicament),
+    FOREIGN KEY (id_status) REFERENCES status(id_status),
+    CONSTRAINT chk_min_le_max CHECK (minimum <= maximum)
+);
 
 
 CREATE TABLE traitements(
@@ -161,6 +178,8 @@ CREATE TABLE medicament_laboratoire(
    FOREIGN KEY(id_laboratoire) REFERENCES laboratoires(id_laboratoire),
    FOREIGN KEY(id_unite) REFERENCES unites(id_unite)
 );
+
+
 
 CREATE TABLE stock_medicaments(
    id_stock_medicament VARCHAR(50)  DEFAULT CONCAT('STM_', nextval('seq_stock_medicament'))  ,

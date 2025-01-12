@@ -154,7 +154,11 @@
                               PrixMedicament[] prix_medicaments = medicament.getPrixMedicament();
                       %>
                           <tr>
-                              <td class="text-center"><%= medicament.getNom() %></td>
+                              <td class="text-center">
+                                <a href="<%= request.getContextPath() %>/medicament/confstock?id_medicament=<%= idMedicament %>">
+                                  <%= medicament.getNom() %>
+                                </a>
+                              </td>
                               <td class="text-center"><%= medicament.getDescription() %></td>
                               <td class="text-center">
                                 <a href="<%= request.getContextPath() %>/medicament/prix?id_medicament=<%= idMedicament %>">

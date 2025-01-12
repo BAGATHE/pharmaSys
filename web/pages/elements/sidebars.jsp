@@ -197,7 +197,7 @@
             <div class="collapse" id="tables">
               <ul class="nav nav-collapse">
                 <li>
-                  <a href="<%= request.getContextPath() %>/pages/stock/etat_stock.jsp">
+                  <a href="<%= request.getContextPath() %>/stock/medicament">
                     <span class="sub-item">Etat Stock </span>
                   </a>
                 </li>

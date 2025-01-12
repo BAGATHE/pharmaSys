@@ -98,10 +98,11 @@ public class MedicamentLaboratoireRepository {
 
     public static int checkMedicamentLaboratoire(Connection conn, MedicamentLaboratoire medicamentLaboratoire)
             throws SQLException {
-        String query = "SELECT * FROM medicament_laboratoire WHERE id_medicament = ? AND id_unite = ?";
+        String query = "SELECT * FROM medicament_laboratoire WHERE id_medicament = ? AND id_unite = ? AND id_laboratoire=?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, medicamentLaboratoire.getMedicament().getIdMedicament());
             stmt.setString(2, medicamentLaboratoire.getUnite().getIdUnite());
+            stmt.setString(3, medicamentLaboratoire.getLaboratoire().getIdLaboratoire());
 
             try (ResultSet rs = stmt.executeQuery()) {
                 return rs.next() ? 1 : 0;

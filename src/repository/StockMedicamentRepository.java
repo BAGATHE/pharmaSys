@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.stock.StockMedicament;
+import model.status.Status;
 
 public class StockMedicamentRepository {
     public static void save(Connection con, StockMedicament stockMedicament) throws Exception {
@@ -28,18 +29,23 @@ public class StockMedicamentRepository {
 
     public static StockMedicament[] getAllNonPerimesASC(Connection con) throws Exception {
         List<StockMedicament> stockList = new ArrayList<>();
-        String sql = "SELECT * FROM stock_medicaments WHERE date_peremption > CURRENT_DATE ORDER BY date_peremption ASC";
+        String sql = "SELECT " +
+                "SUM(sm.quantite_boite) AS total_quantite,sm.id_unite, " +
+                "sm.id_medicament, " +
+                "get_medicament_status(sm.id_medicament, SUM(sm.quantite_boite)) AS status " +
+                "FROM stock_medicaments sm " +
+                "WHERE date_peremption > CURRENT_DATE  " +
+                "GROUP BY sm.id_medicament,sm.id_unite " +
+                "ORDER BY MAX(sm.date_peremption) ASC";
 
         try (PreparedStatement prst = con.prepareStatement(sql);
                 ResultSet rs = prst.executeQuery()) {
             while (rs.next()) {
                 StockMedicament stock = new StockMedicament();
-                stock.setIdStockMedicament(rs.getString("id_stock_medicament"));
-                stock.setDatePeremption(rs.getDate("date_peremption"));
-                stock.setQuantiteBoite(rs.getDouble("quantite_boite"));
+                stock.setQuantiteBoite(rs.getDouble("total_quantite"));
                 stock.setUnite(UniteRepository.getById(con, rs.getString("id_unite")));
-                stock.setLaboratoire(LaboratoireRepository.getById(con, rs.getString("id_laboratoire")));
                 stock.setMedicament(MedicamentRepository.getById(con, rs.getString("id_medicament")));
+                stock.setStatus(new Status("", rs.getString("status")));
                 stockList.add(stock);
             }
         } catch (Exception e) {
