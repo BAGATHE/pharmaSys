@@ -3,8 +3,6 @@ package repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import model.medicament.Medicament;
 import model.medicament.TypeMedicament;
 
 public class TypeMedicamentRepository {

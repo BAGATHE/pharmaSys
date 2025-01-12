@@ -2,9 +2,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
-<%@page import="model.stock.MouvementStock"%>
+<%@page import="model.stock.MouvementStockDetail"%>
 <%
-MouvementStock[] mouvements = (MouvementStock[]) request.getAttribute("mouvements");
+MouvementStockDetail[] mvtDetails = (MouvementStockDetail[]) request.getAttribute("mvtDetails");
 %>
 <div class="main-panel">
     <div class="main-header">
@@ -58,7 +58,13 @@ MouvementStock[] mouvements = (MouvementStock[]) request.getAttribute("mouvement
                 <i class="icon-arrow-right"></i>
               </li>
               <li class="nav-item">
-                <a href="#">Mouvement</a>
+                <a href="#">Etat</a>
+              </li>
+              <li class="separator">
+                <i class="icon-arrow-right"></i>
+              </li>
+              <li class="nav-item">
+                <a href="#">Stock</a>
               </li>
             </ul>
           </div>
@@ -69,68 +75,54 @@ MouvementStock[] mouvements = (MouvementStock[]) request.getAttribute("mouvement
         </div>
 
         <div class="row">
-            <div class="offset-md-2 col-md-8">
+            <div class="col-10 offset-1">
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
-                  <div class="card-title" ><h2 class="text-center" style="color: white;">Mouvement Stock </h2></div>
+                  <a href="<%= request.getContextPath() %>/mouvement/medicament"><button type="button" class="btn btn-info">retour</button></a>
+                  <div class="card-title" ><h2 class="text-center" style="color: white;">details </h2></div>
                 </div>
                 <div class="card-body">
                   <div class="card-sub">
-                    <form method="GET" action="/your-filter-endpoint" class="row g-3">
-                        <div class="col-md-5">
-                          <input type="text" class="form-control" name="filterFirst" placeholder="Filter by First Name">
-                        </div>
-                        <div class="col-md-5">
-                          <input type="text" class="form-control" name="filterLast" placeholder="Filter by Last Name">
-                        </div>
-                        <div class="col-md-2">
-                          <button type="submit" class="btn btn-success">Valider</button>
-                        </div>
-                      </form>
                   </div>
                   <table class="table table-hover mt-3">
                     <thead>
                       <tr>
-                        <th scope="col">Reference</th>
-                        <th class="text-center" scope="col">Date</th>
-                        <th class="text-center" scope="col">Action</th>
+                        <th class="text-center" scope="col">Médicament</th>
+                        <th class="text-center" scope="col">Type</th>
+                        <th class="text-center" scope="col">Unité</th>
+                        <th class="text-center" scope="col">Prix unitaire</th>
+                        <th class="text-center" scope="col">Entréé</th>
+                        <th class="text-center" scope="col">Sortie</th>
                       </tr>
                     </thead>
                     <tbody>
+                      <% 
+                        if (mvtDetails != null && mvtDetails.length > 0) {
+                          for (int i = 0; i < mvtDetails.length; i++) {
+                            MouvementStockDetail mvtDetail = mvtDetails[i];
+                      %>
                       <tr>
-                        <td></td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
+                        <td class="text-center"><%= mvtDetail.getMedicament().getNom() %></td> 
+                        <td class="text-center"><%= mvtDetail.getMedicament().getTypeMedicament().getTypeMedicament() %></td>
+                        <td class="text-center"><%= mvtDetail.getUnite().getNom() %></td> 
+                        <td class="text-center"><%= mvtDetail.getPrixUnitaire() %></td>
+                        <td class="text-center"><%= mvtDetail.getEntree() %></td>
+                        <td class="text-center"><%= mvtDetail.getSortie() %></td> 
+                          
+                      
                       </tr>
-                      <tbody>
-                        <% 
-                          if (mouvements != null && mouvements.length > 0) {
-                            for (int i = 0; i < mouvements.length; i++) {
-                              MouvementStock mvt = mouvements[i];
-                        %>
-                        <tr>
-                          <td class="text-center"><%= mvt.getIdMouvementStock() %></td> 
-                          <td class="text-center"><%= mvt.getDateMouvementStock() %></td>
-                          <td class="text-center">
-                          <a href="<%= request.getContextPath() %>/mouvementdetail/medicament?id_medicament=<%=mvt.getIdMouvementStock()  %>" class="btn btn-info btn-sm">
-                            detail
-                          </a>
-                         </td>
-                        </tr>
-                        <% 
-                            }
-                          } else { 
-                        %>
-                        <tr>
-                          <td class="text-center" colspan="6">Aucun Mouvement disponible</td>
-                        </tr>
-                        <% 
+                      <% 
                           }
-                        %>
-                      </tbody>
+                        } else { 
+                      %>
+                      <tr>
+                        <td class="text-center" colspan="6">Aucun details disponible</td>
+                      </tr>
+                      <% 
+                        }
+                      %>
                     </tbody>
                   </table>
-
 
                 </div>
               </div>
@@ -149,5 +141,5 @@ MouvementStock[] mouvements = (MouvementStock[]) request.getAttribute("mouvement
 
 
 
-      </div>
+      </div>   
 <%@ include file="../elements/footer.jsp" %>

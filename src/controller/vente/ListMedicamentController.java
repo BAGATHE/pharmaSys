@@ -118,7 +118,6 @@ public class ListMedicamentController extends HttpServlet {
         for (int i = 0; i < nombre_lignes; i++) {
             try {
                 int quantite = Integer.parseInt(request.getParameter("quantite_" + i));
-                System.out.println(request.getParameter("quantite_" + i));
                 if (quantite > 0) {
                     quantites.add(quantite);
                 }

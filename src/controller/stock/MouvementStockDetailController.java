@@ -12,18 +12,20 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import repository.StockMedicamentRepository;
+import repository.MouvementStockRepository;
 
-@WebServlet("/stock/medicament")
-public class StockListController extends HttpServlet {
+@WebServlet("/mouvementdetail/medicament")
+public class MouvementStockDetailController extends HttpServlet {
     /*** GET ***/
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try (Connection connection = Connexion.connect()) {
-            request.setAttribute("stocks", StockMedicamentRepository.getEtatStock(connection));
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/stock/etat_stock.jsp");
+            String id_medicament = (String) request.getParameter("id_medicament");
+            request.setAttribute("mvtDetails",
+                    MouvementStockRepository.getDetailByIdMouvementStock(connection, id_medicament));
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/stock/mouvement_detail.jsp");
             dispatcher.forward(request, response);
         } catch (SQLException e) {
             out.print(e.getMessage());

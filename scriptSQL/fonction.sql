@@ -21,6 +21,27 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 SELECT 
     sm.id_stock_medicament,
     sm.id_medicament,

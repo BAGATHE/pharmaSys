@@ -19,12 +19,11 @@ public class MaladieRepository {
             stmt.setString(2, idSymptome);
 
             stmt.executeUpdate();
-            System.out.println("Insertion réussie : Maladie ID = " + idMaladie + ", Symptôme ID = " + idSymptome);
+
         } catch (SQLException e) {
             // Gérer les erreurs spécifiques, comme une violation de clé primaire
             if ("23505".equals(e.getSQLState())) { // Code SQL pour violation de clé primaire
-                System.out.println("Le couple (idMaladie, idSymptome) existe déjà : Maladie ID = " + idMaladie
-                        + ", Symptôme ID = " + idSymptome);
+
             } else {
                 throw e; // Relancer l'exception si ce n'est pas un cas connu
             }
@@ -193,7 +192,7 @@ public class MaladieRepository {
         if (filter.getNom() != null && !filter.getNom().isEmpty()) {
             query.append(" AND nom ILIKE ?");
             parameters.add("%" + filter.getNom() + "%");
-            System.out.println("nom :" + filter.getNom());
+
         }
 
         // Pagination (limit et offset)

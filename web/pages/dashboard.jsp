@@ -1,61 +1,8 @@
 <%@ include file="elements/header.jsp" %>
 <%@ include file="elements/sidebars.jsp" %>
 <div class="main-panel">
-    <div class="main-header">
-      <div class="main-header-logo">
-        <!-- Logo Header -->
-        <div class="logo-header" data-background-color="dark">
-          <a href="index.html" class="logo">
-            <img
-              src="<%= request.getContextPath() %>assets/img/kaiadmin/logo_light.svg"
-              alt="navbar brand"
-              class="navbar-brand"
-              height="20"
-            />
-          </a>
-          <div class="nav-toggle">
-            <button class="btn btn-toggle toggle-sidebar">
-              <i class="gg-menu-right"></i>
-            </button>
-            <button class="btn btn-toggle sidenav-toggler">
-              <i class="gg-menu-left"></i>
-            </button>
-          </div>
-          <button class="topbar-toggler more">
-            <i class="gg-more-vertical-alt"></i>
-          </button>
-        </div>
-        <!-- End Logo Header -->
-      </div>
-      <!-- Navbar Header -->
-      <nav
-        class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
-      >
-        <div class="container-fluid">
-          <nav
-            class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
-          >
-            
-          </nav>
-
-          <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-           
-           
-          </ul>
-        </div>
-      </nav>
-      <!-- End Navbar -->
-    </div>
-
-    <div class="container">
+    <div >
       <div class="page-inner">
-        <div
-          class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
-        >
-          <div>
-            <h3 class="fw-bold mb-3">Dashboard</h3>
-          </div>
-        </div>
         <div class="row">
           <div class="col-sm-6 col-md-3">
             <div class="card card-stats card-round">
@@ -143,21 +90,297 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
-            <div class="card card-round">
+          <div class="col-7">
+            <div class="card " style="max-height: 64vh; overflow: hidden;">
               <div class="card-header">
-                <div class="card-head-row">
-                  <div class="card-title">User Statistics</div>
-                  <div class="card-tools">
-                    <!--input date-->
+                <form method="POST" action="" class="row g-3">
+                  <div class="col-3">
+                    <select name="" id="" class="form-select">
+                        <option value="">-- Toutes les XXX --</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <select name="" id="" class="form-select">
+                        <option value="">-- Toutes les XXX --</option>
+                    </select>
+                  </div>
+                  <div class="col-2">
+                    <button type="submit" class="btn btn-success">Valider</button>
+                </div>
+                </form>
+              </div>
+              <div class="card-body" style="overflow-y: auto;">
+                <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="pills-chart-1-tab" data-bs-toggle="pill" href="#pills-chart-1" role="tab" aria-controls="pills-chart-1" aria-selected="true">chart</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-tableau-1-tab" data-bs-toggle="pill" href="#pills-tableau-1" role="tab" aria-controls="pills-tableau-1" aria-selected="false">tableau</a>
+                  </li>
+                </ul>
+                <div class="tab-content mt-2 mb-3" id="pills-tabContent">
+                  <div class="tab-pane fade show active " id="pills-chart-1" role="tabpanel" aria-labelledby="pills-chart-1-tab">
+                    <div class="chart-container">
+                      <canvas id="lineChart"></canvas>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="pills-tableau-1" role="tabpanel" aria-labelledby="pills-tableau-1-tab">
+                    <div class="table-responsive">
+                      <table class="table align-items-center mb-0">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col">Payment Number</th>
+                            <th scope="col" class="text-end">Date & Time</th>
+                            <th scope="col" class="text-end">Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
+                
               </div>
-              <div class="card-body">
-                <div class="chart-container" style="min-height: 375px">
-                  <canvas id="statisticsChart"></canvas>
+            </div>
+          </div>
+          <div class="col-5">
+            <div class="card" style="max-height: 64vh; overflow: hidden;">
+              <div class="card-header">
+                <form method="POST" action="" class="row g-3">
+                  <div class="col-3">
+                    <select name="" id="" class="form-select">
+                        <option value="">-- Toutes les XXX --</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <select name="" id="" class="form-select">
+                        <option value="">-- Toutes les XXX --</option>
+                    </select>
+                  </div>
+                  <div class="col-2">
+                    <button type="submit" class="btn btn-success">Valider</button>
                 </div>
-                <div id="myChartLegend"></div>
+                </form>
+              </div>
+              <div class="card-body" style="overflow-y: auto;" >
+                <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="pills-chart-2-tab" data-bs-toggle="pill" href="#pills-chart-2" role="tab" aria-controls="pills-chart-2" aria-selected="true">chart</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-tableau-2-tab" data-bs-toggle="pill" href="#pills-tableau-2" role="tab" aria-controls="pills-tableau-2" aria-selected="false">tableau</a>
+                  </li>
+                </ul>
+                <div class="tab-content mt-2 mb-3" id="pills-tabContent">
+                  <div class="tab-pane fade show active " id="pills-chart-2" role="tabpanel" aria-labelledby="pills-chart-2-tab">
+                    <div class="chart-container">
+                      <canvas
+                        id="pieChart"
+                        style="width: 50%; height: 50%"
+                      ></canvas>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="pills-tableau-2" role="tabpanel" aria-labelledby="pills-tableau-2-tab">
+                    <div class="table-responsive">
+                      <table class="table align-items-center mb-0">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col">Payment Number</th>
+                            <th scope="col" class="text-end">Date & Time</th>
+                            <th scope="col" class="text-end">Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-10 offset-1">
+            <div class="card" style="max-height: 64vh; overflow: hidden;">
+              <div class="card-header">
+                <form method="POST" action="" class="row g-3">
+                  <div class="col-3">
+                    <select name="" id="" class="form-select">
+                        <option value="">-- Toutes les XXX --</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <select name="" id="" class="form-select">
+                        <option value="">-- Toutes les XXX --</option>
+                    </select>
+                  </div>
+                  <div class="col-2">
+                    <button type="submit" class="btn btn-success">Valider</button>
+                </div>
+                </form>
+              </div>
+              <div class="card-body" style="overflow-y: auto;">
+                <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="pills-chart-3-tab" data-bs-toggle="pill" href="#pills-chart-3" role="tab" aria-controls="pills-chart-3" aria-selected="true">chart</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-tableau-3-tab" data-bs-toggle="pill" href="#pills-tableau-3" role="tab" aria-controls="pills-tableau-3" aria-selected="false">tableau</a>
+                  </li>
+                </ul>
+                <div class="tab-content mt-2 mb-3" id="pills-tabContent">
+                  <div class="tab-pane fade show active " id="pills-chart-3" role="tabpanel" aria-labelledby="pills-chart-3-tab">
+                    <div class="chart-container">
+                      <canvas id="barChart"></canvas>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="pills-tableau-3" role="tabpanel" aria-labelledby="pills-tableau-3-tab">
+                    <div class="table-responsive">
+                      <table class="table align-items-center mb-0">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col">Payment Number</th>
+                            <th scope="col" class="text-end">Date & Time</th>
+                            <th scope="col" class="text-end">Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                          <tr>
+                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
+                            <td class="text-end">$250.00</td>
+                            <td class="text-end">
+                              <span class="badge badge-success">Completed</span>
+                            </td>
+                          </tr> 
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                
               </div>
             </div>
           </div>
@@ -226,97 +449,7 @@
                         <td class="text-end">
                           <span class="badge badge-success">Completed</span>
                         </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <button
-                            class="btn btn-icon btn-round btn-success btn-sm me-2"
-                          >
-                            <i class="fa fa-check"></i>
-                          </button>
-                          Payment from #10231
-                        </th>
-                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                        <td class="text-end">$250.00</td>
-                        <td class="text-end">
-                          <span class="badge badge-success">Completed</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <button
-                            class="btn btn-icon btn-round btn-success btn-sm me-2"
-                          >
-                            <i class="fa fa-check"></i>
-                          </button>
-                          Payment from #10231
-                        </th>
-                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                        <td class="text-end">$250.00</td>
-                        <td class="text-end">
-                          <span class="badge badge-success">Completed</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <button
-                            class="btn btn-icon btn-round btn-success btn-sm me-2"
-                          >
-                            <i class="fa fa-check"></i>
-                          </button>
-                          Payment from #10231
-                        </th>
-                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                        <td class="text-end">$250.00</td>
-                        <td class="text-end">
-                          <span class="badge badge-success">Completed</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <button
-                            class="btn btn-icon btn-round btn-success btn-sm me-2"
-                          >
-                            <i class="fa fa-check"></i>
-                          </button>
-                          Payment from #10231
-                        </th>
-                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                        <td class="text-end">$250.00</td>
-                        <td class="text-end">
-                          <span class="badge badge-success">Completed</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <button
-                            class="btn btn-icon btn-round btn-success btn-sm me-2"
-                          >
-                            <i class="fa fa-check"></i>
-                          </button>
-                          Payment from #10231
-                        </th>
-                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                        <td class="text-end">$250.00</td>
-                        <td class="text-end">
-                          <span class="badge badge-success">Completed</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <button
-                            class="btn btn-icon btn-round btn-success btn-sm me-2"
-                          >
-                            <i class="fa fa-check"></i>
-                          </button>
-                          Payment from #10231
-                        </th>
-                        <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                        <td class="text-end">$250.00</td>
-                        <td class="text-end">
-                          <span class="badge badge-success">Completed</span>
-                        </td>
-                      </tr>
+                      </tr> 
                     </tbody>
                   </table>
                 </div>
@@ -326,4 +459,9 @@
         </div>
       </div>
     </div>
+    <!-- Chart JS -->
+<script src="<%= request.getContextPath() %>/assets/js/plugin/chart.js/chart.min.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/chart/dashboard/linechart.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/chart/dashboard/barchart.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/chart/dashboard/piechart.js"></script>
 <%@ include file="elements/footer.jsp" %>
