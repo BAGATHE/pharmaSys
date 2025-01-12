@@ -202,7 +202,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="<%= request.getContextPath() %>/pages/stock/etat_stock.jsp">
+                  <a href="<%= request.getContextPath() %>/mouvement/medicament">
                     <span class="sub-item">Mouvement Stock</span>
                   </a>
                 </li>

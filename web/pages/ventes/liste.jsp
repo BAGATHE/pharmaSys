@@ -98,7 +98,7 @@ Vente[] ventes = (Vente[]) request.getAttribute("ventes");
                                         if (type_medicaments != null) {
                                             for (TypeMedicament typeMedicament : type_medicaments) {
                                     %>
-                                                <option value="<%= typeMedicament.getIdType()%>"><%= typeMedicament.getTypeMedicament()%></option>
+                                        <option value="<%= typeMedicament.getIdType()%>"><%= typeMedicament.getTypeMedicament()%></option>
                                     <%
                                             }
                                         }
