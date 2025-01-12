@@ -2,6 +2,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.stock.StockMedicament"%>
+<%
+StockMedicament[] stocks = (StockMedicament[]) request.getAttribute("stocks");
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -127,40 +131,39 @@
                         <th class="text-center" scope="col">Type</th>
                         <th class="text-center" scope="col">Quantité en stock</th>
                         <th class="text-center" scope="col">Unité</th>
-                        <th class="text-center" scope="col">Date dernier mouvement</th>
+                        <th class="text-center" scope="col">Status</th>
                       </tr>
                     </thead>
                     <tbody>
+                      <% 
+                        if (stocks != null && stocks.length > 0) {
+                          for (int i = 0; i < stocks.length; i++) {
+                            StockMedicament stock = stocks[i];
+                      %>
                       <tr>
-                        <td  class="text-center">Paracetamol</td>
-                        <td class="text-center">15000</td>
-                        <td class="text-center">10000</td>
-                        <td class="text-center">5000</td>
-                        <td class="text-center">27/12/2024</td>
+                        <td class="text-center"><%= stock.getMedicament().getNom() %></td> 
+                        <td class="text-center"><%= stock.getMedicament().getTypeMedicament().getTypeMedicament() %></td>
+                        <td class="text-center"><%= stock.getQuantiteBoite() %></td>
+                        <td class="text-center"><%= stock.getUnite().getNom() %></td> 
+                        <td class="text-center status-cell" data-status="<%= stock.getStatus().getNom() %>">
+                          <%= stock.getStatus().getNom() %>
+                        </td>
+                          
+                      
                       </tr>
+                      <% 
+                          }
+                        } else { 
+                      %>
+                      <tr>
+                        <td class="text-center" colspan="6">Aucun stock disponible</td>
+                      </tr>
+                      <% 
+                        }
+                      %>
                     </tbody>
                   </table>
 
-                    <!-- Pagination -->
-        <nav>
-            <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
                 </div>
               </div>
             
@@ -179,4 +182,27 @@
 
 
       </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const statusCells = document.querySelectorAll(".status-cell");
+        
+            statusCells.forEach(cell => {
+                const status = cell.getAttribute("data-status").toLowerCase(); 
+        
+                if (status.includes("suffisant")) {
+                    cell.style.backgroundColor = "#d4edda"; // Vert clair
+                    cell.style.color = "#155724";          // Texte vert foncé
+                } else if (status.includes("critique")) {
+                    cell.style.backgroundColor = "#ffeeba"; // Orange clair
+                    cell.style.color = "#856404";           // Texte orange foncé
+                } else if (status.includes("rupture")) {
+                    cell.style.backgroundColor = "crimson"; // Rouge
+                    cell.style.color = "white";            // Texte blanc
+                }
+            });
+        });
+    </script>
+    
+    
+    
 <%@ include file="../elements/footer.jsp" %>

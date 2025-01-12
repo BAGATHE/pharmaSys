@@ -61,3 +61,8 @@ INSERT INTO type_medicament (type_medicament)VALUES ('Consommable');
 
 select vd.id_vente from vente_details vd join medicaments m on vd.id_medicament = m.id_medicament
 join traitements t on t.id_medicament = m.id_medicament WHERE t.id_categorie='CAT_1' AND m.id_type='TYP_1';
+
+INSERT INTO status (nom) VALUES 
+('Rupture de stock'),
+('Stock critique'),
+('Stock suffisant');

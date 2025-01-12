@@ -5,6 +5,7 @@ import java.sql.Date;
 import model.configuration.Unite;
 import model.medicament.Laboratoire;
 import model.medicament.Medicament;
+import model.status.Status;
 
 public class StockMedicament {
     private String idStockMedicament;
@@ -13,6 +14,7 @@ public class StockMedicament {
     private Medicament medicament;
     private Laboratoire laboratoire;
     private Unite unite;
+    private Status status;
 
     public String getIdStockMedicament() {
         return idStockMedicament;
@@ -79,4 +81,13 @@ public class StockMedicament {
     // algorithme de valorisation de stock
     public void fifo() {
     }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
 }
