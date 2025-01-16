@@ -3,11 +3,30 @@ package model.vente;
 public class VenteFilter {
     private String idType;
     private String idCategorie;
+    private String date_debut;
+    private String date_fin;
 
-    // Constructeur avec paramètres
-    public VenteFilter(String idType, String idCategorie) {
+    public String getDate_debut() {
+        return date_debut;
+    }
+
+    public void setDate_debut(String date_debut) {
+        this.date_debut = date_debut;
+    }
+
+    public String getDate_fin() {
+        return date_fin;
+    }
+
+    public void setDate_fin(String date_fin) {
+        this.date_fin = date_fin;
+    }
+
+    public VenteFilter(String idType, String idCategorie, String date_debut, String date_fin) {
         this.idType = idType;
         this.idCategorie = idCategorie;
+        this.date_debut = date_debut;
+        this.date_fin = date_fin;
     }
 
     // Getter pour idType

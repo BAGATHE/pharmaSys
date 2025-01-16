@@ -3,6 +3,7 @@ package model.recommandation;
 public class RecommandationFilter {
     private String date;
     private String idMedicament;
+    private int year;
 
     public String getDate() {
         return date;
@@ -23,5 +24,13 @@ public class RecommandationFilter {
     public RecommandationFilter(String date, String idMedicament) {
         this.date = date;
         this.idMedicament = idMedicament;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }

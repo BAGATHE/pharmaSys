@@ -15,31 +15,47 @@ public class VenteRepository {
     public static Vente[] getAllwithFiltre(Connection conn, VenteFilter venteFilter) throws Exception {
         List<Vente> ventes = new ArrayList<>();
         List<Object> parameters = new ArrayList<>();
-        StringBuilder query = new StringBuilder("select vd.id_vente from vente_details vd join medicaments m on vd.id_medicament = m.id_medicament\n" +
-                "join traitements t on t.id_medicament = m.id_medicament WHERE 1=1");
+        StringBuilder query = new StringBuilder(
+                "SELECT DISTINCT v.id_vente " +
+                        "FROM ventes v " +
+                        "JOIN vente_details vd ON v.id_vente = vd.id_vente " +
+                        "JOIN medicaments m ON vd.id_medicament = m.id_medicament " +
+                        "LEFT JOIN traitements t ON m.id_medicament = t.id_medicament " +
+                        "WHERE 1=1");
 
-        // Ajouter des conditions de filtre sur id_type
+        // Ajout des filtres pour les dates
+        if ((venteFilter.getDate_debut() == null || venteFilter.getDate_debut().isEmpty()) &&
+                (venteFilter.getDate_fin() == null || venteFilter.getDate_fin().isEmpty())) {
+            query.append(" AND v.date_vente = CURRENT_DATE");
+        } else {
+            query.append(" AND v.date_vente >= ? AND v.date_vente <= ?");
+            parameters.add(java.sql.Date.valueOf(venteFilter.getDate_debut()));
+            parameters.add(java.sql.Date.valueOf(venteFilter.getDate_fin()));
+        }
+
+        // Filtre par type
         if (venteFilter.getIdType() != null && !venteFilter.getIdType().isEmpty()) {
             query.append(" AND m.id_type = ?");
             parameters.add(venteFilter.getIdType());
         }
 
-        // Ajouter des conditions de filtre sur id_categorie
+        // Filtre par catégorie
         if (venteFilter.getIdCategorie() != null && !venteFilter.getIdCategorie().isEmpty()) {
             query.append(" AND t.id_categorie = ?");
             parameters.add(venteFilter.getIdCategorie());
         }
 
         try (PreparedStatement statement = conn.prepareStatement(query.toString())) {
-            // Paramétrer la requête avec les valeurs de filtre
+            // Injection des paramètres dans la requête
             for (int i = 0; i < parameters.size(); i++) {
                 statement.setObject(i + 1, parameters.get(i));
             }
 
             try (ResultSet resultSet = statement.executeQuery()) {
+                // Récupération des résultats
                 while (resultSet.next()) {
                     String idVente = resultSet.getString("id_vente");
-                    Vente vente = VenteRepository.getById(conn, idVente); // Méthode pour récupérer une vente par son ID
+                    Vente vente = VenteRepository.getById(conn, idVente);
 
                     if (vente != null) {
                         ventes.add(vente);
@@ -91,7 +107,7 @@ public class VenteRepository {
 
     public static Vente[] getAll(Connection con) throws Exception {
         List<Vente> ventes = new ArrayList<>();
-        String sql = "SELECT * FROM ventes";
+        String sql = "SELECT * FROM ventes where date_vente = CURRENT_DATE";
         try (PreparedStatement prst = con.prepareStatement(sql);
                 ResultSet res = prst.executeQuery()) {
             while (res.next()) {

@@ -42,6 +42,11 @@ public class RecommandationRepository {
             query.append(" AND id_medicament = ?");
             parameters.add(filter.getIdMedicament());
         }
+        if (filter.getYear() > 0) {
+            query.append(" AND EXTRACT(YEAR from date_debut) = ? OR EXTRACT(YEAR from date_fin) = ?");
+            parameters.add(filter.getYear());
+            parameters.add(filter.getYear());
+        }
 
         try (PreparedStatement stmt = conn.prepareStatement(query.toString())) {
             for (int i = 0; i < parameters.size(); i++) {
