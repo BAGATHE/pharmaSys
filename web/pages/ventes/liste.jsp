@@ -90,8 +90,29 @@ Vente[] ventes = (Vente[]) request.getAttribute("ventes");
                 <div class="card-body">
                   <div class="card-sub">
                     <form  method="POST" action=""class="row g-3">
+                      <div class="col-3">
+                        <div class="form-group">
+                          <label for="nom">date min </label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            name="date_debut"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="form-group">
+                          <label for="nom">date max</label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            name="date_fin"
+                          />
+                        </div>
+                      </div>
                         <div class="col-3">
                               <div class="form-group">
+                                <label for="nom">Type</label>
                                 <select name="type" id="categorie" class="form-select">
                                     <option value="">-- Toutes les Type  --</option>
                                     <%
@@ -108,6 +129,7 @@ Vente[] ventes = (Vente[]) request.getAttribute("ventes");
                          
                         </div>
                         <div class="col-3">
+                          <label for="nom">Categorie</label>
                           <select name="categorie" id="categorie" class="form-select">
                               <option value="">-- Toutes les catégories --</option>
                               <%

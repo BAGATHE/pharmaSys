@@ -32,16 +32,24 @@ public class ListeVenteController extends HttpServlet {
         try (Connection connection = Connexion.connect()) {
             String categorieId = (String) request.getParameter("categorie");
             String typeId = (String) request.getParameter("type");
+            String date_debut = (String) request.getParameter("date_debut");
+            String date_fin = (String) request.getParameter("date_fin");
             if (categorieId == null && categorieId.isEmpty()) {
                 categorieId = "";
             }
             if (typeId == null && typeId.isEmpty()) {
                 typeId = "";
             }
+            if (date_debut == null && date_debut.isEmpty()) {
+                date_debut = "";
+            }
+            if (date_fin == null && date_fin.isEmpty()) {
+                date_fin = "";
+            }
+            System.out.println(date_debut + " " + date_fin);
+            VenteFilter venteFilter = new VenteFilter(typeId, categorieId, date_debut, date_fin);
 
-            VenteFilter venteFilter = new VenteFilter(typeId, categorieId);
-
-            if (categorieId.isEmpty() && typeId.isEmpty()) {
+            if (categorieId.isEmpty() && typeId.isEmpty() && date_debut.isEmpty() && date_fin.isEmpty()) {
                 Vente[] ventes = VenteRepository.getAll(connection);
                 request.setAttribute("ventes", ventes);
             } else {

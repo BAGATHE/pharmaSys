@@ -32,6 +32,7 @@ public class RecommandationList extends HttpServlet {
             String dateString = request.getParameter("date");
             String idMedicament = request.getParameter("medicament");
             RecommandationFilter filter = new RecommandationFilter(dateString, idMedicament);
+            filter.setYear(0);
             request.setAttribute("recommandations", RecommandationRepository.getAllWithFiltre(connection, filter));
             Medicament[] medicaments = MedicamentRepository.getAll(connection);
             request.setAttribute("medicaments", medicaments);
@@ -58,7 +59,11 @@ public class RecommandationList extends HttpServlet {
             connection = Connexion.connect();
             Medicament[] medicaments = MedicamentRepository.getAll(connection);
             request.setAttribute("medicaments", medicaments);
-            request.setAttribute("recommandations", RecommandationRepository.getAll(connection));
+            String dateString = request.getParameter("date");
+            String idMedicament = request.getParameter("medicament");
+            RecommandationFilter filter = new RecommandationFilter(dateString, idMedicament);
+            filter.setYear(2024);
+            request.setAttribute("recommandations", RecommandationRepository.getAllWithFiltre(connection, filter));
             RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/recommandation/liste.jsp");
             dispatcher.forward(request, response);
         } catch (Exception e) {
