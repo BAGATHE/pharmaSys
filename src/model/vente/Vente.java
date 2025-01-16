@@ -5,6 +5,7 @@ import repository.StockMedicamentRepository;
 import java.sql.Connection;
 import java.sql.Date;
 
+import model.client.Client;
 import model.configuration.Conversion;
 import model.configuration.Unite;
 import model.stock.StockMedicament;
@@ -13,9 +14,18 @@ public class Vente {
     private String idVente;
     private Date dateVente;
     private VenteDetail[] venteDetails;
+    private Client client;
 
     public String getIdVente() {
         return idVente;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public void setIdVente(String idVente) {

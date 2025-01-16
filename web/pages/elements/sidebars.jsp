@@ -210,6 +210,29 @@
             </div>
           </li>
           <!--siderBar stock fin-->
+           <!--siderBar stock debut-->
+           <li class="nav-item">
+            <a data-bs-toggle="collapse" href="#client">
+              <i class="fas fa-table"></i>
+              <p>Client</p>
+              <span class="caret"></span>
+            </a>
+            <div class="collapse" id="client">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a href="<%= request.getContextPath() %>/client/insert">
+                    <span class="sub-item">insertion </span>
+                  </a>
+                </li>
+                <li>
+                  <a href="<%= request.getContextPath() %>/client/list">
+                    <span class="sub-item">liste client</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!--siderBar stock fin-->
 
           <!--siderBar configuration debut-->
           <li class="nav-item">

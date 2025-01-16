@@ -75,11 +75,22 @@ CREATE TABLE achats (
    PRIMARY KEY(id_achat),
    FOREIGN KEY(id_laboratoire) REFERENCES laboratoires(id_laboratoire)
 );
+CREATE TABLE client (
+    id_client VARCHAR(50) DEFAULT CONCAT('CLI_', nextval('seq_client')), 
+    nom VARCHAR(50) NOT NULL,                                          
+    identifiant VARCHAR(12) UNIQUE,                                    
+    type_client VARCHAR(50) NOT NULL,                                  
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,                 
+    PRIMARY KEY (id_client)
+);
+
 
 CREATE TABLE ventes (
    id_vente VARCHAR(50) DEFAULT CONCAT('VEN_', nextval('seq_ventes')),
    date_vente DATE,
    total NUMERIC(15,2) CHECK(total >= 0),
+   id_client VARCHAR(50)  NOT NULL,
+   FOREIGN KEY(id_client) REFERENCES client(id_client)
    PRIMARY KEY(id_vente)
 );
 

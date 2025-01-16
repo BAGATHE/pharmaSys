@@ -5,6 +5,7 @@ public class VenteFilter {
     private String idCategorie;
     private String date_debut;
     private String date_fin;
+    private String id_client;
 
     public String getDate_debut() {
         return date_debut;
@@ -47,5 +48,13 @@ public class VenteFilter {
     // Setter pour idCategorie
     public void setIdCategorie(String idCategorie) {
         this.idCategorie = idCategorie;
+    }
+
+    public String getId_client() {
+        return id_client;
+    }
+
+    public void setId_client(String id_client) {
+        this.id_client = id_client;
     }
 }
