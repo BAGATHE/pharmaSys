@@ -44,6 +44,10 @@ public class VenteRepository {
             query.append(" AND t.id_categorie = ?");
             parameters.add(venteFilter.getIdCategorie());
         }
+        if (venteFilter.getId_client() != null && !venteFilter.getId_client().isEmpty()) {
+            query.append(" AND v.id_client = ?");
+            parameters.add(venteFilter.getId_client());
+        }
 
         try (PreparedStatement statement = conn.prepareStatement(query.toString())) {
             // Injection des paramètres dans la requête
@@ -123,6 +127,29 @@ public class VenteRepository {
         return ventes.toArray(new Vente[0]);
     }
 
+    public static Vente[] getVenteByIdClient(Connection con, String idClient) throws Exception {
+        List<Vente> ventes = new ArrayList<>();
+        String sql = "SELECT * FROM ventes WHERE id_client = ?";
+        try (PreparedStatement prst = con.prepareStatement(sql)) {
+            prst.setString(1, idClient);
+            try (ResultSet res = prst.executeQuery()) {
+                while (res.next()) {
+                    Vente vente = new Vente(
+                            res.getString("id_vente"),
+                            res.getDate("date_vente"),
+                            VenteDetailRepository.getByIdVente(con, res.getString("id_vente")) // Détails de la vente
+                    );
+                    vente.setClient(ClientRepository.getById(con, idClient));
+                    ventes.add(vente);
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception(
+                    "Erreur lors de la récupération des ventes pour id_client " + idClient + " : " + e.getMessage());
+        }
+        return ventes.toArray(new Vente[0]);
+    }
+
     public static Vente getById(Connection con, String idVente) throws Exception {
         Vente vente = null;
         String sql = "SELECT * FROM ventes WHERE id_vente = ?";
@@ -134,6 +161,7 @@ public class VenteRepository {
                             res.getString("id_vente"),
                             res.getDate("date_vente"),
                             VenteDetailRepository.getByIdVente(con, res.getString("id_vente")));
+                    vente.setClient(ClientRepository.getById(con, res.getString("id_client")));
                 }
             }
         } catch (Exception e) {

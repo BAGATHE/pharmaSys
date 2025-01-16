@@ -40,3 +40,19 @@ CREATE TRIGGER trg_update_total_vente
 AFTER INSERT OR UPDATE ON vente_details
 FOR EACH ROW
 EXECUTE FUNCTION update_total_vente();
+
+
+
+CREATE OR REPLACE FUNCTION generate_identifiant()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.identifiant := 'CLI' || TO_CHAR(nextval('seq_identifiant'), 'FM000000');
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER trigger_generate_identifiant
+BEFORE INSERT ON client
+FOR EACH ROW
+EXECUTE FUNCTION generate_identifiant();
