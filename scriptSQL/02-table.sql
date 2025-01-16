@@ -123,6 +123,7 @@ CREATE TABLE reductions (
 CREATE TABLE categorie(
    id_categorie VARCHAR(50) DEFAULT CONCAT('CAT_',nextval('seq_categorie')),
    categorie VARCHAR(240)  NOT NULL,
+   age_min INTEGER,
    age_max INTEGER,
    PRIMARY KEY(id_categorie),
    UNIQUE(categorie)
@@ -227,3 +228,21 @@ CREATE TABLE utilisateurs(
    PRIMARY KEY(id_utilisateur),
    UNIQUE(email)
 );
+
+CREATE TABLE recommandation(
+   id_recommandation VARCHAR(50) DEFAULT CONCAT('REC_', nextval('seq_recommandation')),
+   date_debut DATE NOT NULL,
+   date_fin DATE NOT NULL,
+   id_medicament VARCHAR(50) ,
+   PRIMARY KEY(id_recommandation),
+   FOREIGN KEY(id_medicament) REFERENCES medicaments(id_medicament)
+);
+
+
+
+
+-- export 
+  pg_dump -U postgres pharmacie > sauvegarde_pharmacie.sql
+
+-- import
+  psql -U votre_utilisateur -d pharmacie -f sauvegarde_pharmacie.sql

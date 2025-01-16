@@ -102,3 +102,15 @@ SELECT id_maladie, nom AS nom_maladie, description AS description_maladie
 FROM maladies 
 WHERE 1=1
 
+
+SELECT DISTINCT on(ml.id_laboratoire) ml.id_laboratoire
+FROM medicament_laboratoire ml
+JOIN medicaments m
+ON ml.id_medicament=m.id_medicament
+JOIN traitements t 
+ON m.id_medicament = t.id_medicament
+where m.id_type='TYP_1' 
+and t.id_categorie='CAT_1'
+and m.id_medicament='MED_4';
+
+SELECT * FROM recommandation WHERE date_debut <= '01-01-2024' AND date_fin >= '03-07-2024';

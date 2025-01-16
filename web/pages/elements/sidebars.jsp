@@ -222,18 +222,18 @@
               <ul class="nav nav-collapse">
                 <li>
                   <a data-bs-toggle="collapse" href="#reduction">
-                    <span class="sub-item">Reduction Produit</span>
+                    <span class="sub-item">Recommandation Produit</span>
                     <span class="caret"></span>
                   </a>
                   <div class="collapse" id="reduction">
                     <ul class="nav nav-collapse subnav">
                       <li>
-                        <a href="<%= request.getContextPath() %>/pages/reductions/insertion.jsp">
+                        <a href="<%= request.getContextPath() %>/recommandation/insert">
                           <span class="sub-item">Insertion</span>
                         </a>
                       </li>
                       <li>
-                        <a href="<%= request.getContextPath() %>/pages/reductions/liste.jsp">
+                        <a href="<%= request.getContextPath() %>/recommandation/list">
                           <span class="sub-item">Liste</span>
                         </a>
                       </li>

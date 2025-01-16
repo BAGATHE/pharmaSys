@@ -90,14 +90,21 @@
                 </div>
                 <div class="card-body">
                   <div class="card-sub">
-                    <form method="GET" action="/your-filter-endpoint" class="row g-3">
-                        <div class="col-3">
-                          <input type="text" class="form-control" name="maladie" placeholder="Filtrer par maladie">
-                        </div>
-                        <div class="col-md-2">
-                          <button type="submit" class="btn btn-success">Valider</button>
-                        </div>
-                      </form>
+                    <form method="POST" action="" class="row g-3">
+                      <div class="col-3">
+                        <select name="" id="" class="form-select">
+                            <option value="">-- Toutes les XXX --</option>
+                        </select>
+                      </div>
+                      <div class="col-3">
+                        <select name="" id="" class="form-select">
+                            <option value="">-- Toutes les XXX --</option>
+                        </select>
+                      </div>
+                      <div class="col-2">
+                        <button type="submit" class="btn btn-success">Valider</button>
+                    </div>
+                    </form>
                   </div>
                   <table class="table table-bordered table-head-bg-success  mt-3">
                     <thead>

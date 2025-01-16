@@ -291,35 +291,60 @@
           <div class="col-10 offset-1">
             <div class="card" style="max-height: 64vh; overflow: hidden;">
               <div class="card-header">
-                <form method="POST" action="" class="row g-3">
-                  <div class="col-3">
-                    <select name="" id="" class="form-select">
-                        <option value="">-- Toutes les XXX --</option>
-                    </select>
-                  </div>
-                  <div class="col-3">
-                    <select name="" id="" class="form-select">
-                        <option value="">-- Toutes les XXX --</option>
-                    </select>
-                  </div>
-                  <div class="col-2">
-                    <button type="submit" class="btn btn-success">Valider</button>
-                </div>
-                </form>
-              </div>
-              <div class="card-body" style="overflow-y: auto;">
                 <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" id="pills-chart-3-tab" data-bs-toggle="pill" href="#pills-chart-3" role="tab" aria-controls="pills-chart-3" aria-selected="true">chart</a>
+                    <a class="nav-link active" id="pills-chartA-3-tab" data-bs-toggle="pill" href="#pills-chartA-3" role="tab" aria-controls="pills-chartA-3" aria-selected="true">Annuelle</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link " id="pills-chartM-3-tab" data-bs-toggle="pill" href="#pills-chartM-3" role="tab" aria-controls="pills-chartM-3" aria-selected="true">Mensuelle</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="pills-tableau-3-tab" data-bs-toggle="pill" href="#pills-tableau-3" role="tab" aria-controls="pills-tableau-3" aria-selected="false">tableau</a>
                   </li>
                 </ul>
+
+              </div>
+              <div class="card-body" style="overflow-y: auto;">
+                
                 <div class="tab-content mt-2 mb-3" id="pills-tabContent">
-                  <div class="tab-pane fade show active " id="pills-chart-3" role="tabpanel" aria-labelledby="pills-chart-3-tab">
+                  <div class="tab-pane fade show active " id="pills-chartA-3" role="tabpanel" aria-labelledby="pills-chartA-3-tab">
+                    <form method="POST" action="" class="row g-3">
+                      <div class="col-3">
+                        <select name="" id="" class="form-select">
+                            <option value="">-- Toutes les XXX --</option>
+                        </select>
+                      </div>
+                      <div class="col-3">
+                        <select name="" id="" class="form-select">
+                            <option value="">-- Toutes les XXX --</option>
+                        </select>
+                      </div>
+                      <div class="col-2">
+                        <button type="submit" class="btn btn-success">Valider</button>
+                    </div>
+                    </form>
                     <div class="chart-container">
                       <canvas id="barChart"></canvas>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade show active " id="pills-chartM-3" role="tabpanel" aria-labelledby="pills-chartM-3-tab">
+                    <form method="POST" action="" class="row g-3">
+                      <div class="col-3">
+                        <select name="" id="" class="form-select">
+                            <option value="">-- Toutes les XXX --</option>
+                        </select>
+                      </div>
+                      <div class="col-3">
+                        <select name="" id="" class="form-select">
+                            <option value="">-- Toutes les XXX --</option>
+                        </select>
+                      </div>
+                      <div class="col-2">
+                        <button type="submit" class="btn btn-success">Valider</button>
+                    </div>
+                    </form>
+                    <div class="chart-container">
+                      <canvas id="barChartMonthly"></canvas>
                     </div>
                   </div>
                   <div class="tab-pane fade" id="pills-tableau-3" role="tabpanel" aria-labelledby="pills-tableau-3-tab">
@@ -464,4 +489,5 @@
 <script src="<%= request.getContextPath() %>/assets/js/chart/dashboard/linechart.js"></script>
 <script src="<%= request.getContextPath() %>/assets/js/chart/dashboard/barchart.js"></script>
 <script src="<%= request.getContextPath() %>/assets/js/chart/dashboard/piechart.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/chart/dashboard/barchartmonth.js"></script>
 <%@ include file="elements/footer.jsp" %>
