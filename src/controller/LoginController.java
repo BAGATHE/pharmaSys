@@ -35,17 +35,16 @@ public class LoginController extends HttpServlet {
             Utilisateur utilisateur = UtilisateurRepository.checkUtilisateur(connection, email, password);
             String path = null;
             if (utilisateur != null) {
-                path = "/pages/dashboard.jsp";
+                path = "/dashboard";
                 HttpSession session = request.getSession();
                 session.setAttribute("utilisateur", utilisateur);
+                response.sendRedirect(request.getContextPath() + path);
             } else {
                 path = "index.jsp";
                 request.setAttribute("login_erreur", "verifiez bien vos information de connection");
+                RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+                dispatcher.forward(request, response);
             }
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-            dispatcher.forward(request, response);
-
         } catch (Exception e) {
             out.print(e.getMessage());
             e.printStackTrace();

@@ -2,6 +2,20 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../elements/header.jsp" %>
 <%@ include file="../elements/sidebars.jsp" %>
+<%@page import="model.medicament.Medicament"%>
+<%
+    Medicament[] medicaments = (Medicament[]) request.getAttribute("medicaments");
+    String message = (String) request.getAttribute("message");
+    if (message != null && !message.trim().isEmpty()) {
+%>
+    <script src="<%= request.getContextPath() %>/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script>
+        swal({ title: "Notification",text: "<%= message %>",icon: "info", button: "OK"});
+    </script>
+<%
+        request.setAttribute("message", "");
+    }
+%>
 <div class="main-panel">
     <div class="main-header">
       <div class="main-header-logo">
@@ -54,7 +68,7 @@
     <div class="container">
         <div class="page-inner">
           <div class="page-header">
-            <h3 class="fw-bold mb-3">Reduction</h3>
+            <h3 class="fw-bold mb-3">Recommandation/h3>
             <ul class="breadcrumbs mb-3">
               <li class="nav-home">
                 <a href="#">
@@ -65,7 +79,7 @@
                 <i class="icon-arrow-right"></i>
               </li>
               <li class="nav-item">
-                <a href="#">Formulaire Reduction</a>
+                <a href="#">Recommandation</a>
               </li>
             </ul>
           </div>
@@ -75,36 +89,25 @@
               <form method="post" action="" accept-charset="UTF-8">
               <div class="card">
                 <div class="card-header" style="background-color: #1b1d38;">
-                  <div class="card-title"><h2 class="text-center" style="color: white;">Insertion Reduction</h2></div>
+                  <div class="card-title"><h2 class="text-center" style="color: white;">Insertion Recommandation</h2></div>
                 </div>
                 <div class="card-body">
                   <div class="row">
                     <div class="offset-md-3 col-md-6 offset-lg-2 col-lg-8">
-                        <div class="form-group">
-                            <label for="medicament">Médicament</label>
-                            <select class="form-select" id="médicament">
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                            </select>
-                          </div>
-
-                        <div class="row">
-                            <div class="col-6 offset-3">
-                              <div class="form-group">
-                                <label for="reduction">pourcentage de réduction </label>
-                                <input
-                                  type="number"
-                                  class="form-control"
-                                  name="recution"
-                                  required
-                                  min="0"
-                                />
-                              </div>
-                            </div>
-                        </div>
+                      <div class="form-group">
+                        <label for="medicament">Médicament</label>
+                        <select class="form-select" id="medicament" name="medicament">
+                            <option value="">Veuillez choisir un Médicament</option>
+                            <% 
+                            if (medicaments != null) {
+                                for (Medicament medicament : medicaments) { 
+                            %>
+                            <option value="<%= medicament.getIdMedicament() %>">
+                                <%= medicament.getNom() %>
+                            </option>
+                            <% } } %>
+                        </select>
+                    </div>
                         <div class="row">
                             <div class="col-6 offset-3">
                               <div class="form-group">

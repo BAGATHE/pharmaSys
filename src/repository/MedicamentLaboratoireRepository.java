@@ -9,6 +9,7 @@ import java.util.List;
 
 import model.configuration.Unite;
 import model.medicament.Laboratoire;
+import model.medicament.LaboratoireFilter;
 import model.medicament.Medicament;
 import model.medicament.MedicamentLaboratoire;
 
@@ -142,5 +143,51 @@ public class MedicamentLaboratoireRepository {
             }
             return 0;
         }
+    }
+
+    public static Laboratoire[] getAllLaboratoirewithFiltre(Connection conn, LaboratoireFilter LaboratoireFilter)
+            throws Exception {
+        List<Laboratoire> laboratoires = new ArrayList<>();
+        List<Object> parameters = new ArrayList<>();
+        StringBuilder query = new StringBuilder("SELECT DISTINCT on(ml.id_laboratoire) ml.id_laboratoire")
+                .append("FROM medicament_laboratoire ml JOIN medicaments m")
+                .append("ON ml.id_medicament=m.id_medicament")
+                .append("JOIN traitements t ON m.id_medicament = t.id_medicament")
+                .append("where 1=1");
+        if (LaboratoireFilter.getIdMedicament() != null && !LaboratoireFilter.getIdMedicament().isEmpty()) {
+            query.append(" AND id_medicament = ?");
+            parameters.add(LaboratoireFilter.getIdMedicament());
+        }
+
+        if (LaboratoireFilter.getIdCategorie() != null && !LaboratoireFilter.getIdCategorie().isEmpty()) {
+            query.append(" AND id_categorie = ?");
+            parameters.add(LaboratoireFilter.getIdCategorie());
+        }
+        if (LaboratoireFilter.getIdType() != null && !LaboratoireFilter.getIdType().isEmpty()) {
+            query.append(" AND id_type = ?");
+            parameters.add(LaboratoireFilter.getIdType());
+        }
+
+        try (PreparedStatement statement = conn.prepareStatement(query.toString())) {
+            for (int i = 0; i < parameters.size(); i++) {
+                statement.setObject(i + 1, parameters.get(i));
+            }
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String idLaboratoire = resultSet.getString("id_laboratoire");
+                    Laboratoire laboratoire = LaboratoireRepository.getById(conn, idLaboratoire);
+                    if (laboratoire != null) {
+                        laboratoires.add(laboratoire);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de l'exécution de la requête : " + e.getMessage());
+            throw new Exception("Une erreur est survenue lors de la récupération des médicaments.", e);
+        }
+
+        return laboratoires.toArray(new Laboratoire[0]);
     }
 }
