@@ -90,7 +90,9 @@ CREATE TABLE ventes (
    date_vente DATE,
    total NUMERIC(15,2) CHECK(total >= 0),
    id_client VARCHAR(50)  NOT NULL,
-   FOREIGN KEY(id_client) REFERENCES client(id_client)
+   id_utilisateur VARCHAR(50) NOT NULL,
+   FOREIGN KEY(id_client) REFERENCES client(id_client),
+   FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id_utilisateur),
    PRIMARY KEY(id_vente)
 );
 
@@ -225,6 +227,14 @@ CREATE TABLE conversion(
    PRIMARY KEY(id_medicament, id_unite_mere),
    FOREIGN KEY(id_medicament) REFERENCES medicaments(id_medicament),
    FOREIGN KEY(id_unite_mere) REFERENCES unites(id_unite)
+);
+
+CREATE TABLE commission(
+   id_commission VARCHAR(50)  DEFAULT CONCAT('COM_', nextval('seq_commission')) ,
+   pourcentage INTEGER,
+   date_debut DATE,
+   date_fin DATE NOT NULL,
+   PRIMARY KEY(id_commission)
 );
 
 
