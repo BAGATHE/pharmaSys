@@ -1,20 +1,28 @@
 package model.vente;
 
-import repository.ConversionRepository;
-import repository.StockMedicamentRepository;
 import java.sql.Connection;
 import java.sql.Date;
-
 import model.client.Client;
 import model.configuration.Conversion;
 import model.configuration.Unite;
 import model.stock.StockMedicament;
+import repository.ConversionRepository;
+import repository.StockMedicamentRepository;
+import util.Utilitaire;
 
 public class Vente {
     private String idVente;
     private Date dateVente;
     private VenteDetail[] venteDetails;
     private Client client;
+    private String idUserConnected;
+    private double commissionVendeur;
+
+  
+
+    public double getComissionVendeur(int pourcentage) {
+        return Utilitaire.regleDeTrois(100, this.getTotal(), pourcentage);
+    }
 
     public String getIdVente() {
         return idVente;
@@ -58,6 +66,9 @@ public class Vente {
             total += v.getPrixVente() * v.getQuantite();
         }
         return total;
+    }
+
+    public Vente() {
     }
 
     public Vente(String idVente, Date dateVente, VenteDetail[] venteDetails) {
@@ -104,4 +115,21 @@ public class Vente {
             throw new Exception("Erreur lors de la verification de stock " + e.getMessage());
         }
     }
+
+    public double getCommissionVendeur() {
+        return commissionVendeur;
+    }
+
+    public void setCommissionVendeur(double commissionVendeur) {
+        this.commissionVendeur = commissionVendeur;
+    }
+
+    public String getIdUserConnected() {
+        return idUserConnected;
+    }
+
+    public void setIdUserConnected(String idUserConnected) {
+        this.idUserConnected = idUserConnected;
+    }
+
 }

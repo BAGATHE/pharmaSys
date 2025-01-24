@@ -1,5 +1,8 @@
 package util;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -1663,6 +1666,35 @@ public class Utilitaire {
 
         // Convertir en Timestamp
         return Timestamp.valueOf(combinedDateTime);
+    }
+    public static double getConfigurationValue(String key) throws Exception {
+        String value = "0";
+        String filePath = "E:\\Licence_3\\semestre5\\M.Baovola\\pharmaSys\\src\\conf.txt";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().startsWith(key + "=")) {
+                    value = line.split("=")[1].trim();
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            throw new Exception("Erreur lors de la lecture du fichier de configuration: " + e.getMessage(), e);
+        }
+
+        if (value == null) {
+            throw new Exception("Clé de configuration non trouvée: " + key);
+        }
+
+        return toDouble(value, "Erreur de cast config");
+    }
+    public static double toDouble(String value, String errorMessage)throws Exception{
+        try {
+            return Double.parseDouble(value);
+        } catch (Exception e) {
+            throw new Exception(errorMessage+" "+e.getMessage());
+        }
     }
 
 }

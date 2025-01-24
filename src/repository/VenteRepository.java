@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import model.vente.Vente;
 import model.vente.VenteFilter;
 
@@ -75,12 +74,15 @@ public class VenteRepository {
     }
 
     public static String save(Connection con, Vente vente) throws Exception {
-        String sql = "INSERT INTO ventes (date_vente, total) VALUES (?, ?)";
+        String sql = "INSERT INTO ventes (date_vente, total,id_client,id_utilisateur,commission_vendeur) VALUES (?, ?,?,?,?)";
         String generatedId = null;
 
         try (PreparedStatement prst = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             prst.setDate(1, vente.getDateVente());
             prst.setDouble(2, vente.getTotal());
+            prst.setString(3, vente.getClient().getIdClient());
+            prst.setString(4, vente.getIdUserConnected());
+            prst.setDouble(5, vente.getCommissionVendeur());
 
             prst.executeUpdate();
 

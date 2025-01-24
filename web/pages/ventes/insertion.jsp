@@ -4,10 +4,13 @@
 <%@page import="model.medicament.Medicament"%>
 <%@page import="model.medicament.PrixMedicament"%>
 <%@page import="model.configuration.Unite"%>
+<%@page import="model.client.Client"%>
+
 
 
 <%
     Medicament[] medicaments = (Medicament[]) request.getAttribute("medicaments");
+    Client[] clients = (Client[]) request.getAttribute("clients");
     String message = (String) request.getAttribute("message");
     String error = (String) request.getAttribute("error");
     if (message != null && !message.trim().isEmpty()) {
@@ -195,13 +198,27 @@
               </div>
               <div class="card-action">
                 <div class="row align-items-center">
-                  <div class="col-md-4">
+                  <div class="col-4">
                       <div class="form-group">
-                          <label for="date-commande">Date de Vente</label>
+                          <label for="date-commande">Date de Ventes</label>
                           <input type="date" class="form-control" id="date-commande" name="date_commande" required>
                       </div>
                   </div>
-                  <div class="col-md-8 text-end">
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label for="client">Client</label>
+                        <select name="client" id="" class="form-select" required>
+                         
+                          <option value=""></option>
+                          <% for (Client client : clients) { %>
+                            <option value="<%=client.getIdClient() %>">
+                              <%= client.getNom() %>
+                            </option>
+                          <% } %>
+                        </select>
+                    </div>
+                </div>
+                  <div class="col-4 text-end">
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalConfirmation">
                       Valider
                     </button>

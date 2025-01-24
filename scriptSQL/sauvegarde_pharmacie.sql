@@ -49,10 +49,15 @@ ALTER TYPE public.type_client_enum OWNER TO postgres;
 CREATE FUNCTION public.generate_identifiant() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
+
 BEGIN
+
     NEW.identifiant := 'CLI' || TO_CHAR(nextval('seq_identifiant'), 'FM000000');
+
     RETURN NEW;
+
 END;
+
 $$;
 
 
@@ -65,23 +70,41 @@ ALTER FUNCTION public.generate_identifiant() OWNER TO postgres;
 CREATE FUNCTION public.get_medicament_status(p_id_medicament character varying, p_quantite_boite numeric) RETURNS character varying
     LANGUAGE plpgsql
     AS $$
+
 DECLARE
+
     status_name VARCHAR(100);
+
 BEGIN
+
     SELECT s.nom
+
     INTO status_name
+
     FROM medicament_status_stock mss
+
     JOIN status s ON mss.id_status = s.id_status
+
     WHERE mss.id_medicament = p_id_medicament
+
       AND p_quantite_boite BETWEEN mss.minimum AND mss.maximum
+
     LIMIT 1;
 
+
+
     IF NOT FOUND THEN
+
         RETURN '';
+
     END IF;
 
+
+
     RETURN status_name;
+
 END;
+
 $$;
 
 
@@ -94,17 +117,29 @@ ALTER FUNCTION public.get_medicament_status(p_id_medicament character varying, p
 CREATE FUNCTION public.update_total_achat() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
+
 BEGIN
+
    UPDATE achats
+
    SET total = (
+
       SELECT COALESCE(SUM(quantite * prix_unitaire), 0)
+
       FROM achat_details
+
       WHERE id_achat = NEW.id_achat
+
    )
+
    WHERE id_achat = NEW.id_achat;
 
+
+
    RETURN NEW;
+
 END;
+
 $$;
 
 
@@ -117,17 +152,29 @@ ALTER FUNCTION public.update_total_achat() OWNER TO postgres;
 CREATE FUNCTION public.update_total_vente() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
+
 BEGIN
+
    UPDATE ventes
+
    SET total = (
+
       SELECT COALESCE(SUM(quantite * prix_unitaire * (1 - COALESCE(reduction, 0) / 100)), 0)
+
       FROM vente_details
+
       WHERE id_vente = NEW.id_vente
+
    )
+
    WHERE id_vente = NEW.id_vente;
 
+
+
    RETURN NEW;
+
 END;
+
 $$;
 
 
@@ -253,6 +300,34 @@ CREATE TABLE public.client (
 
 
 ALTER TABLE public.client OWNER TO postgres;
+
+--
+-- Name: seq_commission; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.seq_commission
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.seq_commission OWNER TO postgres;
+
+--
+-- Name: commission; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.commission (
+    id_commission character varying(50) DEFAULT concat('COM_', nextval('public.seq_commission'::regclass)) NOT NULL,
+    pourcentage integer,
+    date_debut date,
+    date_fin date NOT NULL
+);
+
+
+ALTER TABLE public.commission OWNER TO postgres;
 
 --
 -- Name: conversion; Type: TABLE; Schema: public; Owner: postgres
@@ -794,7 +869,8 @@ CREATE TABLE public.utilisateurs (
     email character varying(50) NOT NULL,
     mot_de_passe character varying(255) NOT NULL,
     contact character varying(30),
-    role character varying(30) DEFAULT 'admin'::character varying NOT NULL
+    role character varying(30) DEFAULT 'admin'::character varying NOT NULL,
+    esthomme boolean
 );
 
 
@@ -868,6 +944,9 @@ CREATE TABLE public.ventes (
     date_vente date,
     total numeric(15,2),
     id_client character varying(50) NOT NULL,
+    id_utilisateur character varying(50) NOT NULL,
+    commission_vendeur numeric(15,2),
+    CONSTRAINT ventes_commission_vendeur_check CHECK ((commission_vendeur >= (0)::numeric)),
     CONSTRAINT ventes_total_check CHECK ((total >= (0)::numeric))
 );
 
@@ -911,6 +990,15 @@ CAT_3	personne age	60	75
 
 COPY public.client (id_client, nom, identifiant, type_client, date_creation) FROM stdin;
 CLI_2	Client Divers	CLI000001	Divers	2025-01-16 20:16:16.895707
+\.
+
+
+--
+-- Data for Name: commission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.commission (id_commission, pourcentage, date_debut, date_fin) FROM stdin;
+COM_1	10	2025-01-01	2025-12-31
 \.
 
 
@@ -1002,6 +1090,13 @@ MVT_2	2025-01-16
 MVT_3	2025-01-16
 MVT_4	2025-01-16
 MVT_5	2025-01-30
+MVT_6	2025-01-22
+MVT_7	2025-01-14
+MVT_8	2025-01-15
+MVT_9	2025-01-22
+MVT_10	2025-01-20
+MVT_11	2025-01-20
+MVT_12	2025-01-20
 \.
 
 
@@ -1017,6 +1112,17 @@ MSD_4	0.00	10.00	20000.00	MED_1	UNI_1	MVT_2
 MSD_5	0.00	3.00	40000.00	MED_2	UNI_1	MVT_3
 MSD_6	0.00	15.00	20000.00	MED_1	UNI_1	MVT_4
 MSD_7	0.00	40.00	40000.00	MED_2	UNI_1	MVT_5
+MSD_8	0.00	2.00	20000.00	MED_1	UNI_1	MVT_6
+MSD_9	0.00	5.00	20000.00	MED_1	UNI_1	MVT_7
+MSD_10	0.00	3.00	40000.00	MED_2	UNI_1	MVT_7
+MSD_11	0.00	4.00	20000.00	MED_1	UNI_1	MVT_8
+MSD_12	0.00	1.00	20000.00	MED_1	UNI_1	MVT_9
+MSD_13	0.00	2.00	40000.00	MED_2	UNI_1	MVT_9
+MSD_14	0.00	3.00	60000.00	MED_3	UNI_1	MVT_9
+MSD_15	0.00	5.00	20000.00	MED_1	UNI_1	MVT_10
+MSD_16	0.00	6.00	20000.00	MED_1	UNI_1	MVT_11
+MSD_17	0.00	5.00	40000.00	MED_2	UNI_1	MVT_11
+MSD_18	0.00	12.00	20000.00	MED_1	UNI_1	MVT_12
 \.
 
 
@@ -1075,9 +1181,9 @@ STA_3	rupture
 --
 
 COPY public.stock_medicaments (id_stock_medicament, date_peremption, quantite_boite, id_unite, id_laboratoire, id_medicament) FROM stdin;
-STM_1	2027-09-16	75.00	UNI_1	LAB_1	MED_1
-STM_2	2027-09-16	157.00	UNI_1	LAB_1	MED_2
-STM_3	2028-09-16	300.00	UNI_1	LAB_1	MED_3
+STM_1	2027-09-16	40.00	UNI_1	LAB_1	MED_1
+STM_2	2027-09-16	147.00	UNI_1	LAB_1	MED_2
+STM_3	2028-09-16	297.00	UNI_1	LAB_1	MED_3
 \.
 
 
@@ -1132,8 +1238,11 @@ UNI_2	plaquette	UNI_1
 -- Data for Name: utilisateurs; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.utilisateurs (id_utilisateur, nom_complet, email, mot_de_passe, contact, role) FROM stdin;
-UTI_1	Administrateur	admin@email.com	$2a$06$8cAisfjN/0l/GKt7ux3V6.04sVun8ri/msbrtDa3sLgFQft6A8tS2	0343886428	admin
+COPY public.utilisateurs (id_utilisateur, nom_complet, email, mot_de_passe, contact, role, esthomme) FROM stdin;
+UTI_1	Administrateur	admin@email.com	$2a$06$8cAisfjN/0l/GKt7ux3V6.04sVun8ri/msbrtDa3sLgFQft6A8tS2	0343886428	admin	t
+UTI_2	vendeur 1	vendeur1@email.com	$2a$06$H.hxHvCHYOdZ2c5s850/CeCSmtOVCVjl5i9B1BV2BghsbGs/lXfy2	0320000000	vendeur	t
+UTI_3	vendeur 2 femme	vendeur2@email.com	$2a$06$O75homI0XaE4oFNLuIhWaeEJfavH5F.eXa9Lr4GnZj2GjcliYHD86	0320000000	vendeur	f
+UTI_4	vendeur 3 homme	vendeur3@email.com	$2a$06$ZFVprFYhXLBk1lLpQ7jPreJ5sCnXrKQK5iqVuyn8YWfF6mMVc9q9u	0320000000	vendeur	t
 \.
 
 
@@ -1146,6 +1255,17 @@ VND_2	10	20000.00	0.00	VEN_2	MED_1	UNI_1
 VND_3	3	40000.00	0.00	VEN_3	MED_2	UNI_1
 VND_4	15	20000.00	0.00	VEN_4	MED_1	UNI_1
 VND_5	40	40000.00	0.00	VEN_5	MED_2	UNI_1
+VND_6	2	20000.00	0.00	VEN_11	MED_1	UNI_1
+VND_7	5	20000.00	0.00	VEN_12	MED_1	UNI_1
+VND_8	3	40000.00	0.00	VEN_12	MED_2	UNI_1
+VND_9	4	20000.00	0.00	VEN_13	MED_1	UNI_1
+VND_10	1	20000.00	0.00	VEN_14	MED_1	UNI_1
+VND_11	2	40000.00	0.00	VEN_14	MED_2	UNI_1
+VND_12	3	60000.00	0.00	VEN_14	MED_3	UNI_1
+VND_13	5	20000.00	0.00	VEN_15	MED_1	UNI_1
+VND_14	6	20000.00	0.00	VEN_16	MED_1	UNI_1
+VND_15	5	40000.00	0.00	VEN_16	MED_2	UNI_1
+VND_16	12	20000.00	0.00	VEN_17	MED_1	UNI_1
 \.
 
 
@@ -1153,11 +1273,18 @@ VND_5	40	40000.00	0.00	VEN_5	MED_2	UNI_1
 -- Data for Name: ventes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.ventes (id_vente, date_vente, total, id_client) FROM stdin;
-VEN_2	2025-01-16	200000.00	CLI_2
-VEN_3	2025-01-16	120000.00	CLI_2
-VEN_4	2025-01-16	300000.00	CLI_2
-VEN_5	2025-01-30	1600000.00	CLI_2
+COPY public.ventes (id_vente, date_vente, total, id_client, id_utilisateur, commission_vendeur) FROM stdin;
+VEN_2	2025-01-16	200000.00	CLI_2	UTI_2	10000.00
+VEN_4	2025-01-16	300000.00	CLI_2	UTI_2	15000.00
+VEN_5	2025-01-30	1600000.00	CLI_2	UTI_2	80000.00
+VEN_12	2025-01-14	220000.00	CLI_2	UTI_3	22000.00
+VEN_14	2025-01-22	280000.00	CLI_2	UTI_4	28000.00
+VEN_3	2025-01-16	120000.00	CLI_2	UTI_2	0.00
+VEN_11	2025-01-22	40000.00	CLI_2	UTI_2	0.00
+VEN_13	2025-01-15	80000.00	CLI_2	UTI_3	0.00
+VEN_15	2025-01-20	100000.00	CLI_2	UTI_3	0.00
+VEN_16	2025-01-20	320000.00	CLI_2	UTI_3	32000.00
+VEN_17	2025-01-20	240000.00	CLI_2	UTI_4	24000.00
 \.
 
 
@@ -1187,6 +1314,13 @@ SELECT pg_catalog.setval('public.seq_categorie', 1, false);
 --
 
 SELECT pg_catalog.setval('public.seq_client', 2, true);
+
+
+--
+-- Name: seq_commission; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.seq_commission', 1, true);
 
 
 --
@@ -1221,14 +1355,14 @@ SELECT pg_catalog.setval('public.seq_medicaments', 1, false);
 -- Name: seq_mouvement_stock; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.seq_mouvement_stock', 5, true);
+SELECT pg_catalog.setval('public.seq_mouvement_stock', 12, true);
 
 
 --
 -- Name: seq_mouvement_stock_details; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.seq_mouvement_stock_details', 7, true);
+SELECT pg_catalog.setval('public.seq_mouvement_stock_details', 18, true);
 
 
 --
@@ -1291,21 +1425,21 @@ SELECT pg_catalog.setval('public.seq_unites', 1, false);
 -- Name: seq_utilisateurs; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.seq_utilisateurs', 1, true);
+SELECT pg_catalog.setval('public.seq_utilisateurs', 4, true);
 
 
 --
 -- Name: seq_vente_details; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.seq_vente_details', 5, true);
+SELECT pg_catalog.setval('public.seq_vente_details', 16, true);
 
 
 --
 -- Name: seq_ventes; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.seq_ventes', 5, true);
+SELECT pg_catalog.setval('public.seq_ventes', 17, true);
 
 
 --
@@ -1354,6 +1488,14 @@ ALTER TABLE ONLY public.client
 
 ALTER TABLE ONLY public.client
     ADD CONSTRAINT client_pkey PRIMARY KEY (id_client);
+
+
+--
+-- Name: commission commission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.commission
+    ADD CONSTRAINT commission_pkey PRIMARY KEY (id_commission);
 
 
 --
