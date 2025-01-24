@@ -91,10 +91,12 @@ CREATE TABLE ventes (
    total NUMERIC(15,2) CHECK(total >= 0),
    id_client VARCHAR(50)  NOT NULL,
    id_utilisateur VARCHAR(50) NOT NULL,
+   commission_vendeur NUMERIC(15,2)  CHECK(commission_vendeur >= 0), 
    FOREIGN KEY(id_client) REFERENCES client(id_client),
    FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id_utilisateur),
    PRIMARY KEY(id_vente)
 );
+
 
 CREATE TABLE achat_details (
    id_achat_details VARCHAR(50) DEFAULT CONCAT('ACD_', nextval('seq_achat_details')),
@@ -250,6 +252,10 @@ CREATE TABLE utilisateurs(
    UNIQUE(email)
 );
 
+ALTER TABLE utilisateurs
+ADD COLUMN esthomme BOOLEAN;
+
+
 CREATE TABLE recommandation(
    id_recommandation VARCHAR(50) DEFAULT CONCAT('REC_', nextval('seq_recommandation')),
    date_debut DATE NOT NULL,
@@ -266,4 +272,4 @@ CREATE TABLE recommandation(
   pg_dump -U postgres pharmacie > sauvegarde_pharmacie.sql
 
 -- import
-  psql -U votre_utilisateur -d pharmacie -f sauvegarde_pharmacie.sql
+  psql -U postgres -d pharmacie -f sauvegarde_pharmacie.sql

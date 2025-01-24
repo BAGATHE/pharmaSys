@@ -114,3 +114,5 @@ and t.id_categorie='CAT_1'
 and m.id_medicament='MED_4';
 
 SELECT * FROM recommandation WHERE date_debut <= '01-01-2024' AND date_fin >= '03-07-2024';
+
+SELECT id_utilisateur,sum(commission_vendeur)  FROM ventes where date_vente >=   '01-01-2025' AND date_vente <= '03-07-2025' GROUP BY id_utilisateur; 

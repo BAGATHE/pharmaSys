@@ -7,6 +7,7 @@ public class Utilisateur {
     private String motDePasse;
     private String contact;
     private String role;
+    private boolean estHomme;
 
     public Utilisateur(String nomComplet, String email, String motDePasse, String contact, String role) {
         setIdUtilisateur(idUtilisateur);
@@ -73,5 +74,13 @@ public class Utilisateur {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean estHomme() {
+        return estHomme;
+    }
+
+    public void setEstHomme(boolean estHomme) {
+        this.estHomme = estHomme;
     }
 }

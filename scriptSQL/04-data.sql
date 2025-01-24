@@ -8,6 +8,37 @@ VALUES (
     'admin'
 );
 
+INSERT INTO utilisateurs (nom_complet, email, mot_de_passe, contact, role)
+VALUES (
+    'vendeur 1',
+    'vendeur1@email.com',
+    crypt('vendeur', gen_salt('bf')),
+    '0320000000',
+    'vendeur'
+);
+
+INSERT INTO utilisateurs (nom_complet, email, mot_de_passe, contact, role,esthomme)
+VALUES (
+    'vendeur 2 femme',
+    'vendeur2@email.com',
+    crypt('vf', gen_salt('bf')),
+    '0320000000',
+    'vendeur',
+    false
+);
+
+INSERT INTO utilisateurs (nom_complet, email, mot_de_passe, contact, role,esthomme)
+VALUES (
+    'vendeur 3 homme',
+    'vendeur3@email.com',
+    crypt('vh', gen_salt('bf')),
+    '0320000000',
+    'vendeur',
+    true
+);
+
+
+
 INSERT INTO unites(id_unite,nom,id_unite_mere) VALUES('UNI_1','boite plaquette',null);
 INSERT INTO unites(id_unite,nom,id_unite_mere) VALUES('UNI_2','plaquette','UNI_1');
 
@@ -153,3 +184,12 @@ INSERT INTO status (nom) VALUES
 ('Rupture de stock'),
 ('Stock critique'),
 ('Stock suffisant');
+
+ALTER TABLE ventes
+ADD COLUMN id_utilisateur VARCHAR(50) NOT NULL, -- Valeur par défaut (administrateur)
+ADD COLUMN commission_vendeur NUMERIC(15,2) DEFAULT 0 CHECK(commission_vendeur >= 0);
+
+
+INSERT INTO commission (pourcentage, date_debut, date_fin)
+VALUES 
+(10, '2025-01-01', '2025-12-31'); 

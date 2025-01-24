@@ -182,6 +182,11 @@
                     <span class="sub-item">Liste</span>
                   </a>
                 </li>
+                <li>
+                  <a href="<%= request.getContextPath() %>/vente/utilisateurs/commission">
+                    <span class="sub-item">Commission Vendeur</span>
+                  </a>
+                </li>
               </ul>
             </div>
           </li>
@@ -243,6 +248,26 @@
             </a>
             <div class="collapse" id="conf">
               <ul class="nav nav-collapse">
+                <li>
+                  <a data-bs-toggle="collapse" href="#reduction">
+                    <span class="sub-item">Commission</span>
+                    <span class="caret"></span>
+                  </a>
+                  <div class="collapse" id="reduction">
+                    <ul class="nav nav-collapse subnav">
+                      <li>
+                        <a href="<%= request.getContextPath() %>/commission/insert">
+                          <span class="sub-item">Insertion</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="<%= request.getContextPath() %>/commission/list">
+                          <span class="sub-item">Liste</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
                 <li>
                   <a data-bs-toggle="collapse" href="#reduction">
                     <span class="sub-item">Recommandation Produit</span>
