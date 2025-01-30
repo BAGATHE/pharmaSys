@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import model.configuration.Unite;
 import model.medicament.Medicament;
 import model.medicament.PrixMedicament;
@@ -100,6 +99,7 @@ public class PrixMedicamentRepository {
                             medicament,
                             rs.getDouble("prix_vente_unitaire"),
                             unite);
+                            prixMedicament.setDateInsertion(rs.getTimestamp("date_prix"));
                     prixMedicaments.add(prixMedicament);
                 }
             }
@@ -107,6 +107,42 @@ public class PrixMedicamentRepository {
         return prixMedicaments.toArray(new PrixMedicament[0]);
     }
 
+    public static PrixMedicament[] getPrixByIdMedicamentVente(Connection conn, String id) throws SQLException {
+        List<PrixMedicament> prixMedicaments = new ArrayList<>();
+
+        String query = "SELECT pm.* FROM v_prix_medicaments pm " +
+                   "INNER JOIN ( " +
+                   "    SELECT id_medicament, MAX(date_prix) AS max_date " +
+                   "    FROM v_prix_medicaments " +
+                   "    GROUP BY id_medicament " +
+                   ") latest ON pm.id_medicament = latest.id_medicament AND pm.date_prix = latest.max_date " +
+                   "WHERE pm.id_medicament = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Medicament medicament = new Medicament(
+                            rs.getString("id_medicament"),
+                            rs.getString("nom_medicament"),
+                            rs.getString("description_medicament"));
+
+                    Unite unite = new Unite(
+                            rs.getString("id_unite"),
+                            rs.getString("nom_unite"),
+                            rs.getString("id_unite_mere"));
+                    PrixMedicament prixMedicament = new PrixMedicament(
+                            rs.getString("id_prix_medicament"),
+                            medicament,
+                            rs.getDouble("prix_vente_unitaire"),
+                            unite);
+                            prixMedicament.setDateInsertion(rs.getTimestamp("date_prix"));
+                    prixMedicaments.add(prixMedicament);
+                }
+            }
+        }
+        return prixMedicaments.toArray(new PrixMedicament[0]);
+    }
     public static PrixMedicament getById(Connection conn, String id) throws SQLException {
         String query = "SELECT * FROM v_prix_medicaments WHERE id_prix_medicament = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {

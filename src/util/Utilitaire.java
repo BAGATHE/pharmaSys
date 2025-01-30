@@ -1669,7 +1669,7 @@ public class Utilitaire {
     }
     public static double getConfigurationValue(String key) throws Exception {
         String value = "0";
-        String filePath = "E:\\Licence_3\\semestre5\\M.Baovola\\pharmaSys\\src\\conf.txt";
+        String filePath = "/home/emadaly/semestre5/Mdm Baovola/pharmaSys/src/conf.txt";
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;

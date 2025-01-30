@@ -221,6 +221,8 @@ CREATE TABLE prix_medicaments(
    FOREIGN KEY(id_medicament) REFERENCES medicaments(id_medicament)
 );
 
+ALTER TABLE prix_medicaments
+ADD COLUMN date_prix TIMESTAMP DEFAULT NOW();
 
 CREATE TABLE conversion(
    id_medicament VARCHAR(50),

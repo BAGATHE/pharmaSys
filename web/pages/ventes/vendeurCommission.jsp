@@ -4,10 +4,33 @@
 <%@ page import="model.Vendeur" %>
 <%@ page import="model.vente.Vente" %>
 <%@ page import="dto.VendeurDTO" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="java.util.stream.Collectors" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
 
 <%
 Vendeur[] vendeurs = (Vendeur[]) request.getAttribute("vendeurs");
 VendeurDTO[] commissions = (VendeurDTO[]) request.getAttribute("commissions");
+
+Gson gson = new Gson();
+String chartDataJson = "{}"; 
+
+if (commissions != null) {
+    // Convertir le tableau en une liste
+    List<VendeurDTO> commissionList = Arrays.asList(commissions);
+
+    // Utiliser la méthode stream() sur la liste
+    Map<String, Double> chartData = commissionList.stream()
+        .collect(Collectors.groupingBy(
+            VendeurDTO::getGenre,
+            Collectors.summingDouble(VendeurDTO::getSomme)
+        ));
+
+    // Conversion en JSON
+    chartDataJson = gson.toJson(chartData);
+}
 %>
 
 <div class="main-panel">
@@ -179,35 +202,67 @@ VendeurDTO[] commissions = (VendeurDTO[]) request.getAttribute("commissions");
                         
                       </table>
                       <h3 class="text-center"> Groupage par genre</h3> 
-                      <table class="table table-bordered table-head-bg-success mt-3">
-                        <thead>
-                            <tr>
-                                <th scope="col">Genre</th>
-                                <th scope="col">Total Commission</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <%
-                            if (commissions != null) {
-                                for (VendeurDTO vendeur : commissions) {
-                            %>
-                                    <tr>
-                                        <td><%= vendeur.getGenre() %></td>
-                                        <td><%= vendeur.getSomme() %></td>
-                                    </tr>
-                            <%
-                                }
-                            } else {
-                            %>
-                                <tr>
-                                    <td colspan="2">Aucune commission disponible.</td>
-                                </tr>
-                            <%
-                            }
-                            %>
-                        </tbody>
-                    </table>
-                </div>
+                      
+
+                    <div class="col-8 offset-2">
+                      <div class="card" style="max-height: 64vh; overflow: hidden;">
+                        <div class="card-body" style="overflow-y: auto;" >
+                          <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                              <a class="nav-link active" id="pills-chart-2-tab" data-bs-toggle="pill" href="#pills-chart-2" role="tab" aria-controls="pills-chart-2" aria-selected="true">chart</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" id="pills-tableau-2-tab" data-bs-toggle="pill" href="#pills-tableau-2" role="tab" aria-controls="pills-tableau-2" aria-selected="false">tableau</a>
+                            </li>
+                          </ul>
+                          <div class="tab-content mt-2 mb-3" id="pills-tabContent">
+                            <div class="tab-pane fade show active " id="pills-chart-2" role="tabpanel" aria-labelledby="pills-chart-2-tab">
+                              <div class="chart-container">
+                                <canvas
+                                  id="pieChart"
+                                  style="width: 50%; height: 50%"
+                                ></canvas>
+                              </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-tableau-2" role="tabpanel" aria-labelledby="pills-tableau-2-tab">
+                              <div class="table-responsive">
+                                <table class="table table-bordered table-head-bg-success mt-3">
+                                  <thead>
+                                      <tr>
+                                          <th scope="col">Genre</th>
+                                          <th scope="col">Total Commission</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <%
+                                      if (commissions != null) {
+                                          for (VendeurDTO vendeur : commissions) {
+                                      %>
+                                              <tr>
+                                                  <td><%= vendeur.getGenre() %></td>
+                                                  <td><%= vendeur.getSomme() %></td>
+                                              </tr>
+                                      <%
+                                          }
+                                      } else {
+                                      %>
+                                          <tr>
+                                              <td colspan="2">Aucune commission disponible.</td>
+                                          </tr>
+                                      <%
+                                      }
+                                      %>
+                                  </tbody>
+                              </table>
+                              </div>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                
+                  </div>
               </div>
              
             </div>
@@ -232,46 +287,56 @@ VendeurDTO[] commissions = (VendeurDTO[]) request.getAttribute("commissions");
 
 
       </div>
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-  // Fonction pour calculer les totaux
-  function calculerTotal() {
-    let lignes = document.querySelectorAll("tbody tr");
-    let totalGeneral = 0;
+<script src="<%= request.getContextPath() %>/assets/js/plugin/chart.js/chart.min.js"></script>
+<script>
+  // Injecter les données JSON dans la variable JavaScript
+  var chartData = JSON.parse('<%= chartDataJson %>');
 
-    lignes.forEach((ligne) => {
-      let quantiteInput = ligne.querySelector(".quantite");
-      let uniteSelect = ligne.querySelector(".form-select");
-      let ligneTotalElement = ligne.querySelector(".ligne-total");
+  var genres = Object.keys(chartData);
+  var sommes = Object.values(chartData);
 
-      if (quantiteInput && uniteSelect && ligneTotalElement) {
-        let quantite = parseFloat(quantiteInput.value) || 0;
-        let prixUnitaire = parseFloat(uniteSelect.options[uniteSelect.selectedIndex]?.dataset?.prix) || 0;
-        let ligneTotal = quantite * prixUnitaire;
-
-        // Mettre à jour le total de la ligne
-        ligneTotalElement.textContent = ligneTotal.toFixed(2) + " Ar";
-
-        // Ajouter au total général
-        totalGeneral += ligneTotal;
-      }
-    });
-
-    // Mettre à jour le total général
-    document.getElementById("total-general").textContent = totalGeneral.toFixed(2) + " Ar";
-  }
-
-  // Écouteurs pour les inputs de quantité et les selects d'unité
-  document.querySelectorAll(".quantite").forEach((input) => {
-    input.addEventListener("change", calculerTotal);
+  var pieChart = document.getElementById("pieChart").getContext("2d");
+  var myPieChart = new Chart(pieChart, {
+      type: "pie",
+      data: {
+          datasets: [
+              {
+                  data: sommes,
+                  backgroundColor: ["#1d7af3", "#f3545d"],
+                  borderWidth: 0,
+              },
+          ],
+          labels: genres,
+      },
+      options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+              position: "bottom",
+              labels: {
+                  fontColor: "rgb(154, 154, 154)",
+                  fontSize: 11,
+                  usePointStyle: true,
+                  padding: 20,
+              },
+          },
+          pieceLabel: {
+              render: "percentage",
+              fontColor: "white",
+              fontSize: 14,
+          },
+          tooltips: false,
+          layout: {
+              padding: {
+                  left: 20,
+                  right: 20,
+                  top: 20,
+                  bottom: 20,
+              },
+          },
+      },
   });
-
-  document.querySelectorAll(".form-select").forEach((select) => {
-    select.addEventListener("change", calculerTotal);
-  });
-});
-
-      </script>
+</script>
       
     
 <%@ include file="../elements/footer.jsp" %>

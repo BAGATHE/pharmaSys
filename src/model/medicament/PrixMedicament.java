@@ -1,5 +1,6 @@
 package model.medicament;
 
+import java.sql.Timestamp;
 import model.configuration.Unite;
 
 public class PrixMedicament {
@@ -7,6 +8,7 @@ public class PrixMedicament {
     private Medicament medicament;
     private double prixVenteUnitaire;
     private Unite unite;
+    private Timestamp dateInsertion;
 
     public PrixMedicament(Medicament medicament, double prixVenteUnitaire, Unite unite) {
         this.medicament = medicament;
@@ -52,5 +54,15 @@ public class PrixMedicament {
     public void setUnite(Unite unite) {
         this.unite = unite;
     }
+
+    public Timestamp getDateInsertion() {
+        return dateInsertion;
+    }
+
+    public void setDateInsertion(Timestamp dateInsertion) {
+        this.dateInsertion = dateInsertion;
+    }
+
+    
 
 }
