@@ -39,7 +39,7 @@ public class ListMedicamentController extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try (Connection connection = Connexion.connect()) {
-            request.setAttribute("medicaments", MedicamentRepository.getAll(connection));
+            request.setAttribute("medicaments", MedicamentRepository.getAllForVente(connection));
             request.setAttribute("clients", ClientRepository.getAll(connection));
             RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/ventes/insertion.jsp");
             dispatcher.forward(request, response);
@@ -88,7 +88,7 @@ public class ListMedicamentController extends HttpServlet {
             vente.setClient(new Client(id_client, "","","",null));
             vente.setIdUserConnected(user.getIdUtilisateur());
             double seuil = Utilitaire.getConfigurationValue("seuil");
-            if(vente.getTotal()>seuil){
+            if(vente.getTotal()>=seuil){
                 vente.setCommissionVendeur(vente.getComissionVendeur(CommissionRepository.getCurrentCommission(connection).getPourcentage()));
             }else{
                 vente.setCommissionVendeur(0);
@@ -107,10 +107,9 @@ public class ListMedicamentController extends HttpServlet {
             MouvementStockRepository.saveDetail(connection, mvs);
             connection.commit();
             message = "Vente effectue";
-
-            request.setAttribute("medicaments", MedicamentRepository.getAll(connection));
-            request.setAttribute("message", message);
+            request.setAttribute("medicaments", MedicamentRepository.getAllForVente(connection));
             request.setAttribute("clients", ClientRepository.getAll(connection));
+            request.setAttribute("message", message);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/ventes/insertion.jsp");
             dispatcher.forward(request, response);
 

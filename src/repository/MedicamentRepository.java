@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import model.medicament.Medicament;
 
 public class MedicamentRepository {
@@ -37,6 +36,25 @@ public class MedicamentRepository {
 
                 medicament.setPrixMedicament(
                         PrixMedicamentRepository.getPrixByIdMedicament(conn, medicament.getIdMedicament()));
+
+                medicament.setTypeMedicament(TypeMedicamentRepository.getById(conn, rs.getString("id_type")));
+                medicaments.add(medicament);
+            }
+        }
+        return medicaments.toArray(new Medicament[0]);
+    }
+
+    public static Medicament[] getAllForVente(Connection conn) throws SQLException {
+        List<Medicament> medicaments = new ArrayList<>();
+        String query = "SELECT * FROM medicaments";
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Medicament medicament = new Medicament(rs.getString("id_medicament"), rs.getString("nom"),
+                        rs.getString("description"));
+
+                medicament.setPrixMedicament(
+                        PrixMedicamentRepository.getPrixByIdMedicamentVente(conn, medicament.getIdMedicament()));
 
                 medicament.setTypeMedicament(TypeMedicamentRepository.getById(conn, rs.getString("id_type")));
                 medicaments.add(medicament);

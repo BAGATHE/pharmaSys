@@ -55,19 +55,14 @@ public class MedicamentPrixController extends HttpServlet {
             Unite unite = new Unite((String) request.getParameter("unite"));
             double prix_vente = Double.parseDouble((String) request.getParameter("prix_vente"));
             PrixMedicament prix_medicament = new PrixMedicament(medicament, prix_vente, unite);
-            int verification = PrixMedicamentRepository.checkUniteMedicament(connection, prix_medicament);
 
             String message;
             String error = null;
-            if (verification == 0) {
-                int result = PrixMedicamentRepository.save(connection, prix_medicament);
-                connection.commit();
-                message = (result == 1) ? "Insertion réussie" : "Insertion invalide";
-            } else {
-                // Si l'enregistrement existe déjà, on initialise une erreur
-                error = "Ce médicament figure deja dans la liste.";
-                message = null;
-            }
+          
+            int result = PrixMedicamentRepository.save(connection, prix_medicament);
+            connection.commit();
+            message = (result == 1) ? "Insertion réussie" : "Insertion invalide";
+            
 
             request.setAttribute("message", message);
             request.setAttribute("error", error);

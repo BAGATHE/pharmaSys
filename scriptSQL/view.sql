@@ -1,6 +1,7 @@
 CREATE OR REPLACE VIEW v_prix_medicaments AS
 SELECT 
     pm.id_prix_medicament,
+    pm.date_prix,
     pm.prix_vente_unitaire,
     pm.id_unite,
     u.nom AS nom_unite,
@@ -116,3 +117,15 @@ and m.id_medicament='MED_4';
 SELECT * FROM recommandation WHERE date_debut <= '01-01-2024' AND date_fin >= '03-07-2024';
 
 SELECT id_utilisateur,sum(commission_vendeur)  FROM ventes where date_vente >=   '01-01-2025' AND date_vente <= '03-07-2025' GROUP BY id_utilisateur; 
+
+SELECT pm.*
+FROM v_prix_medicaments pm
+INNER JOIN (
+    SELECT id_unite, MAX(date_prix) AS max_date
+    FROM v_prix_medicaments
+    WHERE id_medicament = 'MED_1'
+    GROUP BY id_unite
+) latest 
+ON pm.id_unite = latest.id_unite 
+   AND pm.date_prix = latest.max_date
+WHERE pm.id_medicament = 'MED_1';

@@ -147,6 +147,7 @@
                             <th class="text-center" scope="col">Médicament</th>
                             <th class="text-center" scope="col">Unité</th>
                             <th class="text-center" scope="col">Prix Unitaire</th>
+                            <th class="text-center" scope="col">Date insertion</th>
                             <th class="text-center" scope="col">Action</th>
                         </tr>
                     </thead>
@@ -160,10 +161,8 @@
                             <td class="text-center"><%= pm.getUnite().getNom() %></td>
                             <td class="text-center">
                               <span class="fw-bold  me-3"><%= String.format("%,.2f",  pm.getPrixVenteUnitaire()) %> Ar</span>
-                              <a href="<%= request.getContextPath() %>/medicament/prix/update?id_prix_medicament=<%= pm.getIdPrixMedicament() %>" class="btn btn-warning btn-sm">
-                                <i class="fas fa-edit"></i> Modifier
-                              </a>
                             </td>
+                            <td class="text-center"><%= pm.getDateInsertion()%></td>
 
                             <td class="text-center">
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<%= pm.getIdPrixMedicament() %>">

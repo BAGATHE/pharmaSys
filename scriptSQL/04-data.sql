@@ -193,3 +193,16 @@ ADD COLUMN commission_vendeur NUMERIC(15,2) DEFAULT 0 CHECK(commission_vendeur >
 INSERT INTO commission (pourcentage, date_debut, date_fin)
 VALUES 
 (10, '2025-01-01', '2025-12-31'); 
+
+      String query = 
+        "SELECT pm.* " +
+        "FROM v_prix_medicaments pm " +
+        "INNER JOIN ( " +
+        "    SELECT id_unite, MAX(date_prix) AS max_date " +
+        "    FROM v_prix_medicaments " +
+        "    WHERE id_medicament = ? " +
+        "    GROUP BY id_unite " +
+        ") latest " +
+        "ON pm.id_unite = latest.id_unite " +
+        "AND pm.date_prix = latest.max_date " +
+        "WHERE pm.id_medicament = ?;";
